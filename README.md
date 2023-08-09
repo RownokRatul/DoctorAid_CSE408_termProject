@@ -1,2 +1,2 @@
-# DoctorAid_CSE408_termProject
-This is Term Porject of Software Development Sessional
+# DoctorAid_CSE408_TermProject
+This is a L-4/T-1 project of CSE408
