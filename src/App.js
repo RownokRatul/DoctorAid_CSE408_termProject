@@ -11,11 +11,17 @@ import Search from './Pages/SearchTab/SearchTab';
 import Prescription from './Pages/PrescriptionTab/PrescriptionTab';
 import FloatingActionButton from './Pages/CreatePrescriptionTab/Components/FloatingActionButton';
 import CreatePrescriptionPage from './Pages/CreatePrescriptionTab/CreatePrescriptionTab';
+import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import { useThemeContext } from './ThemeContext';
+
 // ...
 
 
 function App() {
+  const { theme } = useThemeContext(); // Use the theme from your custom context
+
   return (
+    <MuiThemeProvider theme={theme}>
     <Router>
       <MainLayout>
         <Routes>
@@ -35,6 +41,7 @@ function App() {
         <FloatingActionButton />
       </MainLayout>
     </Router>
+    </MuiThemeProvider>
   );
 }
 

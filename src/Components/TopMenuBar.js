@@ -1,10 +1,10 @@
-// components/TopMenuBar.js
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AppBar, Tabs, Tab, ThemeProvider, createTheme } from '@mui/material';
+import { AppBar, Tabs, Tab, ThemeProvider, createTheme, Toolbar, Switch } from '@mui/material';
+import { useThemeContext } from '../ThemeContext';
 
 const TopMenuBar = () => {
+  const { darkMode, setDarkMode } = useThemeContext();
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -50,13 +50,21 @@ const TopMenuBar = () => {
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="static" color="primary">
-        <Tabs value={currentTabIndex} aria-label="simple tabs example">
-          <Tab label="General" component={Link} to="/general" />
-          <Tab label="Demography" component={Link} to="/demography" />
-          <Tab label="Medications" component={Link} to="/medication" />
-          <Tab label="Prescriptions" component={Link} to="/prescription" />
-          <Tab label="Search" component={Link} to="/search" />
-        </Tabs>
+        <Toolbar>
+          <Tabs value={currentTabIndex} aria-label="simple tabs example">
+            <Tab label="General" component={Link} to="/general" />
+            <Tab label="Demography" component={Link} to="/demography" />
+            <Tab label="Medications" component={Link} to="/medication" />
+            <Tab label="Prescriptions" component={Link} to="/prescription" />
+            <Tab label="Search" component={Link} to="/search" />
+          </Tabs>
+          <Switch
+            checked={darkMode}
+            onChange={() => setDarkMode(!darkMode)}
+            name="darkModeSwitch"
+            inputProps={{ 'aria-label': 'dark mode switch' }}
+          />
+        </Toolbar>
       </AppBar>
     </ThemeProvider>
   );
