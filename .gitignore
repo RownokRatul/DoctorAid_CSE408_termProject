@@ -1,0 +1,29 @@
+# Node.js and Prisma related
+node_modules/
+prisma/client/
+.env
+
+# Dependency directories
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+/.nyc_output
+
+# Output
+/dist
+/build
+/out
+
+# IDEs and editors
+.idea/
+.vscode/
+*.code-workspace
+
+# Logs and debugging
+logs
+*.log
+
+# Prisma-specific
+prisma/.env
