@@ -5,12 +5,13 @@ const checkCookie = require('../../authentication/cookie_checker');
 require('dotenv').config();
 
 
-const router = express.Router({mergeParams : true});
+const router = express.Router();
 
 
 router.post('/api/v0/login', async (req, res) => { //post->get
     // console.log("Backend: requested-> /api/v0/login");
     // req_json = req.body;
+    console.log(req);
     const pseudo_view = await loginController(req);
     if(pseudo_view) {
         console.log(pseudo_view);
@@ -31,14 +32,15 @@ async function loginController(req) {
     // req_json.username = 'doc_oc'
     // req_json.password = 'MTIz'
     const req_json = req.body;
-    console.log(req.json);
+    console.log("loginController")
+    console.log(req.body, req.query);
     const model_user_login_info = await orm_login.verifyLogin(req_json.username, req_json.password);
     if(model_user_login_info) {
         console.log('User found!');
         console.log(model_user_login_info);
         // set cookie
         session = req.session;
-        session.userid = model_user_login_info.username;
+        // session.userid = model_user_login_info.username;
         let model = null;
         if(model_user_login_info.user_role.toUpperCase() == 'DOCTOR') {
             model = await orm_emp_info.get_doctor_info(req_json.username);
