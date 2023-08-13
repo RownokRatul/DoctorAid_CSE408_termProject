@@ -37,13 +37,18 @@ model intern_info {
 model patient_basic_info {
   id         Int      @id @default(autoincrement())
   name       String
-  age        Int
   phone      String
-  address    String
-  occupation String
   nid        String?
   dob        DateTime
   gender     String
+  addresses  String[]
+  address_from DateTime[]
+  address_to DateTime[]
+  occupations String[]
+  occupation_from DateTime[]
+  occupation_to DateTime[]
+  height     Float
+  weight     Float
 }
 
 

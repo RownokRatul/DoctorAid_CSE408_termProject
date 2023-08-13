@@ -8,13 +8,18 @@ async function get_patient_basic_info(phone) {
         select: {
             id: true,
             name: true,  
-            age: true,
             phone: true,  
-            address: true, 
-            occupation: true,
             nid: true,
             dob: true,
-            gender: true
+            gender: true,
+            addresses: true,
+            address_from: true,
+            address_to: true,
+            occupations: true,
+            occupation_from: true,
+            occupation_to: true,
+            height: true,
+            weight: true,
         }
     });
     return model_patient_basic_info;
