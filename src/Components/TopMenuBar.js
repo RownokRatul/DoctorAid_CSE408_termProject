@@ -12,6 +12,11 @@ const TopMenuBar = ({ logo }) => {
         <Tabs>
           <Tab label="General" component={Link} to="/general" />
           <Tab label="Demography" component={Link} to="/demography" />
+          <Tab label="Diagnostics" component={Link} to="/diagnostics" />
+          <Tab label="Medication" component={Link} to="/medication" />
+          <Tab label="Search" component={Link} to="/search" />
+          <Tab label="Prescription" component={Link} to="/prescription" />
+          
           {/* Add other tabs as needed */}
           {/* ... */}
         </Tabs>
