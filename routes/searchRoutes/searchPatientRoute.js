@@ -10,9 +10,9 @@ const router = express.Router({mergeParams : true});
 router.post('/api/v0/search_patient', async (req, res) => { //post->get
     // console.log("Backend: requested-> /api/v0/search_patient");
     // req_json = req.body;
-    const pseudo_view = await searchController(req);
+    const pseudo_view = await patientSearchController(req);
     if(pseudo_view) {
-        console.log(pseudo_view);
+        // console.log(pseudo_view);
         const user = pseudo_view[0];
         res.status(200).json({message : "okay", user});
     }
@@ -21,7 +21,7 @@ router.post('/api/v0/search_patient', async (req, res) => { //post->get
     }
 });
 
-async function searchController(req) {
+async function patientSearchController(req) {
     const req_json = req.body;
 
     // if(!cookie.checkCookie(req.session)) {
