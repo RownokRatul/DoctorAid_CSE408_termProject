@@ -46,7 +46,7 @@ const GeneralTab = () => {
         <MajorDiseasesCard diseases={diseases} />
       </div>
       <div style={{ flex: '1', padding: '20px' }}>
-      <Card style={{ marginBottom: '20px' }}>
+        <Card style={{ marginBottom: '20px' }}>
           <HeartRateChart />
         </Card>
         <Card style={{ marginBottom: '20px' }}>
