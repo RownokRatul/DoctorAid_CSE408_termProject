@@ -43,6 +43,7 @@ app.use(require('./routes/rootRoutes/rootRoute'));
 app.use(require('./routes/registerRoutes/patientRegisterRoute'));
 app.use(require('./routes/searchRoutes/searchPatientRoute'));
 app.use(require('./routes/patientSummaryRoutes/patientSummaryRoute'));
+app.use(require('./routes/patientSummaryRoutes/patientDemographyRoute'));
 
 
 // const users = [

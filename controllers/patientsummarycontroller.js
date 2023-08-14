@@ -11,45 +11,6 @@ async function patientSummaryController(req) {
     console.log(model_patient_summary_info);
     if(model_patient_summary_info) {
         console.log("full object: ", model_patient_summary_info);
-        console.log("1st element: ", model_patient_summary_info[0]);
-        console.log("2nd element: ", model_patient_summary_info[1]);
-
-        // const pseudo_view = {
-        //     value_high : model_patient_summary_info[0].bloodPressures[0].value_high,
-        //     value_low : model_patient_summary_info[0].bloodPressures[0].value_low,
-        //     taken_at : model_patient_summary_info[0].bloodPressures[0].taken_at,
-        // };
-
-        // const valueHighs = [];
-        // const valueLows = [];
-        // const takenAts = [];
-
-        // // Loop through each patient's blood pressure data
-        // model_patient_summary_info.forEach(patientInfo => {
-        //     patientInfo.bloodPressures.forEach(bp => {
-        //         valueHighs.push(bp.value_high);
-        //         valueLows.push(bp.value_low);
-        //         takenAts.push(bp.taken_at);
-        //     });
-
-        //     patientInfo.heartRates.forEach(hr => {
-        //         heartRateData.values.push(hr.value);
-        //         heartRateData.taken_ats.push(hr.taken_at);
-        //     });
-        // });
-        // // model_patient_summary_info.forEach(patientInfo => {
-        //     // model_patient_summary_info[0].bloodPressures.forEach(bp => {
-        //     //     console.log("bp: ", bp);
-        //     //     valueHighs.push(bp.value_high);
-        //     //     valueLows.push(bp.value_low);
-        //     //     takenAts.push(bp.taken_at);
-        //     // });
-        // // });
-        // const pseudo_view = {
-        //     value_highs: valueHighs,
-        //     value_lows: valueLows,
-        //     taken_ats: takenAts
-        // };
 
         const bloodPressureData = {
             value_highs: [],
@@ -62,7 +23,6 @@ async function patientSummaryController(req) {
             taken_ats: []
         };
 
-        // Loop through each patient's blood pressure data
         model_patient_summary_info.forEach(patientInfo => {
             patientInfo.bloodPressures.forEach(bp => {
                 bloodPressureData.value_highs.push(bp.value_high);
@@ -81,15 +41,12 @@ async function patientSummaryController(req) {
             heart_rate_data: heartRateData
         };
 
-
-
-        
         console.log("pseudo view ",pseudo_view);
 
         return pseudo_view;
     }
     else {
-        console.log('NO user Found!');
+        console.log('No user Found!');
         return null;
     }
 }

@@ -14,7 +14,7 @@ router.post('/api/v0/login', async (req, res) => { //post->get
     console.log(req.body);
     const pseudo_view = await loginController(req);
     if(pseudo_view) {
-        console.log('User found!');
+        console.log('Login route: User found!');
         console.log(pseudo_view);
         res.json(pseudo_view);
     }

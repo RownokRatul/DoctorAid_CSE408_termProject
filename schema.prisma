@@ -41,12 +41,16 @@ model patient_basic_info {
   nid        String?
   dob        DateTime
   gender     String
+  hometown   String
   addresses  String[]
   address_from DateTime[]
   address_to DateTime[]
   occupations String[]
   occupation_from DateTime[]
   occupation_to DateTime[]
+  travel_history String[]
+  travel_from DateTime[]
+  travel_to DateTime[]
   height     Float
   weight     Float
   bloodPressures patient_blood_pressures[]
