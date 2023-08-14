@@ -43,4 +43,4 @@ async function loginController(req) {
     }
 }
 
-module.exports = loginController;
+module.exports = {loginController};

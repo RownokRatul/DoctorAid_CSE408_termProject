@@ -1,8 +1,8 @@
 const express = require('express');
 const orm_login = require('../../ORM/ORM_login');
-const orm_emp_info = require('../../ORM/ORM_employee_info');
+// const orm_emp_info = require('../../ORM/ORM_employee_info');
 const checkCookie = require('../../authentication/cookie_checker');
-const loginController = require('../../controllers/logincontroller'); // Import the loginController function
+const {loginController} = require('../../controllers/logincontroller'); // Import the loginController function
 require('dotenv').config();
 
 
@@ -23,11 +23,6 @@ router.post('/api/v0/login', async (req, res) => { //post->get
     else {
         res.status(401).json({error : 'Invalid Login'});
     }
-    // const test = {
-    //     username: 'BOB',
-    //     password: '123'
-    // }
-    // loginController(test);
 });
 
 
