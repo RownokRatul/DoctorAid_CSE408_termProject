@@ -1,0 +1,7 @@
+## login
+POST http://localhost:5000/api/v0/patients/get_general_tab_info/
+content-type: application/json
+
+{
+  "id": 1
+}

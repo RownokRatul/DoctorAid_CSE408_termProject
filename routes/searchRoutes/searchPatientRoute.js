@@ -22,9 +22,4 @@ router.post('/api/v0/search_patient', async (req, res) => { //post->get
     }
 });
 
-
-
-
-
-
 module.exports = router;

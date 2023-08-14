@@ -6,7 +6,7 @@ async function loginController(req) {
     // req_json.password = 'MTIz'
     const req_json = req.body;
     console.log("loginController")
-    console.log(req.body, req.query);
+    // console.log(req.body, req.query);
     const model_user_login_info = await orm_login.verifyLogin(req_json.username, req_json.password);
     if(model_user_login_info) {
         console.log('User found! in controller');

@@ -49,6 +49,26 @@ model patient_basic_info {
   occupation_to DateTime[]
   height     Float
   weight     Float
+  bloodPressures patient_blood_pressures[]
+  heartRates     patient_heart_rates[]
 }
 
 
+  
+model patient_blood_pressures {
+  id        Int       @id @default(autoincrement())
+  patient   patient_basic_info @relation(fields: [patient_id], references: [id])
+  patient_id Int
+  taken_at  DateTime
+  value_low Int
+  value_high Int
+}
+
+model patient_heart_rates {
+  id        Int       @id @default(autoincrement())
+  patient   patient_basic_info @relation(fields: [patient_id], references: [id])
+  patient_id Int
+  taken_at  DateTime
+  value     Int
+}
+  

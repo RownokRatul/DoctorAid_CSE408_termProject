@@ -21,7 +21,4 @@ router.post('/api/v0/register_patient', async (req, res) => { //post->get
     }
 });
 
-
-
-
 module.exports = router;
