@@ -14,42 +14,7 @@ const medicationList = [
     uses: 'Pain relief, fever reduction',
     sideEffects: 'Nausea, vomiting',
   },
-  {
-    medicineName: 'Aspirin',
-    genericName: 'Acetylsalicylic Acid',
-    startedFrom: '01/01/2021',
-    doses: '100mg',
-    appointmentNo: '12345',
-    uses: 'Pain relief, fever reduction',
-    sideEffects: 'Nausea, vomiting',
-  },
-  {
-    medicineName: 'Aspirin',
-    genericName: 'Acetylsalicylic Acid',
-    startedFrom: '01/01/2021',
-    doses: '100mg',
-    appointmentNo: '12345',
-    uses: 'Pain relief, fever reduction',
-    sideEffects: 'Nausea, vomiting',
-  },
-  {
-    medicineName: 'Aspirin',
-    genericName: 'Acetylsalicylic Acid',
-    startedFrom: '01/01/2021',
-    doses: '100mg',
-    appointmentNo: '12345',
-    uses: 'Pain relief, fever reduction',
-    sideEffects: 'Nausea, vomiting',
-  },
-  {
-    medicineName: 'Aspirin',
-    genericName: 'Acetylsalicylic Acid',
-    startedFrom: '01/01/2021',
-    doses: '100mg',
-    appointmentNo: '12345',
-    uses: 'Pain relief, fever reduction',
-    sideEffects: 'Nausea, vomiting',
-  },
+ 
   // Add more as needed
 ];
 
@@ -59,31 +24,7 @@ const restrictedList = [
     genericName: 'Ibuprofen',
     sideEffects: 'Stomach pain, nausea',
   },
-  {
-    medicineName: 'Ibuprofen',
-    genericName: 'Ibuprofen',
-    sideEffects: 'Stomach pain, nausea',
-  },
-  {
-    medicineName: 'Ibuprofen',
-    genericName: 'Ibuprofen',
-    sideEffects: 'Stomach pain, nausea',
-  },
-  {
-    medicineName: 'Ibuprofen',
-    genericName: 'Ibuprofen',
-    sideEffects: 'Stomach pain, nausea',
-  },
-  {
-    medicineName: 'Ibuprofen',
-    genericName: 'Ibuprofen',
-    sideEffects: 'Stomach pain, nausea',
-  },
-  {
-    medicineName: 'Ibuprofen',
-    genericName: 'Ibuprofen',
-    sideEffects: 'Stomach pain, nausea',
-  },
+ 
   // Add more as needed
 ];
 

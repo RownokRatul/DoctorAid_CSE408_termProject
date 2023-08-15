@@ -3,7 +3,8 @@ import { Box, Dialog, DialogContent, DialogTitle, Typography, Button } from '@mu
 import SearchCriteria from './Components/SearchCriteria/SearchCriteria';
 import SearchResult from './Components/SearchResults/SearchResult';
 import MiddleFlexBox from './Components/BodyPicker/MiddleFlexBox';
-
+import { useContext } from 'react';
+import { PatientContext } from '../../PatientContext';
 const SearchTab = () => {
   const [results, setResults] = useState([]); // To store the search results
   const [selectedResult, setSelectedResult] = useState(null);
@@ -29,10 +30,13 @@ const SearchTab = () => {
   const handleClose = () => {
     setSelectedResult(null);
   };
+  const { patientID } = useContext(PatientContext);
   // SearchTabs Component
     const handlePartSelected = (part) => {
+      
       // Do something with the selected part, such as filtering search results...
       console.log(part);
+      console.log(patientID);
     };
 
   return (

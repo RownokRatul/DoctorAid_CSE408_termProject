@@ -9,6 +9,7 @@ import RightFlexbox from './Components/RightFlexBox';
 import TopBanner from './Components/TopBanner';
 import BottomBanner from './Components/BottomBanner';
 import { useState } from 'react';
+import { usePatientIDValidation } from '../../PatientIDValidation';
 
 
 const patientInfo = {
@@ -22,6 +23,7 @@ const avatarSrc = 'path/to/avatar.png'; // or a URL to an image
 
 
 const CreatePrescriptionPage = () => {
+  usePatientIDValidation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -40,6 +42,7 @@ const CreatePrescriptionPage = () => {
   };
 
   return (
+    
     <div
       style={{
         transform: 'scale(1)',
@@ -70,7 +73,7 @@ const CreatePrescriptionPage = () => {
       <TopBanner patientInfo={patientInfo} prescriptionNo={prescriptionNo} avatarSrc={avatarSrc} />
       
       {/* Middle 70% Flexbox */}
-      <Grid container style={{ height: '70%', width: '100%' }}>
+      <Grid container style={{ height: '100%', width: '100%' }}>
         <Grid item xs={3}>
             <LeftFlexbox diseasesList={diseasesList} setDiseasesList={setDiseasesList} testsList={testsList} setTestsList={setTestsList} />
         </Grid>
