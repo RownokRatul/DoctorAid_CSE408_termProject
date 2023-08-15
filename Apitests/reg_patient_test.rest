@@ -1,0 +1,27 @@
+## Register Patient
+POST http://localhost:5000/api/v0/register_patient
+content-type: application/json
+
+{
+  "name": "John Smith",
+  "phone": "0987654321",
+  "nid": "987654321",
+  "dob": "1995-05-15T00:00:00.000Z",
+  "gender": "F",
+  "hometown": "Hometown B",
+  "addresses": [
+    "Address 4",
+    "Address 5",
+    "Address 6"
+  ],
+  "address_from": [
+    "2023-04-01T00:00:00.000Z",
+    "2023-05-01T00:00:00.000Z",
+    "2023-06-01T00:00:00.000Z"
+  ],
+  "address_to": [
+    "2023-04-15T00:00:00.000Z",
+    "2023-05-31T00:00:00.000Z",
+    "2023-06-15T00:00:00.000Z"
+  ]
+}

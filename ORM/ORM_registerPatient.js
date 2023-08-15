@@ -1,20 +1,27 @@
 const prisma = require('./ORM_init');
 
-async function insertPatientInfo(patientData) {
+async function createPatient(patientData) {
     try {
-        const { name, age, phone, address, occupation, nid, dob, gender } = patientData;
-  
+        const { name, phone, nid, dob, gender, hometown, addresses, address_from, address_to } = patientData;
+        // const { name, phone, nid, dob, gender, hometown } = patientData;
+        console.log(patientData);
+        console.log("addresses:", addresses);
+        console.log("address_from:", address_from);
+        console.log("address_to:", address_to);
+        const id=8;
         const newPatient = await prisma.patient_basic_info.create({
             data: {
-            name,
-            age,
-            phone,
-            address,
-            occupation,
-            nid,
-            dob,
-            gender,
-            },
+                name,
+                phone,
+                nid,
+                dob,
+                gender,
+                hometown,
+                addresses,
+                address_from,
+                address_to,
+
+            }
         });
 
         return newPatient;
@@ -26,5 +33,5 @@ async function insertPatientInfo(patientData) {
 }
 
 module.exports = {
-    insertPatientInfo,
+    createPatient,
 };

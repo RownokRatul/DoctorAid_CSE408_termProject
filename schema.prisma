@@ -37,8 +37,8 @@ model intern_info {
 model patient_basic_info {
   id         Int      @id @default(autoincrement())
   name       String
-  phone      String
-  nid        String?
+  phone      String   @unique
+  nid        String   @unique
   dob        DateTime
   gender     String
   hometown   String
@@ -51,8 +51,8 @@ model patient_basic_info {
   travel_history String[]
   travel_from DateTime[]
   travel_to DateTime[]
-  height     Float
-  weight     Float
+  height     Float?
+  weight     Float?
   bloodPressures patient_blood_pressures[]
   heartRates     patient_heart_rates[]
 }

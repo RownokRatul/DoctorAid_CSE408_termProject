@@ -10,7 +10,7 @@ async function patientRegisterController(req) {
     // }
 
     console.log(req_json);
-    const model_patient_basic_info = await orm_registerPatient.insertPatientInfo(req_json);
+    const model_patient_basic_info = await orm_registerPatient.createPatient(req_json);
     if(model_patient_basic_info) {
         console.log('Patient Registered!');
         // console.log(model_patient_basic_info);
