@@ -1,7 +1,7 @@
 // Controller/patientregistercontroller.js
 const orm_registerPatient = require('../ORM/ORM_registerPatient');
 
-async function patientRegisterController(req) {
+async function patientUpdateController(req) {
     const req_json = req.body;
 
     // if(!cookie.checkCookie(req.session)) {
@@ -10,9 +10,9 @@ async function patientRegisterController(req) {
     // }
 
     console.log(req_json);
-    const model_patient_basic_info = await orm_registerPatient.createPatient(req_json);
+    const model_patient_basic_info = await orm_registerPatient.updatePatient(req_json);
     if(model_patient_basic_info) {
-        console.log('Patient Registered!');
+        console.log('Patient Updated!');
         // console.log(model_patient_basic_info);
         const pseudo_view = model_patient_basic_info;
         return pseudo_view;
@@ -24,5 +24,4 @@ async function patientRegisterController(req) {
 }
 
 
-
-module.exports = {patientRegisterController};
+module.exports = {patientUpdateController};

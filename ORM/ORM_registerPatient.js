@@ -32,6 +32,50 @@ async function createPatient(patientData) {
     }
 }
 
+async function updatePatient(updateData) {
+    try {
+        const { id, height, weight, occupations, occupation_from, occupation_to, travel_history, travel_from, travel_to } = updateData;
+
+        const existingPatient = await prisma.patient_basic_info.findUnique({
+            where: {
+                id,
+            },
+        });
+
+        if (!existingPatient) {
+            throw new Error(`Patient with ID ${id} not found.`);
+        }
+
+        const updatedPatient = await prisma.patient_basic_info.update({
+            where: {
+                id,
+            },
+            data: {
+                height,
+                weight,
+                occupations,
+                occupation_from,
+                occupation_to,
+                travel_history,
+                travel_from,
+                travel_to,
+            },
+        });
+
+        return updatedPatient;
+    } catch (error) {
+        // Handle any errors that occur during the update
+        console.error('Error updating patient information:', error);
+        throw error;
+    }
+}
+
+
+
+
+
+
 module.exports = {
     createPatient,
+    updatePatient
 };
