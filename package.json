@@ -24,5 +24,8 @@
     "pg-promise": "^11.5.2",
     "prisma": "^5.1.1",
     "prompt-sync": "^4.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }

@@ -1,0 +1,15 @@
+## Update Patient
+PUT http://localhost:5000/api/v0/update_patient
+content-type: application/json
+
+{
+  "id"  : 13,
+  "height": 175,
+  "weight": 70,
+  "occupations": ["Occupation A", "Occupation B"],
+  "occupation_from": ["2022-01-01T00:00:00Z", "2022-02-01T00:00:00Z"],
+  "occupation_to": ["2022-12-31T00:00:00Z", "2022-12-31T00:00:00Z"],
+  "travel_history": ["Place X", "Place Y"],
+  "travel_from": ["2021-01-01T00:00:00Z", "2021-02-01T00:00:00Z"],
+  "travel_to": ["2021-01-15T00:00:00Z", "2021-02-15T00:00:00Z"]
+}
