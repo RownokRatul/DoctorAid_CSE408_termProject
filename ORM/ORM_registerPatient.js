@@ -17,10 +17,7 @@ async function createPatient(patientData) {
                 dob,
                 gender,
                 hometown,
-                addresses,
-                address_from,
-                address_to,
-
+                
             }
         });
 
@@ -34,7 +31,7 @@ async function createPatient(patientData) {
 
 async function updatePatient(updateData) {
     try {
-        const { id, height, weight, occupations, occupation_from, occupation_to, travel_history, travel_from, travel_to } = updateData;
+        const { id, height, weight, addresses, address_from, address_to, occupations, occupation_from, occupation_to, travel_history, travel_from, travel_to } = updateData;
 
         const existingPatient = await prisma.patient_basic_info.findUnique({
             where: {
@@ -53,6 +50,9 @@ async function updatePatient(updateData) {
             data: {
                 height,
                 weight,
+                addresses,
+                address_from,
+                address_to,
                 occupations,
                 occupation_from,
                 occupation_to,

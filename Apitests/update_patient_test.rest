@@ -3,9 +3,23 @@ PUT http://localhost:5000/api/v0/update_patient
 content-type: application/json
 
 {
-  "id"  : 13,
+  "id"  : 14,
   "height": 175,
   "weight": 70,
+  "addresses": [
+    "Address 4",
+    "Address 5",
+    "Address 6"
+  ],
+  "address_from": [
+    "2023-04-01T00:00:00.000Z",
+    "2023-05-01T00:00:00.000Z",
+    "2023-06-01T00:00:00.000Z"
+  ],
+  "address_to": [
+    "2023-04-15T00:00:00.000Z",
+    "2023-05-31T00:00:00.000Z"
+  ],
   "occupations": ["Occupation A", "Occupation B"],
   "occupation_from": ["2022-01-01T00:00:00Z", "2022-02-01T00:00:00Z"],
   "occupation_to": ["2022-12-31T00:00:00Z", "2022-12-31T00:00:00Z"],
