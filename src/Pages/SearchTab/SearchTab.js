@@ -5,7 +5,11 @@ import SearchResult from './Components/SearchResults/SearchResult';
 import MiddleFlexBox from './Components/BodyPicker/MiddleFlexBox';
 import { useContext } from 'react';
 import { PatientContext } from '../../PatientContext';
+
+import { usePatientIDValidation } from '../../PatientIDValidation';
 const SearchTab = () => {
+
+  usePatientIDValidation();
   const [results, setResults] = useState([]); // To store the search results
   const [selectedResult, setSelectedResult] = useState(null);
 

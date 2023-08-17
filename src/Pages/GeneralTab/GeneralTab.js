@@ -11,6 +11,8 @@ import MajorDiseasesCard from './Components/Cards/MajorDiseasesCard';
 import HeartRateChart from './Components/Charts/HeartRateChart';
 import BloodPressureChart from './Components/Charts/BloodPressureChart';
 import GlucoseLevelChart from './Components/Charts/GlucoseLevelChart';
+import { usePatientIDValidation } from '../../PatientIDValidation';
+
 
 
 import { Card } from '@mui/material';
@@ -37,6 +39,7 @@ const diseases = ['Hypertension', 'Diabetes'];
 
 
 const GeneralTab = () => {
+  usePatientIDValidation();
   return (
     <div style={{ display: 'flex', height: '100%' }}>
       <div style={{ flex: '1', padding: '20px' }}>

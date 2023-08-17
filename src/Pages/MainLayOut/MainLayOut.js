@@ -28,7 +28,7 @@ const MainLayout = ({ children }) => {
           <ChevronRight />
         </IconButton>
       )}
-      <LeftPanel open={open} toggleDrawer={toggleDrawer} />
+      
       <Container>
         {children}
       </Container>

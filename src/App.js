@@ -13,6 +13,8 @@ import AdminPage from './Pages/AdminPage/AdminPage';
 import FloatingActionButton from './Pages/CreatePrescriptionTab/Components/FloatingActionButton';
 import CreatePrescriptionPage from './Pages/CreatePrescriptionTab/CreatePrescriptionTab';
 import PatientIDInput from './Pages/EnterPatientID/EnterPatientID';
+import PatientRegistration from './Pages/PatientRegistrationTab/PatientRegistration'
+import InternDoctor from './Pages/InternDoctor/InternDoctor';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import { useThemeContext } from './ThemeContext';
 import { PatientProvider } from './PatientContext';
@@ -37,6 +39,8 @@ function App() {
             <Route path="/prescription" element={<Prescription />} />
             <Route path="/create-prescription" element={<CreatePrescriptionPage />} />
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/register" element={<PatientRegistration />} />
+            <Route path="/intern" element={<InternDoctor />} />
           </Routes>
         </PatientProvider>
         <FloatingActionButton />

@@ -3,6 +3,8 @@ import { Box, Dialog, DialogContent, DialogTitle, Typography, Button } from '@mu
 import MedicationCard from './Components/MedicationCard'
 import RestrictedCard from './Components/RestrictedCard'
 
+import { usePatientIDValidation } from '../../PatientIDValidation';
+
 // Mock data with additional details
 const medicationList = [
   {
@@ -29,6 +31,8 @@ const restrictedList = [
 ];
 
 const MedicationTab = () => {
+
+  usePatientIDValidation();
   const [detail, setDetail] = useState(null);
 
   const showDetail = (medicine) => {

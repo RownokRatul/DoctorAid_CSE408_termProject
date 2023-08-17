@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableRow, Button } from '@mui/material';
+import DiseasesDialog from './DiseasesDialog';
 import remove from './Image/trash-bin.png';
 
 function DiseasesTable() {
