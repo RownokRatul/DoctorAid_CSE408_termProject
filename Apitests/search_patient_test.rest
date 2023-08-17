@@ -3,7 +3,7 @@ POST http://localhost:5000/api/v0/search_patient/
 content-type: application/json
 
 {
-    "phone":"1234567890"
+    "phone":"9876543210"
 }
 
 # {
