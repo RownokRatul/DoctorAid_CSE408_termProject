@@ -1,0 +1,49 @@
+## login
+POST http://localhost:5000/api/v0/patients/get_general_tab_info/
+content-type: application/json
+
+{
+  "id": 1
+}
+
+# {
+#   "message": "Success",
+#   "data": {
+#     "id": 1,
+#     "name": "John Doe",
+#     "phone": "John Doe",
+#     "age": 30,
+#     "gender": "M",
+#     "height": 175.5,
+#     "weight": 70.5,
+#     "blood_pressure_data": {
+#       "value_highs": [
+#         110,
+#         125,
+#         120
+#       ],
+#       "value_lows": [
+#         70,
+#         85,
+#         80
+#       ],
+#       "taken_ats": [
+#         "2023-08-01T00:00:00.000Z",
+#         "2023-08-07T00:00:00.000Z",
+#         "2023-08-13T00:00:00.000Z"
+#       ]
+#     },
+#     "heart_rate_data": {
+#       "heart_rates": [
+#         82,
+#         77,
+#         80
+#       ],
+#       "taken_ats": [
+#         "2023-08-01T00:00:00.000Z",
+#         "2023-08-07T00:00:00.000Z",
+#         "2023-08-13T00:00:00.000Z"
+#       ]
+#     }
+#   }
+# }

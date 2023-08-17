@@ -3,6 +3,8 @@ node_modules/
 prisma/client/
 .env
 
+package-lock.json
+
 # Dependency directories
 /.pnp
 .pnp.js

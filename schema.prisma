@@ -37,13 +37,42 @@ model intern_info {
 model patient_basic_info {
   id         Int      @id @default(autoincrement())
   name       String
-  age        Int
-  phone      String
-  address    String
-  occupation String
-  nid        String?
+  phone      String   @unique
+  nid        String   @unique
   dob        DateTime
   gender     String
+  hometown   String
+  addresses  String[]
+  address_from DateTime[]
+  address_to DateTime[]
+  occupations String[]
+  occupation_from DateTime[]
+  occupation_to DateTime[]
+  travel_history String[]
+  travel_from DateTime[]
+  travel_to DateTime[]
+  height     Float?
+  weight     Float?
+  bloodPressures patient_blood_pressures[]
+  heartRates     patient_heart_rates[]
 }
 
 
+  
+model patient_blood_pressures {
+  id        Int       @id @default(autoincrement())
+  patient   patient_basic_info @relation(fields: [patient_id], references: [id])
+  patient_id Int
+  taken_at  DateTime
+  value_low Int
+  value_high Int
+}
+
+model patient_heart_rates {
+  id        Int       @id @default(autoincrement())
+  patient   patient_basic_info @relation(fields: [patient_id], references: [id])
+  patient_id Int
+  taken_at  DateTime
+  value     Int
+}
+  

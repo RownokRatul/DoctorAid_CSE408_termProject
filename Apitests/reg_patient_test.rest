@@ -1,0 +1,36 @@
+## Register Patient
+POST http://localhost:5000/api/v0/register_patient
+content-type: application/json
+
+{
+  "name": "John Smith",
+  "phone": "0987654321",
+  "nid": "987654321",
+  "dob": "1995-05-15T00:00:00.000Z",
+  "gender": "F",
+  "hometown": "Hometown B"
+}
+
+# {
+#   "message": "Successfully registered",
+#   "data": {
+#     "id": 17,
+#     "name": "John Smith",
+#     "phone": "0987654321",
+#     "nid": "987654321",
+#     "dob": "1995-05-15T00:00:00.000Z",
+#     "gender": "F",
+#     "hometown": "Hometown B",
+#     "addresses": [],
+#     "address_from": [],
+#     "address_to": [],
+#     "occupations": [],
+#     "occupation_from": [],
+#     "occupation_to": [],
+#     "travel_history": [],
+#     "travel_from": [],
+#     "travel_to": [],
+#     "height": null,
+#     "weight": null
+#   }
+# }
