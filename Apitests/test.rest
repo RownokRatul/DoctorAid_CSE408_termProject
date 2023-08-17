@@ -1,9 +1,0 @@
-## login
-POST http://localhost:5000/api/v0/login
-content-type: application/json
-
-{
-  "username":"doc_oc",
-  "password":"MTIz"
-}
-

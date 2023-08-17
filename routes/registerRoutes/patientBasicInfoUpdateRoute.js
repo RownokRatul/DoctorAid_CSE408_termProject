@@ -14,7 +14,7 @@ router.put('/api/v0/update_patient', async (req, res) => { //post->get
     const pseudo_view = await patientUpdateController(req);
     if(pseudo_view) {
         console.log(pseudo_view);
-        res.status(200).json({message : 'Successfully updated', data : pseudo_view});
+        res.status(200).json({message : 'Success', data : pseudo_view});
     }
     else {
         res.status(404).json({error : 'Not Found'});

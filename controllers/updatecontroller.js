@@ -8,9 +8,15 @@ async function patientUpdateController(req) {
     //     // Force to login. And return a status
     //     return;
     // }
-
+    var model_patient_basic_info = null;
     console.log(req_json);
-    const model_patient_basic_info = await orm_registerPatient.updatePatient(req_json);
+    try{
+        model_patient_basic_info = await orm_registerPatient.updatePatient(req_json);
+    }
+    catch(error){
+        console.log(error);
+        model_patient_basic_info = null;
+    }
     if(model_patient_basic_info) {
         console.log('Patient Updated!');
         // console.log(model_patient_basic_info);

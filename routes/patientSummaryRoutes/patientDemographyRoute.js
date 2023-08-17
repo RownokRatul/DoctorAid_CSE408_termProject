@@ -16,7 +16,7 @@ router.post('/api/v0/patients/get_demography_tab_info/', async (req, res) => { /
     if(pseudo_view) {
         console.log('Demo tab route : User found!');
         console.log(pseudo_view);
-        res.json(pseudo_view);
+        res.status(200).json({message : 'Success', data : pseudo_view});
     }
     else {
         res.status(401).json({error : 'Invalid Login'});

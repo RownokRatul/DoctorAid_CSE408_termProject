@@ -16,7 +16,7 @@ router.post('/api/v0/login', async (req, res) => { //post->get
     if(pseudo_view) {
         console.log('Login route: User found!');
         console.log(pseudo_view);
-        res.json(pseudo_view);
+        res.status(200).json({message : 'Success', data : pseudo_view});
     }
     else {
         res.status(401).json({error : 'Invalid Login'});
