@@ -9,6 +9,13 @@ content-type: application/json
 # {
 #   "message": "Success",
 #   "data": {
+#     "id": 1,
+#     "name": "John Doe",
+#     "phone": "John Doe",
+#     "age": 30,
+#     "gender": "M",
+#     "height": 175.5,
+#     "weight": 70.5,
 #     "blood_pressure_data": {
 #       "value_highs": [
 #         110,

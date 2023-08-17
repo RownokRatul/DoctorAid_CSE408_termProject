@@ -24,12 +24,19 @@ async function get_patient_basic_info(phone) {
     });
     return model_patient_basic_info;
 }
-async function get_patient_summary_info(id){
-    const patientBloodPressureData = await prisma.patient_basic_info.findMany({
+async function get_patient_summary_info(uid){
+    const patientBloodPressureData = await prisma.patient_basic_info.findUnique({
         where: {
-            id: id,
+            id: uid,
         }, 
         select: {
+            id: true,
+            name: true,
+            phone: true,
+            dob: true,
+            gender: true,
+            height: true,
+            weight: true,
             bloodPressures: {
                 select: {
                     taken_at: true,

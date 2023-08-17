@@ -7,11 +7,11 @@ async function patientSummaryController(req) {
     const req_json = req.body;
     console.log("in patient Summary Controller")
     console.log(req.body);
-    const model_patient_summary_info = await orm_patient_summary_info.get_patient_summary_info(req.id);
+    const model_patient_summary_info = await orm_patient_summary_info.get_patient_summary_info(req.body.id);
     console.log(model_patient_summary_info);
     if(model_patient_summary_info) {
         console.log("full object: ", model_patient_summary_info);
-
+        // const {}
         const bloodPressureData = {
             value_highs: [],
             value_lows: [],
@@ -23,20 +23,42 @@ async function patientSummaryController(req) {
             taken_ats: []
         };
 
-        model_patient_summary_info.forEach(patientInfo => {
-            patientInfo.bloodPressures.forEach(bp => {
+        // model_patient_summary_info.forEach(patientInfo => {
+        //     patientInfo.bloodPressures.forEach(bp => {
+        //         bloodPressureData.value_highs.push(bp.value_high);
+        //         bloodPressureData.value_lows.push(bp.value_low);
+        //         bloodPressureData.taken_ats.push(bp.taken_at);
+        //     });
+
+        //     patientInfo.heartRates.forEach(hr => {
+        //         heartRateData.heart_rates.push(hr.value);
+        //         heartRateData.taken_ats.push(hr.taken_at);
+        //     });
+        // });
+
+        // model_patient_summary_info.forEach(patientInfo => {
+            model_patient_summary_info.bloodPressures.forEach(bp => {
                 bloodPressureData.value_highs.push(bp.value_high);
                 bloodPressureData.value_lows.push(bp.value_low);
                 bloodPressureData.taken_ats.push(bp.taken_at);
             });
 
-            patientInfo.heartRates.forEach(hr => {
+            model_patient_summary_info.heartRates.forEach(hr => {
                 heartRateData.heart_rates.push(hr.value);
                 heartRateData.taken_ats.push(hr.taken_at);
             });
-        });
-
+        // });
+        const currentYear = new Date().getFullYear();
+        const birthYear = model_patient_summary_info.dob.getFullYear();
+        let age = currentYear - birthYear;
         const pseudo_view = {
+            id : model_patient_summary_info.id,
+            name : model_patient_summary_info.name,
+            phone : model_patient_summary_info.name,
+            age : age,
+            gender : model_patient_summary_info.gender,
+            height : model_patient_summary_info.height,
+            weight : model_patient_summary_info.weight,
             blood_pressure_data: bloodPressureData,
             heart_rate_data: heartRateData
         };
