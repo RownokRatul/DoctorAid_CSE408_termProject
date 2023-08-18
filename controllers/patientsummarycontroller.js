@@ -64,7 +64,7 @@ async function patientSummaryController(req) {
         const pseudo_view = {
             id : model_patient_summary_info.id,
             name : model_patient_summary_info.name,
-            phone : model_patient_summary_info.name,
+            phone : model_patient_summary_info.phone,
             age : age,
             gender : model_patient_summary_info.gender,
             height : model_patient_summary_info.height,
