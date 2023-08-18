@@ -7,11 +7,17 @@ async function patientSummaryController(req) {
     const req_json = req.body;
     console.log("in patient Summary Controller")
     console.log(req.body);
+    const model_chronic_diseases = await orm_patient_summary_info.get_chronic_disease_by_pid(req.body.id);
+    // console.log(model_chronic_diseases);
     const model_patient_summary_info = await orm_patient_summary_info.get_patient_summary_info(req.body.id);
-    console.log(model_patient_summary_info);
+    // console.log(model_patient_summary_info);
     if(model_patient_summary_info) {
         console.log("full object: ", model_patient_summary_info);
         // const {}
+        let chronDiseases = {
+            disease_name: [],
+        }
+
         const bloodPressureData = {
             value_highs: [],
             value_lows: [],
@@ -47,6 +53,10 @@ async function patientSummaryController(req) {
                 heartRateData.heart_rates.push(hr.value);
                 heartRateData.taken_ats.push(hr.taken_at);
             });
+
+            model_chronic_diseases.forEach(disease => { 
+                chronDiseases.disease_name.push(disease.disease_name);
+            });
         // });
         const currentYear = new Date().getFullYear();
         const birthYear = model_patient_summary_info.dob.getFullYear();
@@ -60,7 +70,8 @@ async function patientSummaryController(req) {
             height : model_patient_summary_info.height,
             weight : model_patient_summary_info.weight,
             blood_pressure_data: bloodPressureData,
-            heart_rate_data: heartRateData
+            heart_rate_data: heartRateData,
+            chronic_diseases: chronDiseases
         };
 
         console.log("pseudo view ",pseudo_view);

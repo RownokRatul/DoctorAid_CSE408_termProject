@@ -43,8 +43,8 @@ app.use(require('./routes/rootRoutes/rootRoute'));
 app.use(require('./routes/registerRoutes/patientRegisterRoute'));
 app.use(require('./routes/registerRoutes/patientBasicInfoUpdateRoute'));
 app.use(require('./routes/searchRoutes/searchPatientRoute'));
-app.use(require('./routes/patientSummaryRoutes/patientSummaryRoute'));
-app.use(require('./routes/patientSummaryRoutes/patientDemographyRoute'));
+app.use(require('./routes/generalTabRoutes/patientSummaryRoute'));
+app.use(require('./routes/demographyRoutes/patientDemographyRoute'));
 
 
 // const users = [

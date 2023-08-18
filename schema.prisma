@@ -53,8 +53,9 @@ model patient_basic_info {
   travel_to DateTime[]
   height     Float?
   weight     Float?
-  bloodPressures patient_blood_pressures[]
-  heartRates     patient_heart_rates[]
+  bloodPressures 	patient_blood_pressures[]
+  heartRates     	patient_heart_rates[]
+//   medicalHistory 	medical_history[]
 }
 
 
@@ -75,4 +76,49 @@ model patient_heart_rates {
   taken_at  DateTime
   value     Int
 }
+
+// model medical_history {
+//   disease_id Int
+//   date       DateTime
+//   patient_id Int
+
+//   diseases   diseases 			@relation(fields: [disease_id], references: [id])
+//   patient    patient_basic_info @relation(fields: [patient_id], references: [id])
+
+//   @@id([disease_id, date, patient_id])
+//   @@index([disease_id], name: "disease_id")
+//   @@index([patient_id], name: "patient_id")
+// }
+
   
+// model diseases {
+//   id         			Int       @id @default(autoincrement())
+//   disease_name       	String
+//   symptoms   			String[]
+//   is_chronic			String?   @map("is_chronic")
+//   medical_history 		medical_history[]
+
+//   @@index([disease_name], name: "disease_name")
+// }
+
+model medical_history {
+  disease_id Int
+  date       DateTime
+  patient_id Int
+  diseases   diseases @relation(fields: [disease_id], references: [id])
+
+  @@id([disease_id, date, patient_id])
+}
+
+model diseases {
+  id          Int             @id @default(autoincrement())
+  disease_name String
+  is_chronic  String?
+  medical_history medical_history[]
+
+  @@index([disease_name], name: "disease_name")
+}
+
+
+
+
