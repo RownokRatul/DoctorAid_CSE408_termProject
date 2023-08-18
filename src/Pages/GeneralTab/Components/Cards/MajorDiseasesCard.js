@@ -5,7 +5,7 @@ import { Card, CardContent, Typography, Table, TableBody, TableRow, TableCell } 
 
 const MajorDiseasesCard = ({ diseases }) => {
   return (
-    <Card>
+    <Card style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between' ,backgroundColor:'azure'}}>
       <CardContent>
         <Typography variant="h6">Major Chronic Diseases</Typography>
         <Table>

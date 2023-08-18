@@ -38,7 +38,7 @@ function MiddleFlexbox({ selectedMedicines, setSelectedMedicines }) {
   return (
     <div className="middle-flexbox" style={{ width: '95%', backgroundColor: '#f0f0f0' }}>
       <h3 style={{ textAlign: 'center', paddingTop:'15px' }}>Add Medicines</h3>
-      <Card style={{ padding: '10px', height: '100%', backgroundColor: '#f9f9f9' }}>
+      <Card style={{ padding: '10px', height: '100%', backgroundColor: 'azure' }}>
         <TextField
           fullWidth
           label="Search Medicine"

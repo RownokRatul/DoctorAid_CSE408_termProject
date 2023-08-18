@@ -13,7 +13,7 @@ function TopBanner({ patientInfo, prescriptionNo, avatarSrc }) {
       padding: '10px',
       borderRadius: '5px',
       boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
-      backgroundColor: '#f9f9f9',
+      backgroundColor: 'azure',
       marginBottom: '20px',
     }}>
       <Grid item xs={3} style={{ paddingLeft: '10px' }}>

@@ -5,7 +5,7 @@ import { Card, CardContent, Typography, Table, TableBody, TableRow, TableCell } 
 
 const MajorSurgeriesCard = ({ surgeries }) => {
   return (
-    <Card style={{ marginBottom: '20px' }}>
+    <Card style={{ marginBottom: '20px' , backgroundColor:"azure"}}>
       <CardContent>
         <Typography variant="h6">Major Surgeries</Typography>
         <Table>

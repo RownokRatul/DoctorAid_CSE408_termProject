@@ -1,5 +1,7 @@
 // pages/MainLayout.js
 
+
+import { useLocation } from 'react-router-dom';
 import React, { useState } from 'react';
 import TopMenuBar from '../../Components/TopMenuBar';
 import LeftPanel from '../../Components/LeftPanel';
@@ -10,6 +12,7 @@ import { ChevronRight } from '@mui/icons-material';
 import doctoraid_logo from './Components/Images/doctoraid_logo.jpg';
 
 const MainLayout = ({ children }) => {
+  const location = useLocation(); // Get the current location
   const [open, setOpen] = useState(true);
   const logo = './Components/Images/doctoraid_logo.jpg'; // Add your logo path here
   const bannerSrc = './Components/Images/doctoraid_logo.jpg'; // Add your banner path here
@@ -22,14 +25,19 @@ const MainLayout = ({ children }) => {
   return (
     <div style={{ position: 'relative', minHeight: '100vh', paddingBottom: '60px' }}>
       <Banner src={doctoraid_logo} />
-      <TopMenuBar logo={logo} />
-      {!open && (
-        <IconButton onClick={toggleDrawer} style={{ position: 'absolute', left: 0, top: '50%' }}>
-          <ChevronRight />
-        </IconButton>
+      {location.pathname !== '/' && (
+        <div>
+          
+      	  <TopMenuBar logo={logo} />
+          {!open && (
+           <IconButton onClick={toggleDrawer} style={{ position: 'absolute', left: 0, top: '50%' }}>
+           <ChevronRight />
+          </IconButton>
+          )}
+        </div>
       )}
       
-      <Container>
+      <Container >
         {children}
       </Container>
       

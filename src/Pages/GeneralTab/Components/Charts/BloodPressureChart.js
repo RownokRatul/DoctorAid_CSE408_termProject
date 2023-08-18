@@ -1,23 +1,27 @@
-// components/HeartRateChart.js
-
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-
 import { CategoryScale } from 'chart.js'; 
 import Chart from 'chart.js/auto'; 
 
 Chart.register(CategoryScale);
 
+const BloodPressure = ({ bloodPressure }) => {
+  const { value_highs, value_lows, taken_ats } = bloodPressure;
 
-const BloodPressure = () => {
   const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+    labels: taken_ats.map((date) => new Date(date).toLocaleDateString()),
     datasets: [
       {
-        label: 'Blood Pressure',
-        data: [70, 72, 75, 73, 74],
+        label: 'Blood Pressure High',
+        data: value_highs,
+        borderColor: 'red',
+        fill: true,
+      },
+      {
+        label: 'Blood Pressure Low',
+        data: value_lows,
         borderColor: 'blue',
-        fill: false,
+        fill: true,
       },
     ],
   };
