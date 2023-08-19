@@ -8,9 +8,10 @@ generator client {
 }
 
 model user_login_info {
-  username      String @unique
-  hash_password String
-  user_role     String
+  username           String               @unique
+  hash_password      String
+  user_role          String
+  diagnostician_info diagnostician_info[]
 }
 
 model doctor_info {
@@ -139,6 +140,7 @@ model test_metadata {
 
   prescribed_tests prescribed_tests[]
   queued_tests     queued_tests[]
+  tests_tag        tests_tag[]
 
   @@index([test_name], name: "test_name")
 }
@@ -215,6 +217,7 @@ model tags {
   disease_tag disease_tag[]
   surgery_tag surgery_tag[]
   drug_tag    drug_tag[]
+  tests_tag   tests_tag[]
 }
 
 model disease_tag {
@@ -242,4 +245,21 @@ model surgery_tag {
   tags    tags             @relation(fields: [tag_id], references: [id])
 
   @@id([surgery_id, tag_id])
+}
+
+model tests_tag {
+  test_id Int
+  tag_id  Int
+  tags    tags          @relation(fields: [tag_id], references: [id])
+  test    test_metadata @relation(fields: [test_id], references: [id])
+
+  @@id([test_id, tag_id])
+}
+
+model diagnostician_info {
+  username String @id
+  name     String
+  phone    String
+
+  user_login_info user_login_info @relation(fields: [username], references: [username])
 }

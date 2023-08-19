@@ -53,6 +53,8 @@ app.use(require('./routes/diagnosticianRoutes/updateTestResultRoute'));
 app.use(require('./routes/diagnosticsTabRoutes/getPrescribedTestsRoute'));
 app.use(require('./routes/diagnosticsTabRoutes/getPrescribedTestDetailsRoute'));
 
+app.use(require('./routes/searchRoutes/searchTabRoute'));
+
 
 // const users = [
 //   { id: 1, username: 'john_doe', name: 'John Doe', email: 'john.doe@example.com' },

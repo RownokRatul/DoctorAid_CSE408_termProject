@@ -1,10 +1,9 @@
 // controllers/searchcontroller.js
 const orm_search_patient = require('../../ORM/ORM_patient_info');
-const orm_search_tab_result = require('../../ORM/ORM_search_tab_result')
+const orm_search_by_tag = require('../../ORM/ORM_search_by_tag')
 
 async function patientSearchController(req) {
     const req_json = req.body;
-
     // if(!cookie.checkCookie(req.session)) {
     //     // Force to login. And return a status
     //     return;
@@ -25,11 +24,10 @@ async function patientSearchController(req) {
 }
 
 
-async function searchTabController(req) {
-    const req_json = req.req_json;
+async function searchByTagController(req) {
+    const req_json = req.body;
     console.log(req_json);
-    const model_
-    const model_search_result = await orm_search_tab_result.searchByTag(req_json.patient_id, req_json.tags);
+    const model_search_result = await orm_search_by_tag.getTestsByPatientAndTags(req_json.patient_id, req_json.tags);
     if(model_search_result) {
         console.log('In controllers/searchTabController');
         console.log(model_search_result);
@@ -43,5 +41,5 @@ async function searchTabController(req) {
 
 module.exports = {
     patientSearchController,
-    searchTabController,
+    searchByTagController,
 };

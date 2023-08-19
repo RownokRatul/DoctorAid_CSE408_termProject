@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const router = express.Router();
 
-router.get('/api/v0/get_prescribed_test_by_test_id/', async (req, res) => { //post->get
+router.post('/api/v0/get_prescribed_test_by_test_id', async (req, res) => { //post->get
     // console.log("Backend: requested-> /api/v0/login");
     // req_json = req.body;
     console.log("diagnostics tab route details");
