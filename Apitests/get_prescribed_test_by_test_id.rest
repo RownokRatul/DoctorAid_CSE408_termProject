@@ -1,0 +1,27 @@
+GET http://localhost:5000/api/v0/get_prescribed_test_by_test_id/
+content-type: application/json
+
+{
+    "prescription_id": 2,
+    "test_id": 2
+}
+
+# {
+#   "message": "Success",
+#   "data": {
+#     "prescription_id": 2,
+#     "test_id": 2,
+#     "test_values": [
+#       "200",
+#       "125-200",
+#       "mg/dL",
+#       "40",
+#       "40-60",
+#       "mg/dL",
+#       "130",
+#       "100-130",
+#       "mg/dL"
+#     ],
+#     "date": "2022-06-12T00:00:00.000Z"
+#   }
+# }

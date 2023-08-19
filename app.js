@@ -51,6 +51,7 @@ app.use(require('./routes/diagnosticianRoutes/testMetadataRoute'));
 // app.use(require('./routes/diagnosticianRoutes/testMetadataRoute'));
 app.use(require('./routes/diagnosticianRoutes/updateTestResultRoute'));
 app.use(require('./routes/diagnosticsTabRoutes/getPrescribedTestsRoute'));
+app.use(require('./routes/diagnosticsTabRoutes/getPrescribedTestDetailsRoute'));
 
 
 // const users = [

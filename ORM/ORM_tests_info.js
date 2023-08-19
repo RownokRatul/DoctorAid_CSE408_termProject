@@ -141,10 +141,30 @@ async function get_prescribed_tests_by_patient(patient_id) {
   // }));
 }
 
+async function get_prescribed_test_by_test_id(prescription_id, test_id) {
+  const prescribedTest = await prisma.prescribed_tests.findUnique({
+    where: {
+      prescription_id_test_id: {
+        prescription_id,
+        test_id
+      }
+    },
+    select: {
+      prescription_id: true,
+      test_id: true,
+      test_values: true,
+      date: true
+    }
+  });
+
+  return prescribedTest;
+}
+
 
 module.exports = {
     get_queued_tests,
     get_test_metadata,
     update_test_result,
     get_prescribed_tests_by_patient,
+    get_prescribed_test_by_test_id,
 }
