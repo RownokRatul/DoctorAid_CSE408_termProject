@@ -1,0 +1,30 @@
+POST http://localhost:5000/api/v0/create_prescribed_test/
+content-type: application/json
+
+{
+    "prescription_id":  2,
+    "test_id": 1,
+    "test_values" : ["1","2","3","4","5","6","7","8","9"],
+    "date" : "2021-05-01T00:00:00.000Z"
+}
+
+# {
+#   "message": "Success",
+#   "data": {
+#     "prescription_id": 2,
+#     "test_id": 1,
+#     "test_values": [
+#       "1",
+#       "2",
+#       "3",
+#       "4",
+#       "5",
+#       "6",
+#       "7",
+#       "8",
+#       "9"
+#     ],
+#     "attachments": null,
+#     "date": "2021-05-01T00:00:00.000Z"
+#   }
+# }

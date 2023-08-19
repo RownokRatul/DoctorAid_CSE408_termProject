@@ -1,3 +1,4 @@
+const { as } = require("pg-promise");
 const prisma = require("./ORM_init");
 
 
@@ -57,8 +58,55 @@ async function get_test_metadata(test_id) {
 }
   
 
-async function update_test_result(presc_id, test_id, result) {
+// async function update_test_result(presc_id, test_id, result) {
+//   const newPrescribedTest = await prisma.prescribed_tests.create({
+//       data: {
+//           prescription_id: presc_id,
+//           test_id : test_id,
+//           test_values: result,
+//       }
+//   });
+//   return newPrescribedTest;
+// }
 
+async function update_test_result(prescription_id, test_id, test_values, date) {
+  
+  // const dummy = await prisma.prescribed_tests.delete({
+  //   where: { prescription_id_test_id: { prescription_id, test_id } },
+  // });
+  // console.log(dummy);
+  // Check if the entry exists in the queued_tests table
+  // await prisma.queued_tests.create({where: { prescription_id_test_id: { prescription_id, test_id } }})
+  const queuedTest = await prisma.queued_tests.findUnique({
+    where: { prescription_id_test_id: { prescription_id, test_id } },
+  });
+  try{
+    if (!queuedTest) {
+      throw new Error('No matching queued test found');
+    }
+
+    // Begin a transaction
+    const result = await prisma.$transaction([
+      // Delete the entry from the queued_tests table
+        prisma.queued_tests.delete({
+          where: { prescription_id_test_id: { prescription_id, test_id } },
+        }),
+        // Create a new entry in the prescribed_tests table
+        prisma.prescribed_tests.create({
+          data: {
+            prescription_id,
+            test_id,
+            test_values,
+            date,
+          },
+        }),
+    ]);
+        // The result will be an array containing the results of the delete and create operations
+      return result[1]; // Return the result of the create operation
+  }catch(error){
+    console.error("Error updating test result:", error);
+    throw error; // You can handle the error as needed
+  }
 }
 
 

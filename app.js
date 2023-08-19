@@ -49,7 +49,7 @@ app.use(require('./routes/demographyRoutes/patientDemographyRoute'));
 app.use(require('./routes/diagnosticianRoutes/queuedTestsRoute'));
 app.use(require('./routes/diagnosticianRoutes/testMetadataRoute'));
 // app.use(require('./routes/diagnosticianRoutes/testMetadataRoute'));
-// app.use(require('./routes/diagnosticianRoutes/updateTestResultRoute'));
+app.use(require('./routes/diagnosticianRoutes/updateTestResultRoute'));
 
 
 // const users = [
@@ -58,7 +58,6 @@ app.use(require('./routes/diagnosticianRoutes/testMetadataRoute'));
 // ];
 
 // API endpoint to get all users
-// app.get('/api/users', (req, res) => {
-//   console.log("here");
-//   res.json(users);
-// });
+app.get('/api/users', (req, res) => {
+  
+});

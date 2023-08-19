@@ -146,6 +146,7 @@ model prescribed_tests {
   test_id         Int
   test_values     String[]
   attachments     String?
+  date            DateTime?
 
   prescription prescription  @relation(fields: [prescription_id], references: [id])
   test         test_metadata @relation(fields: [test_id], references: [id])
@@ -156,7 +157,6 @@ model prescribed_tests {
 model queued_tests {
   prescription_id Int
   test_id         Int
-  date            DateTime
 
   prescription prescription  @relation(fields: [prescription_id], references: [id])
   test         test_metadata @relation(fields: [test_id], references: [id])
