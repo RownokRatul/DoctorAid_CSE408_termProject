@@ -128,6 +128,7 @@ model prescription {
   prescribed_tests prescribed_tests[]
   queued_tests     queued_tests[]
   prescribed_drugs prescribed_drugs[]
+  prescription_tag prescription_tag[]
 
   @@index([patient_id], name: "patient_id")
 }
@@ -212,12 +213,13 @@ model drug_tag {
 }
 
 model tags {
-  id          Int           @id @default(autoincrement())
-  tag_name    String        @unique
-  disease_tag disease_tag[]
-  surgery_tag surgery_tag[]
-  drug_tag    drug_tag[]
-  tests_tag   tests_tag[]
+  id               Int                @id @default(autoincrement())
+  tag_name         String             @unique
+  disease_tag      disease_tag[]
+  surgery_tag      surgery_tag[]
+  drug_tag         drug_tag[]
+  tests_tag        tests_tag[]
+  prescription_tag prescription_tag[]
 }
 
 model disease_tag {
@@ -262,4 +264,13 @@ model diagnostician_info {
   phone    String
 
   user_login_info user_login_info @relation(fields: [username], references: [username])
+}
+
+model prescription_tag {
+  prescription_id Int
+  tag_id          Int
+  prescription    prescription @relation(fields: [prescription_id], references: [id])
+  tags            tags         @relation(fields: [tag_id], references: [id])
+
+  @@id([prescription_id, tag_id])
 }

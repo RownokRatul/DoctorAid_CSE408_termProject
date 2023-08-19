@@ -27,11 +27,20 @@ async function patientSearchController(req) {
 async function searchByTagController(req) {
     const req_json = req.body;
     console.log(req_json);
-    const model_search_result = await orm_search_by_tag.getTestsByPatientAndTags(req_json.patient_id, req_json.tags);
-    if(model_search_result) {
+    const model_tests = await orm_search_by_tag.getTestsByPatientAndTags(req_json.patient_id, req_json.tags);
+    const model_prescriptions = await orm_search_by_tag.getPrescriptionsByPatientAndTags(req_json.patient_id, req_json.tags);
+    const model_medical_history = await orm_search_by_tag.getDiseasesByPatientAndTags(req_json.patient_id, req_json.tags);
+    if(model_tests || model_prescriptions || model_medical_history) {
         console.log('In controllers/searchTabController');
-        console.log(model_search_result);
-        return model_search_result;
+        // console.log(model_tests);
+        // console.log(model_prescriptions);
+        // console.log(model_medical_history);
+        const search_res = {
+            tests: model_tests,
+            prescriptions: model_prescriptions,
+            medical_history: model_medical_history
+        }
+        return search_res;
     }
     else {
         console.log('NO user Found!');

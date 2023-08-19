@@ -11,8 +11,7 @@ router.post('/api/v0/search_by_tag', async (req, res) => {
     console.log("Inside search by tag route!");
     const pseudo_view = await searchByTagController.searchByTagController(req);
     if(pseudo_view) {
-        console.log(pseudo_view);
-        const user = pseudo_view[0];
+        // console.log(pseudo_view);
         res.status(200).json({message : 'Success', data : pseudo_view});
         // res.status(200).json({message : "okay", user});
     }
