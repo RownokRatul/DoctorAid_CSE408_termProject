@@ -37,9 +37,12 @@ const MainLayout = ({ children }) => {
         </div>
       )}
       
-      <Container >
+      <div style={{backgroundColor:"khaki",width:"90%" , marginLeft:"5%"}}>
+        {/* <Container style={{width:"90%"}}> */}
         {children}
-      </Container>
+        {/* </Container> */}
+        
+      </div>
       
       <Footer />
       

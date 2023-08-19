@@ -8,6 +8,9 @@ import { Line } from 'react-chartjs-2'; // Importing Line from react-chartjs-2 f
 
 import NewsCard from './Components/NewsCardComponent'; // Import the NewsCard component
 
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css'; // Import the default styling
+
 const DoctorHomepage = () => {
 
   // ...other code
@@ -106,22 +109,32 @@ const DoctorHomepage = () => {
 
         {/* Middle Panel */}
         <div style={{ flex: '30%', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          {/* Top Card with Graph */}
-            <Card style={{ marginBottom: '20px', padding: '15px',backgroundColor:"azure" }}>
-            <Typography variant="h6" style={{ marginBottom: '10px' }}>Last 7 Days Patient Count</Typography>
-            <div style={{ height: '300px' }}> {/* Set your desired max height */}
-              <Line
-                data={{
-                  labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-                  datasets: [{
-                    label: 'Patients',
-                    data: [12, 19, 3, 5, 2, 3, 7], // Dummy data
-                    borderColor: 'rgba(75,192,192,1)',
-                    backgroundColor: 'rgba(75,192,192,0.2)',
-                  }]
-                }}
-                options={{ maintainAspectRatio: false }}
-              />
+           
+
+          <Card style={{ display: 'flex', marginBottom: '20px', padding: '15px', backgroundColor: "azure" }}>
+            {/* Left Part with Graph */}
+            <div style={{ flex: '50%', marginRight: '10px' }}>
+              <Typography variant="h6" style={{ marginBottom: '10px' }}>Last 7 Days Patient Count</Typography>
+              <div style={{ height: '300px' }}> {/* Set your desired max height */}
+                <Line
+                  data={{
+                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+                    datasets: [{
+                      label: 'Patients',
+                      data: [12, 19, 3, 5, 2, 3, 7], // Dummy data
+                      borderColor: 'rgba(75,192,192,1)',
+                      backgroundColor: 'rgba(75,192,192,0.2)',
+                    }]
+                  }}
+                  options={{ maintainAspectRatio: false }}
+                />
+              </div>
+            </div>
+            
+            {/* Right Part with Calendar */}
+            <div style={{ flex: '50%', marginLeft: '10px', height: '300px' }}>
+              <Typography variant="h6" style={{ marginBottom: '10px' }}>Calendar</Typography>
+              <Calendar value={new Date()} /> {/* react-calendar component */}
             </div>
           </Card>
 
@@ -159,7 +172,7 @@ const DoctorHomepage = () => {
         
       
         {/* Right Panel */}
-        <div style={{ flex: '30%', height: '600px', padding: '20px' }}> {/* Adjusted flex value */}
+        <div style={{ flex: '30%', height: '690px', padding: '20px' }}> {/* Adjusted flex value */}
           <Card style={{ padding: '5px', backgroundColor: "azure", marginBottom: "20px" }}>
             <h2 style={{textAlign:"center"}}>Search Patient</h2>
             <div style={{marginTop:"30px" , marginBottom:"30px", marginLeft:"130px"}}>

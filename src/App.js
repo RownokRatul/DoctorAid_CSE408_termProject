@@ -18,6 +18,7 @@ import InternDoctor from './Pages/InternDoctor/InternDoctor';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import { useThemeContext } from './ThemeContext';
 import { PatientProvider } from './PatientContext';
+import DiagnosticianPage from './Pages/DiagnosticianTab/DiagnosticianTab';
 // ...
 
 
@@ -41,6 +42,8 @@ function App() {
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/register" element={<PatientRegistration />} />
             <Route path="/intern" element={<InternDoctor />} />
+            <Route path="/diagnostician" element={<DiagnosticianPage />} />
+            
           </Routes>
         </PatientProvider>
         <FloatingActionButton />
