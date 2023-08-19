@@ -5,7 +5,7 @@ const {testMetadataController} = require('../../controllers/tests_controllers/te
 
 const router = express.Router();
 
-router.get('/api/v0/get_test_metadata', async (req, res) => { 
+router.post('/api/v0/get_test_metadata', async (req, res) => { 
     // console.log(req.body);
     const pseudo_view = await testMetadataController(req);
     if(pseudo_view) {
