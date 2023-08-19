@@ -4,3 +4,21 @@ content-type: application/json
 {
     "patient_id": 2
 }
+
+# {
+#   "message": "Success",
+#   "data": [
+#     {
+#       "prescription_id": 2,
+#       "test_id": 3,
+#       "test_name": "Ultrasound",
+#       "date": "2023-08-17T00:00:00.000Z"
+#     },
+#     {
+#       "prescription_id": 2,
+#       "test_id": 2,
+#       "test_name": "Lipid Panel",
+#       "date": "2023-08-17T00:00:00.000Z"
+#     }
+#   ]
+# }
