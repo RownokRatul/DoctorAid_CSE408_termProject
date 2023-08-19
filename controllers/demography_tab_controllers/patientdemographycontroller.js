@@ -1,4 +1,4 @@
-const orm_patient_demography_info = require('../ORM/ORM_patient_info');
+const orm_patient_demography_info = require('../../ORM/ORM_patient_info');
 
 async function patientDemographyController(req) {
     const req_json = req.body;

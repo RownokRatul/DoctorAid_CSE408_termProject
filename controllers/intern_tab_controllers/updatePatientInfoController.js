@@ -1,5 +1,5 @@
 // Controller/patientregistercontroller.js
-const orm_registerPatient = require('../ORM/ORM_registerPatient');
+const orm_registerPatient = require('../../ORM/ORM_registerPatient');
 
 async function patientUpdateController(req) {
     const req_json = req.body;

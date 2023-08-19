@@ -2,7 +2,7 @@ const express = require('express');
 // const orm_login = require('../../ORM/ORM_login');
 // const orm_emp_info = require('../../ORM/ORM_employee_info');
 const checkCookie = require('../../authentication/cookie_checker');
-const {patientSummaryController} = require('../../controllers/patientsummarycontroller'); // Import the loginController function
+const {patientSummaryController} = require('../../controllers/general_tab_controllers/patientsummarycontroller'); // Import the loginController function
 require('dotenv').config();
 
 const router = express.Router();

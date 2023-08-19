@@ -2,7 +2,7 @@ const express = require('express');
 // const orm_registerPatient = require('../../ORM/ORM_registerPatient');
 const cookie = require('../../authentication/cookie_checker');
 require('dotenv').config();
-const {patientUpdateController} = require('../../controllers/updatecontroller'); // Import the patientRegisterController function
+const {patientUpdateController} = require('../../controllers/intern_tab_controllers/updatePatientInfoController'); // Import the patientRegisterController function
 
 
 const router = express.Router({mergeParams : true});

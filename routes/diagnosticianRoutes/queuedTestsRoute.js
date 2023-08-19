@@ -1,7 +1,7 @@
 const express = require('express');
 const checkCookie = require('../../authentication/cookie_checker');
 require('dotenv').config();
-const {queuedTestsController} = require('../../controllers/tests_controllers/queuedTestsController'); // Import the loginController function
+const {queuedTestsController} = require('../../controllers/diagnostician_page_controllers/queuedTestsController'); // Import the loginController function
 
 const router = express.Router();
 

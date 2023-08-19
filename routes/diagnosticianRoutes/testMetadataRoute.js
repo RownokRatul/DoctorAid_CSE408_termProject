@@ -1,7 +1,7 @@
 const express = require('express');
 const checkCookie = require('../../authentication/cookie_checker');
 require('dotenv').config();
-const {testMetadataController} = require('../../controllers/tests_controllers/testMetadataController'); // Import the testMetadataController function
+const {testMetadataController} = require('../../controllers/diagnostician_page_controllers/testMetadataController'); // Import the testMetadataController function
 
 const router = express.Router();
 

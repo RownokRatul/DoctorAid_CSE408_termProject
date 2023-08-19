@@ -1,5 +1,5 @@
 // controllers/searchcontroller.js
-const orm_search_patient = require('../ORM/ORM_patient_info');
+const orm_search_patient = require('../../ORM/ORM_patient_info');
 
 async function patientSearchController(req) {
     const req_json = req.body;

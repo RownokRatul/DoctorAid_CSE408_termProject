@@ -1,5 +1,5 @@
-const orm_login = require('../ORM/ORM_login');
-const orm_emp_info = require('../ORM/ORM_employee_info');
+const orm_login = require('../../ORM/ORM_login');
+const orm_emp_info = require('../../ORM/ORM_employee_info');
 
 async function loginController(req) {
     // req_json.username = 'doc_oc'

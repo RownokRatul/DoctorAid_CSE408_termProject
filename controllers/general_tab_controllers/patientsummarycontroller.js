@@ -1,4 +1,4 @@
-const orm_patient_summary_info = require('../ORM/ORM_patient_info');
+const orm_patient_summary_info = require('../../ORM/ORM_patient_info');
 // const orm_emp_info = require('../ORM/ORM_employee_info');
 
 async function patientSummaryController(req) {

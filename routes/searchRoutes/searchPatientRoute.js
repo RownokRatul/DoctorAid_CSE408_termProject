@@ -1,6 +1,6 @@
 const express = require('express');
 // const orm_search_patient = require('../../ORM/ORM_patient_info');
-const { patientSearchController } = require('../../controllers/searchcontroller'); // Import the patientSearchController function
+const { patientSearchController } = require('../../controllers/search_tab_controllers/searchcontroller'); // Import the patientSearchController function
 const cookie = require('../../authentication/cookie_checker');
 require('dotenv').config();
 
