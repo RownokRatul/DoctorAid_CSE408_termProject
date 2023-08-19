@@ -54,7 +54,7 @@ app.use(require('./routes/diagnosticsTabRoutes/getPrescribedTestsRoute'));
 app.use(require('./routes/diagnosticsTabRoutes/getPrescribedTestDetailsRoute'));
 
 app.use(require('./routes/searchRoutes/searchTabRoute'));
-
+app.use(require('./routes/createPrescriptionRoutes/get_all_diseases_Routes'));
 // const users = [
 //   { id: 1, username: 'john_doe', name: 'John Doe', email: 'john.doe@example.com' },
 //   { id: 2, username: 'jane_smith', name: 'Jane Smith', email: 'jane.smith@example.com' },

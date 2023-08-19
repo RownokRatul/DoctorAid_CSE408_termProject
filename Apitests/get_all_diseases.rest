@@ -1,0 +1,28 @@
+GET http://localhost:5000/api/v0/get_all_diseases
+content-type: application/json
+
+# {
+#   "message": "Success",
+#   "data": [
+#     {
+#       "id": 4,
+#       "disease_name": "Cancer"
+#     },
+#     {
+#       "id": 5,
+#       "disease_name": "Osteoarthritis"
+#     },
+#     {
+#       "id": 3,
+#       "disease_name": "Asthma"
+#     },
+#     {
+#       "id": 1,
+#       "disease_name": "Diabetes"
+#     },
+#     {
+#       "id": 2,
+#       "disease_name": "Hypertension"
+#     }
+#   ]
+# }
