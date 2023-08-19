@@ -156,9 +156,10 @@ model prescribed_tests {
 model queued_tests {
   prescription_id Int
   test_id         Int
+  date            DateTime
 
-  prescription  prescription  @relation(fields: [prescription_id], references: [id])
-  test test_metadata @relation(fields: [test_id], references: [id])
+  prescription prescription  @relation(fields: [prescription_id], references: [id])
+  test         test_metadata @relation(fields: [test_id], references: [id])
 
   @@id([prescription_id, test_id])
 }

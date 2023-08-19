@@ -23,6 +23,11 @@ async function get_queued_tests() {
               test_name: true,
             },
           },
+          prescription:{
+            select:{
+                date: true,
+            }
+          }
         },
       });
   

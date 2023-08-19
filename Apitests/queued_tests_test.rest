@@ -12,12 +12,14 @@ content-type: application/json
 #     {
 #       "prescription_id": 1,
 #       "test_id": 2,
-#       "test_name": "Lipid Panel"
+#       "test_name": "Lipid Panel",
+#       "date": "2023-08-18T00:00:00.000Z"
 #     },
 #     {
 #       "prescription_id": 2,
 #       "test_id": 1,
-#       "test_name": "CBC"
+#       "test_name": "CBC",
+#       "date": "2023-08-17T00:00:00.000Z"
 #     }
 #   ]
 # }

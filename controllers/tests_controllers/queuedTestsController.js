@@ -10,6 +10,7 @@ async function queuedTestsController(req) {
             prescription_id: item.prescription_id,
             test_id: item.test_id,
             test_name: item.test.test_name,
+            date: item.prescription.date,
           }));
         console.log(pseudo_view);
         return pseudo_view;
