@@ -1,0 +1,25 @@
+## test_metadata
+GET http://localhost:5000/api/v0/get_test_metadata/
+content-type: application/json
+
+{
+  "test_id": 2
+}
+
+# {
+#   "message": "Success",
+#   "data": {
+#     "id": 2,
+#     "test_name": "Lipid Panel",
+#     "row_name": [
+#       "Cholesterol",
+#       "HDL",
+#       "LDL"
+#     ],
+#     "column_name": [
+#       "Diagnosed Value",
+#       "Normal Range",
+#       "Unit"
+#     ]
+#   }
+# }

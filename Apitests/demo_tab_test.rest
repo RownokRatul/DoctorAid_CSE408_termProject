@@ -1,10 +1,9 @@
 ## login
-POST http://localhost:5000/api/v0/login
+POST http://localhost:5000/api/v0/patients/get_demography_tab_info/
 content-type: application/json
 
 {
-  "username":"doc_oc",
-  "password":"MTIz"
+  "id": 1
 }
 
 # {

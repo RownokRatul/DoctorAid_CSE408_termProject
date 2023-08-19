@@ -31,12 +31,6 @@ async function get_queued_tests() {
         },
       });
   
-      // You can further format the result if needed
-    //   const result = queuedTests.map(item => ({
-    //     prescription_id: item.prescription_id,
-    //     test_id: item.test_id,
-    //     test_name: item.test.test_name,
-    //   }));
       return queuedTests;
     // return result;
     } catch (error) {
@@ -51,6 +45,12 @@ async function get_test_metadata(test_id) {
         where: {
             id: test_id,
         },
+        select:{
+          id: true,
+          test_name: true,
+          row_name: true,
+          column_name: true,
+        }
     });
     console.log(test_metadata);
     return test_metadata;

@@ -47,6 +47,7 @@ app.use(require('./routes/generalTabRoutes/patientSummaryRoute'));
 app.use(require('./routes/demographyRoutes/patientDemographyRoute'));
 
 app.use(require('./routes/diagnosticianRoutes/queuedTestsRoute'));
+app.use(require('./routes/diagnosticianRoutes/testMetadataRoute'));
 // app.use(require('./routes/diagnosticianRoutes/testMetadataRoute'));
 // app.use(require('./routes/diagnosticianRoutes/updateTestResultRoute'));
 
