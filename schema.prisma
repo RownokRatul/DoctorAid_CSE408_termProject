@@ -113,6 +113,7 @@ model diseases {
   disease_name    String
   is_chronic      String?
   medical_history medical_history[]
+  disease_tag     disease_tag[]
 
   @@index([disease_name], name: "disease_name")
 }
@@ -125,6 +126,7 @@ model prescription {
 
   prescribed_tests prescribed_tests[]
   queued_tests     queued_tests[]
+  prescribed_drugs prescribed_drugs[]
 
   @@index([patient_id], name: "patient_id")
 }
@@ -162,4 +164,82 @@ model queued_tests {
   test         test_metadata @relation(fields: [test_id], references: [id])
 
   @@id([prescription_id, test_id])
+}
+
+model prescribed_drugs {
+  prescription_id   Int
+  drug_id           Int
+  prescribed_dosage String?
+
+  prescription prescription @relation(fields: [prescription_id], references: [id])
+  drug         brand_drugs  @relation(fields: [drug_id], references: [id])
+
+  @@id([prescription_id, drug_id])
+}
+
+model generic_drugs {
+  id              Int      @id @default(autoincrement())
+  name            String
+  usecases        String[]
+  adverse_effects String[]
+
+  brand_drugs brand_drugs[]
+  drug_tag    drug_tag[]
+}
+
+model brand_drugs {
+  id           Int    @id @default(autoincrement())
+  generic_id   Int?
+  name         String
+  company      String
+  adult_dosage String
+  child_dosage String
+
+  generic          generic_drugs?     @relation(fields: [generic_id], references: [id])
+  prescribed_drugs prescribed_drugs[]
+}
+
+model drug_tag {
+  drug_id Int
+  tag_id  Int
+
+  drug generic_drugs @relation(fields: [drug_id], references: [id])
+  tag  tags          @relation(fields: [tag_id], references: [id])
+
+  @@id([drug_id, tag_id])
+}
+
+model tags {
+  id          Int           @id @default(autoincrement())
+  tag_name    String        @unique
+  disease_tag disease_tag[]
+  surgery_tag surgery_tag[]
+  drug_tag    drug_tag[]
+}
+
+model disease_tag {
+  disease_id Int
+  tag_id     Int
+
+  diseases diseases @relation(fields: [disease_id], references: [id])
+  tags     tags     @relation(fields: [tag_id], references: [id])
+
+  @@id([disease_id, tag_id])
+}
+
+model surgery_metadata {
+  id           Int    @id @default(autoincrement())
+  surgery_name String
+
+  surgery_tag surgery_tag[]
+}
+
+model surgery_tag {
+  surgery_id Int
+  tag_id     Int
+
+  surgery surgery_metadata @relation(fields: [surgery_id], references: [id])
+  tags    tags             @relation(fields: [tag_id], references: [id])
+
+  @@id([surgery_id, tag_id])
 }
