@@ -35,12 +35,12 @@ async function searchByTagController(req) {
         // console.log(model_tests);
         // console.log(model_prescriptions);
         // console.log(model_medical_history);
-        const search_res = {
+        const pseudo_view = {
             tests: model_tests,
             prescriptions: model_prescriptions,
             medical_history: model_medical_history
         }
-        return search_res;
+        return pseudo_view;
     }
     else {
         console.log('NO user Found!');

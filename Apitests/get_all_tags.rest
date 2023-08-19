@@ -1,0 +1,206 @@
+
+GET http://localhost:5000/api/v0/search_by_tag
+content-type: application/json
+
+
+# {
+#   "message": "Success",
+#   "data": [
+#     {
+#       "id": 1,
+#       "tag_name": "Head"
+#     },
+#     {
+#       "id": 2,
+#       "tag_name": "Heart"
+#     },
+#     {
+#       "id": 3,
+#       "tag_name": "Liver"
+#     },
+#     {
+#       "id": 4,
+#       "tag_name": "Nausea"
+#     },
+#     {
+#       "id": 5,
+#       "tag_name": "Headache"
+#     },
+#     {
+#       "id": 6,
+#       "tag_name": "Fever"
+#     },
+#     {
+#       "id": 7,
+#       "tag_name": "Cough"
+#     },
+#     {
+#       "id": 8,
+#       "tag_name": "Sore Throat"
+#     },
+#     {
+#       "id": 9,
+#       "tag_name": "Kidney"
+#     },
+#     {
+#       "id": 10,
+#       "tag_name": "Lung"
+#     },
+#     {
+#       "id": 11,
+#       "tag_name": "Stomach"
+#     },
+#     {
+#       "id": 12,
+#       "tag_name": "Intestine"
+#     },
+#     {
+#       "id": 13,
+#       "tag_name": "Eye"
+#     },
+#     {
+#       "id": 14,
+#       "tag_name": "Ear"
+#     },
+#     {
+#       "id": 15,
+#       "tag_name": "Nose"
+#     },
+#     {
+#       "id": 16,
+#       "tag_name": "Throat"
+#     },
+#     {
+#       "id": 17,
+#       "tag_name": "Skin"
+#     },
+#     {
+#       "id": 18,
+#       "tag_name": "Hair"
+#     },
+#     {
+#       "id": 19,
+#       "tag_name": "Nail"
+#     },
+#     {
+#       "id": 20,
+#       "tag_name": "Bone"
+#     },
+#     {
+#       "id": 21,
+#       "tag_name": "Muscle"
+#     },
+#     {
+#       "id": 22,
+#       "tag_name": "Joint"
+#     },
+#     {
+#       "id": 23,
+#       "tag_name": "Blood"
+#     },
+#     {
+#       "id": 24,
+#       "tag_name": "Infection"
+#     },
+#     {
+#       "id": 25,
+#       "tag_name": "Pain"
+#     },
+#     {
+#       "id": 26,
+#       "tag_name": "Anxiety"
+#     },
+#     {
+#       "id": 27,
+#       "tag_name": "Depression"
+#     },
+#     {
+#       "id": 28,
+#       "tag_name": "Inflammation"
+#     },
+#     {
+#       "id": 29,
+#       "tag_name": "Migraine"
+#     },
+#     {
+#       "id": 30,
+#       "tag_name": "Diarrhea"
+#     },
+#     {
+#       "id": 31,
+#       "tag_name": "Constipation"
+#     },
+#     {
+#       "id": 32,
+#       "tag_name": "Fatigue"
+#     },
+#     {
+#       "id": 33,
+#       "tag_name": "Weight Loss"
+#     },
+#     {
+#       "id": 34,
+#       "tag_name": "Dizziness"
+#     },
+#     {
+#       "id": 35,
+#       "tag_name": "Breathlessness"
+#    {
+#       "id": 38,
+#       "tag_name": "Diabetes"
+#     },
+#     {
+#       "id": 39,
+#       "tag_name": "Cancer"
+#     },
+#     {
+#       "id": 40,
+#       "tag_name": "Hypertension"
+#     },
+#     {
+#       "id": 41,
+#       "tag_name": "Asthma"
+#     },
+#     {
+#       "id": 42,
+#       "tag_name": "Arthritis"
+#     },
+#     {
+#       "id": 43,
+#       "tag_name": "Epilepsy"
+#     },
+#     {
+#       "id": 44,
+#       "tag_name": "Cholesterol"
+#     },
+#     {
+#       "id": 45,
+#       "tag_name": "Heart Attack"
+#     },
+#     {
+#       "id": 46,
+#       "tag_name": "Stroke"
+#     },
+#     {
+#       "id": 47,
+#       "tag_name": "Ulcer"
+#     },
+#     {
+#       "id": 48,
+#       "tag_name": "Osteoporosis"
+#     },
+#     {
+#       "id": 49,
+#       "tag_name": "Back Pain"
+#     }
+#   ]
+# }    },
+#     {
+#       "id": 36,
+#       "tag_name": "Sleeplessness"
+#     },
+#     {
+#       "id": 37,
+#       "tag_name": "Allergy"
+#     },
+ 
