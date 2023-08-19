@@ -12,6 +12,7 @@ async function verifyLogin(username, password) {
             user_role: true,
         },
     });
+    console.log(model_user_login_info);
     return model_user_login_info;
 }
 

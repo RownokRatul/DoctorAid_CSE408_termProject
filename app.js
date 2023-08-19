@@ -46,6 +46,10 @@ app.use(require('./routes/searchRoutes/searchPatientRoute'));
 app.use(require('./routes/generalTabRoutes/patientSummaryRoute'));
 app.use(require('./routes/demographyRoutes/patientDemographyRoute'));
 
+app.use(require('./routes/diagnosticianRoutes/queuedTestsRoute'));
+// app.use(require('./routes/diagnosticianRoutes/testMetadataRoute'));
+// app.use(require('./routes/diagnosticianRoutes/updateTestResultRoute'));
+
 
 // const users = [
 //   { id: 1, username: 'john_doe', name: 'John Doe', email: 'john.doe@example.com' },

@@ -8,73 +8,72 @@ generator client {
 }
 
 model user_login_info {
-  username  String   @unique
-  hash_password   String
-  user_role String
+  username      String @unique
+  hash_password String
+  user_role     String
 }
 
 model doctor_info {
-  username String @unique
-  name String 
+  username       String @unique
+  name           String
   specialization String
-  degree String 
-  phone String 
-  email String
+  degree         String
+  phone          String
+  email          String
 }
 
 model receptionist_info {
   username String @unique
-  name String 
-  phone String
+  name     String
+  phone    String
 }
 
 model intern_info {
   username String @unique
-  name String 
-  phone String
+  name     String
+  phone    String
 }
 
 model patient_basic_info {
-  id         Int      @id @default(autoincrement())
-  name       String
-  phone      String   @unique
-  nid        String   @unique
-  dob        DateTime
-  gender     String
-  hometown   String
-  addresses  String[]
-  address_from DateTime[]
-  address_to DateTime[]
-  occupations String[]
+  id              Int                       @id @default(autoincrement())
+  name            String
+  phone           String                    @unique
+  nid             String                    @unique
+  dob             DateTime
+  gender          String
+  hometown        String
+  addresses       String[]
+  address_from    DateTime[]
+  address_to      DateTime[]
+  occupations     String[]
   occupation_from DateTime[]
-  occupation_to DateTime[]
-  travel_history String[]
-  travel_from DateTime[]
-  travel_to DateTime[]
-  height     Float?
-  weight     Float?
-  bloodPressures 	patient_blood_pressures[]
-  heartRates     	patient_heart_rates[]
-//   medicalHistory 	medical_history[]
+  occupation_to   DateTime[]
+  travel_history  String[]
+  travel_from     DateTime[]
+  travel_to       DateTime[]
+  height          Float?
+  weight          Float?
+  bloodPressures  patient_blood_pressures[]
+  heartRates      patient_heart_rates[]
+  //   medicalHistory 	medical_history[]
+  prescription    prescription[]
 }
 
-
-  
 model patient_blood_pressures {
-  id        Int       @id @default(autoincrement())
-  patient   patient_basic_info @relation(fields: [patient_id], references: [id])
+  id         Int                @id @default(autoincrement())
+  patient    patient_basic_info @relation(fields: [patient_id], references: [id])
   patient_id Int
-  taken_at  DateTime
-  value_low Int
+  taken_at   DateTime
+  value_low  Int
   value_high Int
 }
 
 model patient_heart_rates {
-  id        Int       @id @default(autoincrement())
-  patient   patient_basic_info @relation(fields: [patient_id], references: [id])
+  id         Int                @id @default(autoincrement())
+  patient    patient_basic_info @relation(fields: [patient_id], references: [id])
   patient_id Int
-  taken_at  DateTime
-  value     Int
+  taken_at   DateTime
+  value      Int
 }
 
 // model medical_history {
@@ -90,7 +89,6 @@ model patient_heart_rates {
 //   @@index([patient_id], name: "patient_id")
 // }
 
-  
 // model diseases {
 //   id         			Int       @id @default(autoincrement())
 //   disease_name       	String
@@ -111,14 +109,56 @@ model medical_history {
 }
 
 model diseases {
-  id          Int             @id @default(autoincrement())
-  disease_name String
-  is_chronic  String?
+  id              Int               @id @default(autoincrement())
+  disease_name    String
+  is_chronic      String?
   medical_history medical_history[]
 
   @@index([disease_name], name: "disease_name")
 }
 
+model prescription {
+  id         Int                @id @default(autoincrement())
+  patient_id Int
+  date       DateTime?
+  patient    patient_basic_info @relation(fields: [patient_id], references: [id])
 
+  prescribed_tests prescribed_tests[]
+  queued_tests     queued_tests[]
 
+  @@index([patient_id], name: "patient_id")
+}
 
+model test_metadata {
+  id          Int      @id @default(autoincrement())
+  test_name   String
+  row_name    String[]
+  column_name String[]
+
+  prescribed_tests prescribed_tests[]
+  queued_tests     queued_tests[]
+
+  @@index([test_name], name: "test_name")
+}
+
+model prescribed_tests {
+  prescription_id Int
+  test_id         Int
+  test_values     String[]
+  attachments     String?
+
+  prescription prescription  @relation(fields: [prescription_id], references: [id])
+  test         test_metadata @relation(fields: [test_id], references: [id])
+
+  @@id([prescription_id, test_id])
+}
+
+model queued_tests {
+  prescription_id Int
+  test_id         Int
+
+  prescription  prescription  @relation(fields: [prescription_id], references: [id])
+  test test_metadata @relation(fields: [test_id], references: [id])
+
+  @@id([prescription_id, test_id])
+}

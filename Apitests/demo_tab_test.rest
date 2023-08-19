@@ -1,58 +1,24 @@
 ## login
-POST http://localhost:5000/api/v0/patients/get_demography_tab_info/
+POST http://localhost:5000/api/v0/login
 content-type: application/json
 
 {
-  "id": 1
+  "username":"doc_oc",
+  "password":"MTIz"
 }
 
 # {
 #   "message": "Success",
 #   "data": {
-#     "patient_demography_info": [
-#       {
-#         "name": "John Doe",
-#         "gender": "M",
-#         "addresses": [
-#           "Elk Street 1",
-#           "Elm Street 2"
-#         ],
-#         "address_from": [
-#           "2020-01-01T00:00:00.000Z",
-#           "2022-03-15T00:00:00.000Z"
-#         ],
-#         "address_to": [
-#           "2022-03-15T00:00:00.000Z"
-#         ],
-#         "hometown": "Hometown A",
-#         "occupations": [
-#           "Software Engineer",
-#           "Project Manager"
-#         ],
-#         "occupation_from": [
-#           "2020-01-01T00:00:00.000Z",
-#           "2022-03-15T00:00:00.000Z"
-#         ],
-#         "occupation_to": [
-#           "2022-03-16T00:00:00.000Z"
-#         ],
-#         "travel_history": [
-#           "Visited Country A",
-#           "Visited Country B",
-#           "Visited Country C"
-#         ],
-#         "travel_from": [
-#           "2023-01-01T00:00:00.000Z",
-#           "2023-02-15T00:00:00.000Z",
-#           "2023-03-20T00:00:00.000Z"
-#         ],
-#         "travel_to": [
-#           "2023-01-15T00:00:00.000Z",
-#           "2023-02-25T00:00:00.000Z",
-#           "2023-03-25T00:00:00.000Z"
-#         ],
-#         "age": 30
-#       }
-#     ]
+#     "username": "doc_oc",
+#     "role": "doctor",
+#     "info": {
+#       "username": "doc_oc",
+#       "name": "Doctor Octavious",
+#       "specialization": "Neuroscience",
+#       "degree": "MBBS",
+#       "phone": "01798543234",
+#       "email": "dococ@gmail.com"
+#     }
 #   }
 # }

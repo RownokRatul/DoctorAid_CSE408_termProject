@@ -1,0 +1,23 @@
+## login
+get http://localhost:5000/api/v0/get_queued_tests
+content-type: application/json
+
+{
+    
+}
+
+# {
+#   "message": "Success",
+#   "data": [
+#     {
+#       "prescription_id": 1,
+#       "test_id": 2,
+#       "test_name": "Lipid Panel"
+#     },
+#     {
+#       "prescription_id": 2,
+#       "test_id": 1,
+#       "test_name": "CBC"
+#     }
+#   ]
+# }
