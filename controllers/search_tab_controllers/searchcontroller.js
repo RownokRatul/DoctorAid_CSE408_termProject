@@ -1,5 +1,6 @@
 // controllers/searchcontroller.js
 const orm_search_patient = require('../../ORM/ORM_patient_info');
+const orm_search_tab_result = require('../../ORM/ORM_search_tab_result')
 
 async function patientSearchController(req) {
     const req_json = req.body;
@@ -23,6 +24,24 @@ async function patientSearchController(req) {
     }
 }
 
+
+async function searchTabController(req) {
+    const req_json = req.req_json;
+    console.log(req_json);
+    const model_
+    const model_search_result = await orm_search_tab_result.searchByTag(req_json.patient_id, req_json.tags);
+    if(model_search_result) {
+        console.log('In controllers/searchTabController');
+        console.log(model_search_result);
+        return model_search_result;
+    }
+    else {
+        console.log('NO user Found!');
+        return null;
+    }
+}
+
 module.exports = {
-    patientSearchController
+    patientSearchController,
+    searchTabController,
 };
