@@ -109,9 +109,42 @@ async function update_test_result(prescription_id, test_id, test_values, date) {
   }
 }
 
+async function get_prescribed_tests_by_patient(patient_id) {
+  const prescribedTests = await prisma.prescribed_tests.findMany({
+    where: {
+      prescription: {
+        patient_id: patient_id
+      }
+    },
+    select: {
+      prescription_id: true,
+      test_id: true,
+      test: {
+        select: {
+          test_name: true
+        }
+      },
+      prescription: {
+        select: {
+          date: true
+        }
+      }
+    }
+  });
+
+  return prescribedTests;
+  // return prescribedTests.map(test => ({
+  //   prescription_id: test.prescription_id,
+  //   test_id: test.test_id,
+  //   test_name: test.test.test_name,
+  //   date: test.prescription.date
+  // }));
+}
+
 
 module.exports = {
     get_queued_tests,
     get_test_metadata,
     update_test_result,
+    get_prescribed_tests_by_patient,
 }
