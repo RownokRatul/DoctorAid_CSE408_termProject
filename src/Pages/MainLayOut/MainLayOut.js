@@ -37,7 +37,7 @@ const MainLayout = ({ children }) => {
         </div>
       )}
       
-      <div style={{backgroundColor:"khaki",width:"90%" , marginLeft:"5%"}}>
+      <div style={{backgroundColor:"",width:"90%" , marginLeft:"5%"}}>
         {/* <Container style={{width:"90%"}}> */}
         {children}
         {/* </Container> */}

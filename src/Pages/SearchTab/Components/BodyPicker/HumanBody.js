@@ -25,9 +25,10 @@ const HumanBody = ({ onSelectPart }) => {
     
   
     return (
-   
+    
     //return an image
     <div style={{ position: 'relative', width: '500px', height: '500px' }}>
+      
     {/* PNG background image */}
     <img src={humanBodyImage} alt="Human Body" style={{ width: '100%', height: '100%' }} />
 
@@ -68,11 +69,11 @@ const HumanBody = ({ onSelectPart }) => {
             </g>
             <g style={{ cursor: 'pointer' }}>
                 <title>Lung</title>
-                <circle cx="73%" cy="28%" r="1.3%" fill="#2effff" onClick={() => handleBodyPartClick('lung')} />
+                <circle cx="73%" cy="28%" r="1.3%" fill="#2effff" onClick={() => handleBodyPartClick('Lung')} />
             </g>
             <g style={{ cursor: 'pointer' }}>
                 <title>Heart</title>
-                <circle cx="72%" cy="32%" r="1.3%" fill="#2effff" onClick={() => handleBodyPartClick('heart')} />
+                <circle cx="72%" cy="32%" r="1.3%" fill="#2effff" onClick={() => handleBodyPartClick('Heart')} />
             </g>
 
             {/*  make the boarder curved*/}
