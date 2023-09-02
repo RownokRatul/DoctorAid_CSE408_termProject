@@ -19,6 +19,7 @@ import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import { useThemeContext } from './ThemeContext';
 import { PatientProvider } from './PatientContext';
 import DiagnosticianPage from './Pages/DiagnosticianTab/DiagnosticianTab';
+import PracticePage2 from './Pages/practicePage/practice2';
 // ...
 
 
@@ -43,6 +44,7 @@ function App() {
             <Route path="/register" element={<PatientRegistration />} />
             <Route path="/intern" element={<InternDoctor />} />
             <Route path="/diagnostician" element={<DiagnosticianPage />} />
+            <Route path="/demo" element={<PracticePage2 />} />
             
           </Routes>
         </PatientProvider>

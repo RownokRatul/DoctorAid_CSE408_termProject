@@ -68,7 +68,7 @@ const DoctorHomepage = () => {
   };
 
   const handleSubmit = () => {
-    setPatientID(inputID);
+    setPatientID(parseInt(inputID, 10));
     console.log(inputID);
     navigate('/general'); // Navigate to the general tab
   };
