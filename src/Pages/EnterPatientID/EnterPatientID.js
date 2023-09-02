@@ -20,11 +20,18 @@ const DoctorHomepage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = 'https://newsapi.org/v2/everything?' +
-                    'q=Medicine&Doctor&Patient&' +
-                    'from=2023-08-10&' +
-                    'sortBy=popularity&' +
-                    'apiKey=af17597cd9564f5bb7615fa5ff39b6ad';
+        // const url = 'https://newsapi.org/v2/everything?' +
+        //             'q=Medicine&Doctor&Patient&' +
+        //             'from=2023-08-28&' +
+        //             'sortBy=popularity&' +
+        //             'apiKey=af17597cd9564f5bb7615fa5ff39b6ad';
+
+
+               const     url = 'https://newsapi.org/v2/everything?'+
+       'q=Apple&'+
+       'from=2023-08-27&'+
+       'sortBy=popularity&'+
+       'apiKey=af17597cd9564f5bb7615fa5ff39b6ad';
         
         const req = new Request(url);
   
@@ -181,12 +188,12 @@ const DoctorHomepage = () => {
             </div>
           </Card>
 
-          <Card style={{ height: '100%', padding: '15px', overflowY: 'scroll', backgroundColor: "beige" }}>
+          {/* <Card style={{ height: '100%', padding: '15px', overflowY: 'scroll', backgroundColor: "beige" }}>
             <h2 style={{textAlign:"center"}}>Recent News</h2>
           {news.map((article, index) => (
             <NewsCard key={index} news={article} />
           ))}
-          </Card>
+          </Card> */}
         </div>
       </div>
     </div>
