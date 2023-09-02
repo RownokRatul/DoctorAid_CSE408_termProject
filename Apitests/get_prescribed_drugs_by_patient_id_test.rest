@@ -2,7 +2,7 @@ POST http://localhost:5000/api/v0/get_prescribed_drugs_by_patient_id/
 content-type: application/json
 
 {
-    "patient_id": 2
+    "patient_id": 1
 }
 
 # {
