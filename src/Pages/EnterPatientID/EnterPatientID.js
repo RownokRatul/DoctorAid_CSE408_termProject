@@ -181,12 +181,12 @@ const DoctorHomepage = () => {
             </div>
           </Card>
 
-          <Card style={{ height: '100%', padding: '15px', overflowY: 'scroll', backgroundColor: "beige" }}>
+          {/* <Card style={{ height: '100%', padding: '15px', overflowY: 'scroll', backgroundColor: "beige" }}>
             <h2 style={{textAlign:"center"}}>Recent News</h2>
           {news.map((article, index) => (
             <NewsCard key={index} news={article} />
           ))}
-          </Card>
+          </Card> */}
         </div>
       </div>
     </div>
