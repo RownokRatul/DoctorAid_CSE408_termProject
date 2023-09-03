@@ -1,0 +1,26 @@
+POST http://localhost:5000/api/v0/get_prescribed_drugs_by_patient_id/
+content-type: application/json
+
+{
+    "patient_id": 2
+}
+
+# {
+#   "message": "Success",
+#   "data": [
+#     {
+#       "prescription_id": 2,
+#       "drug_id": 2,
+#       "drug_name": "Advil:200mg",
+#       "generic_name": "Ibuprofen",
+#       "date": "2023-08-17T00:00:00.000Z"
+#     },
+#     {
+#       "prescription_id": 2,
+#       "drug_id": 4,
+#       "drug_name": "Zestril:10mg",
+#       "generic_name": "Lisinopril",
+#       "date": "2023-08-17T00:00:00.000Z"
+#     }
+#   ]
+# }
