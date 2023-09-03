@@ -22,4 +22,19 @@ router.get('/api/v0/get_practice', async (req, res) => { //post->get
     }
 });
 
+router.post('/api/v0/create_practice', async (req, res) => { //post->get
+    {
+        console.log("req.body\n");
+        const pseudo_view = await createPracticeController(req);
+        if(pseudo_view) {
+            console.log(pseudo_view);
+            res.status(200).json({message : 'Success', data : pseudo_view});
+        }
+        else {
+            console.log('NO user Found!');
+            res.status(404).json({error : 'Not Found'});
+        }
+    }
+});
+
 module.exports = router;
