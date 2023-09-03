@@ -15,17 +15,39 @@ const PracticePage2=() => {
     console.log('List of items updated:', list);
   }, [list]);
 
+
+  useEffect(() => {
+    const response = fetch('/api/v0/get_practice', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data:",data);
+        const fetchedList = data.data;
+        console.log('Fetched list:', fetchedList); // Logging the fetched tags
+        setList(fetchedList); // Updating the state
+       
+      console.log("list response",list);
+      })
+      .catch((err) => console.error('Failed to fetch tags:', err));
+    }, []);
+  
+
   const handleAdd = async () => {
 
       // Mock API call to localhost:/api/add_demo_data
     // Replace this with your actual API logic
-    const response = await fetch('http://localhost:/api/create_practice', {
+    const response = await fetch('/api/v0/create_practice', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name:text }),
     });
+
+    const result = await response.json();
+    console.log("result", result);
     console.log("text:",text);
-    const newItem = { id: list.length + 1, name:text, occupation:[] };
+    const newItem = { id: result.data.id, name:result.data.name, occupation:[] };
     setList([...list, newItem]);
     setText('');
   };
@@ -38,6 +60,14 @@ const PracticePage2=() => {
 
 
   const handleDelete = (item) => {
+    console.log("item:",item);
+    const response = fetch('/api/v0/delete_practice', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      
+
+      body: JSON.stringify({ id: item.id }),
+    })
     setList(list.filter((item2) => item2.id !== item.id));
   };
 
