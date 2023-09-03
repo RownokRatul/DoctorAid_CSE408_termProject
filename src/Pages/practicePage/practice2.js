@@ -19,11 +19,11 @@ const PracticePage2=() => {
 
       // Mock API call to localhost:/api/add_demo_data
     // Replace this with your actual API logic
-    // const response = await fetch('http://localhost:/api/add_demo_data', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ text }),
-    // });
+    const response = await fetch('http://localhost:/api/create_practice', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name:text }),
+    });
     console.log("text:",text);
     const newItem = { id: list.length + 1, name:text, occupation:[] };
     setList([...list, newItem]);
