@@ -54,6 +54,9 @@ app.use(require('./routes/diagnosticsTabRoutes/getPrescribedTestsRoute'));
 app.use(require('./routes/diagnosticsTabRoutes/getPrescribedTestDetailsRoute'));
 
 app.use(require('./routes/searchRoutes/searchTabRoute'));
+app.use(require('./routes/createPrescriptionRoutes/get_all_diseases_Routes'));
+app.use(require('./routes/practiceRoutes/practiceTabRoutes'));
+
 
 app.use(require('./routes/medicationTabRoutes/getPrescribedDrugsRoute'));
 app.use(require('./routes/medicationTabRoutes/getPrescribedDrugDetailsRoute'));
