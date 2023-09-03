@@ -1,0 +1,7 @@
+## login
+POST http://localhost:5000/api/v0/create_practice
+content-type: application/json
+
+{
+    "name": "practice1"
+}
