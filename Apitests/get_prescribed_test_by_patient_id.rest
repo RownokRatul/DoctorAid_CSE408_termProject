@@ -1,4 +1,4 @@
-GET http://localhost:5000/api/v0/get_prescribed_tests_by_patient_id/
+POST http://localhost:5000/api/v0/get_prescribed_tests_by_patient_id/
 content-type: application/json
 
 {

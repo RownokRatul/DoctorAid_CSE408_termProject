@@ -278,15 +278,15 @@ model prescription_tag {
 model practice{
   id Int @id @default(autoincrement())
   name String
-  relations practice_relations[] 
+  relations practice_relation[] 
 }
 model practice_occupation{
   id Int @id @default(autoincrement())
   job_name String
-  relations practice_relations[]
+  relations practice_relation[]
 }
 
-model practice_relations {
+model practice_relation {
   practice_id Int 
   occupation_id Int
   practice practice @relation(fields: [practice_id], references: [id])

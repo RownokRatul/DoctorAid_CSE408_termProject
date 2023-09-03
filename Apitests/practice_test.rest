@@ -1,5 +1,5 @@
 ## login
-get http://localhost:5000/api/v0/get_practice
+GET http://localhost:5000/api/v0/get_practice
 content-type: application/json
 
 {

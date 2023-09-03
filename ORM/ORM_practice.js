@@ -21,8 +21,10 @@ async function getPractice(){
         const practice = await prisma.practice.findMany({
             select: {
                 name: true,
-                patient_relations: {
+                relations: {
+                    select: {
                     occupation: true,
+                    }
                 },
             }
         });
@@ -33,3 +35,9 @@ async function getPractice(){
         throw error;
     }
 }
+
+module.exports = {
+    createPractice,
+    getPractice,
+};
+
