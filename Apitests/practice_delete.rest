@@ -1,0 +1,6 @@
+DELETE http://localhost:5000/api/v0/delete_practice
+content-type: application/json
+
+{
+    "id": 10
+}

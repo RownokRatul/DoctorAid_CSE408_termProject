@@ -5,3 +5,11 @@ content-type: application/json
 {
     "name": "practice1"
 }
+
+# {
+#   "message": "Success",
+#   "data": {
+#     "id": 5,
+#     "name": "practice1"
+#   }
+# }
