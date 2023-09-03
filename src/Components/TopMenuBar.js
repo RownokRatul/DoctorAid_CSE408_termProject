@@ -15,6 +15,7 @@ const TopMenuBar = () => {
     '/prescription',
     '/search',
     '/diagnostics',
+    '/practice',
   ];
 
   const currentTabIndex = paths.indexOf(currentPath);
@@ -59,6 +60,7 @@ const TopMenuBar = () => {
             <Tab label="Prescriptions" component={Link} to="/prescription" />
             <Tab label="Search" component={Link} to="/search" />
             <Tab label="Diagnostics" component={Link} to="/diagnostics" />
+            <Tab label="Practice" component={Link} to="/demo" />
           </Tabs>
           <Switch
             checked={darkMode}

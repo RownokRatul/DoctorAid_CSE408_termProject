@@ -23,6 +23,7 @@ const PracticePage2=() => {
     })
       .then((res) => res.json())
       .then((data) => {
+        
         console.log("data:",data);
         const fetchedList = data.data;
         console.log('Fetched list:', fetchedList); // Logging the fetched tags
@@ -73,6 +74,15 @@ const PracticePage2=() => {
 
   const handleUpdate = () => {
     console.log("id:",editItem.id,"name:",editItem.name,"occupation:",editItem.occupation);
+
+    const response = fetch('/api/v0/update_practice', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      
+
+      body: JSON.stringify({ id: editItem.id,name:editItem.name,occupation:editItem.occupation }),
+    })
+
     // make a json of what was print in console.log
 
     const json = {
