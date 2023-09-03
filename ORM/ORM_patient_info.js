@@ -153,6 +153,8 @@ async function get_patient_summary_info(uid) {
 
 
 async function get_patient_demography_info(patientId) {
+  
+  console.log("***********************-")
     console.log("In patient Demography Controller");
     const model_patient_demography_info = await prisma.patient_basic_info.findMany({
         where: {
@@ -174,6 +176,8 @@ async function get_patient_demography_info(patientId) {
             travel_to: true,
         }
     });
+    console.log("--------------**--------------------")
+    console.log(model_patient_demography_info);
 
     // Calculate age based on "dob"
     const currentYear = new Date().getFullYear();
@@ -182,6 +186,8 @@ async function get_patient_demography_info(patientId) {
         patient.age = currentYear - birthYear;
         delete patient.dob;
     }
+    console.log("###########################")
+    console.log(model_patient_demography_info);
 
     return model_patient_demography_info;
 }
