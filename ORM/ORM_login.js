@@ -16,6 +16,22 @@ async function verifyLogin(username, password) {
     return model_user_login_info;
 }
 
+async function getUserByUsername(username) {
+    const model_user_login_info = await prisma.user_login_info.findUnique({
+        where: {
+            username: username,
+        }, 
+        select: {
+            username: true,
+            hash_password: true,
+            user_role: true,
+        },
+    });
+    console.log(model_user_login_info);
+    return model_user_login_info;
+}
+
 module.exports = {
     verifyLogin,
+    getUserByUsername,
 };
