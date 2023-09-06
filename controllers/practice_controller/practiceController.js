@@ -1,23 +1,25 @@
-const orm_practice = require('../../ORM/ORM_practice');
+const orm_test_status = require('../../ORM/ORM_test_status');
 
 
-async function getPracticeController(req) {
-    const req_json = req.body;
-    // if(!cookie.checkCookie(req.session)) {
-    //     // Force to login. And return a status
-    //     return;
-    // }
-    console.log(req_json);
-    const model_practice = await orm_practice.getPractice();
-    if(model_practice) {
-        const pseudo_view = model_practice;
+async function getPatientTestStatusController() {
+    console.log("Inside test status fetch");
+    const pseudo_view = await orm_test_status.getTestStatus();
+    console.log(pseudo_view);
+    if(pseudo_view) {
         return pseudo_view;
     }
     else {
-        console.log('NO user Found!');
+        console.log('No test status found!');
         return null;
     }
 }
+
+
+
+
+
+
+
 
 
 async function createPracticeController(req) {
@@ -65,7 +67,7 @@ async function editPracticeController(req) {
 }
 
 module.exports = {
-    getPracticeController,
+    getPatientTestStatusController,
     createPracticeController,
     deletePracticeController,
     editPracticeController,
