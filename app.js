@@ -3,9 +3,24 @@ const cookieParser = require('cookie-parser');
 const sessions = require('express-session');
 const morgan = require('morgan');
 var bodyParser = require('body-parser')
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+// app.use(sessions({
+//   secret : 'thisismysecret',
+//   saveUninitialized : true,
+//   cookie : {maxAge : 60*60*1000*24},
+//   resave : false,
+// }));
+
+
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });

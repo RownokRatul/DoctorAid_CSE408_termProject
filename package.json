@@ -20,6 +20,8 @@
     "http": "^0.0.1-security",
     "kill-port": "^2.0.1",
     "morgan": "^1.10.0",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
     "pg": "^8.11.2",
     "pg-promise": "^11.5.2",
     "prisma": "^5.1.1",
