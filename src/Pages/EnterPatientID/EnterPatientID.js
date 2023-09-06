@@ -1,4 +1,11 @@
 import React, { useState, useContext ,useEffect} from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import { PatientContext } from '../../PatientContext';
 import { TextField, Button, Card, Typography,Avatar } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -11,11 +18,14 @@ import NewsCard from './Components/NewsCardComponent'; // Import the NewsCard co
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // Import the default styling
 
+import testStatus from './Components/testStatusTable';
+
 const DoctorHomepage = () => {
 
   // ...other code
 
   const [news, setNews] = useState([]);
+  const [testStatus, setTestStatus] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,6 +54,21 @@ const DoctorHomepage = () => {
     };
   
     fetchData();
+
+
+    const response = fetch('/api/v0/get_test_status', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data:",data);
+        const fetchedList = data.data;
+        console.log('Fetched list:', fetchedList); // Logging the fetched tags
+        setTestStatus(fetchedList); // Updating the state
+      console.log("list response",testStatus);
+      })
+
   }, []);
 
   
@@ -161,6 +186,39 @@ const DoctorHomepage = () => {
             ))}
           </div>
         </Card>
+        
+        
+      <div>    
+      <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="right">Patient ID</TableCell>
+            <TableCell align="right">Prescription ID&nbsp;(g)</TableCell>
+            <TableCell align="right">Test Name&nbsp;(g)</TableCell>
+            <TableCell align="right">Status&nbsp;(g)</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {testStatus.map((row) => (
+            <TableRow
+              key={row.name}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell align="right">{row.patient_id}</TableCell>
+              <TableCell align="right">{row.prescription_id}</TableCell>
+              <TableCell align="right">{row.test_name}</TableCell>
+              <TableCell align="right">{row.status}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    </div>
+
+
+
+
 
         </div>
 

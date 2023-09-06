@@ -17,4 +17,5 @@ const InputCard = ({ text, setText, handleAdd }) => (
   </Card>
 );
 
+
 export default InputCard;

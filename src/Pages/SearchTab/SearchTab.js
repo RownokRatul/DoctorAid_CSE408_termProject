@@ -181,7 +181,7 @@ const SearchTab = () => {
           
           
           
-          
+
           )
         ) : (
           <Typography variant="body1" color="textSecondary">No results found</Typography>
