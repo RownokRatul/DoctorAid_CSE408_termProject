@@ -6,6 +6,7 @@ var bodyParser = require('body-parser')
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
+require('./passport-config');  // Adjust the path
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -13,12 +14,21 @@ const PORT = process.env.PORT || 5000;
 // app.use(passport.initialize());
 // app.use(passport.session());
 
-// app.use(sessions({
-//   secret : 'thisismysecret',
-//   saveUninitialized : true,
-//   cookie : {maxAge : 60*60*1000*24},
-//   resave : false,
-// }));
+
+//new
+app.use(sessions({
+  secret : 'thisismysecret',
+  saveUninitialized : true,
+  cookie : {maxAge : 60*60*1000*24},
+  resave : false,
+}));
+
+app.use(cookieParser());
+
+app.use(passport.initialize());
+app.use(passport.session());
+//new
+
 
 
 app.listen(PORT, () => {
