@@ -5,6 +5,7 @@ const morgan = require('morgan');
 var bodyParser = require('body-parser')
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const ensureAuthenticated = require('./ensure-auth');
 
 require('./passport-config');  // Adjust the path
 
@@ -62,7 +63,7 @@ require('dotenv').config();
 // }));
 
 // app.use(cookieParser());
-
+// app.use(ensureAuthenticated);
 app.use(require('./routes/loginRoutes/loginRoute'));
 app.use(require('./routes/rootRoutes/rootRoute'));
 app.use(require('./routes/registerRoutes/patientRegisterRoute'));

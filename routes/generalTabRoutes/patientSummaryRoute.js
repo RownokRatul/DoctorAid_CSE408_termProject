@@ -4,10 +4,10 @@ const express = require('express');
 const checkCookie = require('../../authentication/cookie_checker');
 const {patientSummaryController} = require('../../controllers/general_tab_controllers/patientsummarycontroller'); // Import the loginController function
 require('dotenv').config();
-
+const ensureAuthenticated = require('../../ensure-auth');
 const router = express.Router();
 
-router.post('/api/v0/patients/get_general_tab_info/', async (req, res) => { //post->get
+router.post('/api/v0/patients/get_general_tab_info/', ensureAuthenticated, async (req, res) => { //post->get
     // console.log("Backend: requested-> /api/v0/login");
     // req_json = req.body;
     console.log("gen_tab_route");
