@@ -6,3 +6,19 @@ content-type: application/json
     "username": "doc_oc",
     "password": "MTIz"
 }
+
+# {
+#   "message": "Authenticated",
+#   "user": {
+#     "username": "doc_oc",
+#     "role": "doctor",
+#     "info": {
+#       "username": "doc_oc",
+#       "name": "Doctor Octavious",
+#       "specialization": "Neuroscience",
+#       "degree": "MBBS",
+#       "phone": "01798543234",
+#       "email": "dococ@gmail.com"
+#     }
+#   }
+# }

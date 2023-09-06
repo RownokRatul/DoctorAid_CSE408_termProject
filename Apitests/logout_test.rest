@@ -1,0 +1,11 @@
+## login
+GET http://localhost:5000/api/v0/logout
+content-type: application/json
+
+{
+
+}
+
+# {
+#   "message": "Successfully logged out"
+# }

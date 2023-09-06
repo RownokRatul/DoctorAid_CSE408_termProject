@@ -65,6 +65,7 @@ require('dotenv').config();
 // app.use(cookieParser());
 // app.use(ensureAuthenticated);
 app.use(require('./routes/loginRoutes/loginRoute'));
+app.use(require('./routes/loginRoutes/logoutRoute'));
 app.use(require('./routes/rootRoutes/rootRoute'));
 app.use(require('./routes/registerRoutes/patientRegisterRoute'));
 app.use(require('./routes/registerRoutes/patientBasicInfoUpdateRoute'));
