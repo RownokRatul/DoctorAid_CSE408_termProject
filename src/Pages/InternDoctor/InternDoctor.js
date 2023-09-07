@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState,useContext, useEffect } from 'react';
 import { Button, Card, Container, Box } from '@mui/material';
 
 import AddressCard from './Components/AddressCard';
@@ -10,8 +10,31 @@ import OccupationCard from './Components/Occupation';
 import historyCard from './Components/TravelHistory';
 import DiseasesCard from './Components/DiseaseCard';
 import PrescriptionCard from './Components/PrescriptionUploadCard';
+import { PatientContext } from '../../PatientContext';
+import axios from 'axios';
 
 const InternDoctor = () => {
+
+  const {phoneNumber}=useContext(PatientContext);
+  const [patientInfo, setPatientInfo] = useState(null); // To store the search results
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post('api/v0/search_patient/', {
+          phone: phoneNumber,
+        });
+        setPatientInfo(response.data);
+        console.log("response",response.data);
+        
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); 
+
+  console.log("Phone Number:",phoneNumber);
   const [page, setPage] = useState(1); // State to manage the current page
   const [info, setInfo] = useState({
     

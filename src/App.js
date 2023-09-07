@@ -21,7 +21,9 @@ import { PatientProvider } from './PatientContext';
 import DiagnosticianPage from './Pages/DiagnosticianTab/DiagnosticianTab';
 import PracticePage2 from './Pages/practicePage/practice2';
 import LoginPage from './Pages/LandingPage/landingPage';
+import SearchPatient from './Pages/InternDoctor/InternSearchPage';
 // ...
+
 
 
 function App() {
@@ -44,9 +46,10 @@ function App() {
             <Route path="/create-prescription" element={<CreatePrescriptionPage />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/register" element={<PatientRegistration />} />
-            <Route path="/intern" element={<InternDoctor />} />
+            <Route path="/intern" element={<SearchPatient />} />
             <Route path="/diagnostician" element={<DiagnosticianPage />} />
             <Route path="/demo" element={<PracticePage2 />} />
+            <Route path="/internPage" element={<InternDoctor />} />
             
           </Routes>
         </PatientProvider>

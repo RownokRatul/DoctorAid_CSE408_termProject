@@ -6,6 +6,7 @@ import MajorDiseasesCard from './Components/Cards/MajorDiseasesCard';
 import HeartRateChart from './Components/Charts/HeartRateChart';
 import BloodPressureChart from './Components/Charts/BloodPressureChart';
 import { Card } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useContext } from 'react';
 import { PatientContext } from '../../PatientContext'
 
@@ -36,6 +37,7 @@ const GeneralTab = () => {
   }, [patientID]);
 
   if (!data) {
+    <CircularProgress />
     return <div>Loading...</div>;
   }
 

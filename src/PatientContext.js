@@ -10,9 +10,11 @@ export const PatientProvider = ({ children }) => {
   
   const [patientID, setPatientID] = useState(initialPatientID ? parseInt(initialPatientID, 10) : null);
   const [doctorInfo, setDoctorInfo] = useState(initialDoctorInfo);
+  const [phoneNumber, setPhoneNumber] = useState(null);
   const [showInvalidIDDialog, setShowInvalidIDDialog] = useState(false);
-  const [showInvalidDoctorDialog, setShowInvalidDoctorDialog] = useState(false);
+
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -68,7 +70,7 @@ export const PatientProvider = ({ children }) => {
   };
 
   return (
-    <PatientContext.Provider value={{ patientID, setPatientID, isPatientIDValid, doctorInfo, setDoctorInfo,logoutDoctor,isDoctorInfoValid }}>
+    <PatientContext.Provider value={{ patientID, setPatientID, isPatientIDValid, doctorInfo, setDoctorInfo,logoutDoctor,isDoctorInfoValid,setPhoneNumber,phoneNumber}}>
       {children}
       <Dialog open={showInvalidIDDialog} onClose={handleCloseDialog}>
         <DialogTitle style={{ backgroundColor: 'red', textAlign: 'center' }}>
