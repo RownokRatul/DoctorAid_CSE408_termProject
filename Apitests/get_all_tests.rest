@@ -1,0 +1,7 @@
+## login
+POST http://localhost:5000/api/v0/get_tests_by_doctor_id
+content-type: application/json
+
+{
+    "doctor_username" : "doc_oc"
+}

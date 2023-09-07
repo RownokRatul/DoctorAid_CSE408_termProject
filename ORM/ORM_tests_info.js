@@ -44,7 +44,7 @@ async function get_queued_tests() {
 
   async function get_done_tests() {
     try {
-      const queuedTests = await prisma.prescribed_tests.findMany({
+      const doneTests = await prisma.prescribed_tests.findMany({
         select: {
           prescription_id: true,
           test_id: true,
@@ -63,7 +63,7 @@ async function get_queued_tests() {
         },
       });
   
-      return queuedTests;
+      return doneTests;
     // return result;
     } catch (error) {
       console.error("Error fetching queued tests:", error);
@@ -195,6 +195,7 @@ async function get_prescribed_test_by_test_id(prescription_id, test_id) {
 
 module.exports = {
     get_queued_tests,
+    get_done_tests,
     get_test_metadata,
     update_test_result,
     get_prescribed_tests_by_patient,
