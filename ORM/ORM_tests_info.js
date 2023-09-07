@@ -41,6 +41,35 @@ async function get_queued_tests() {
       throw error; // You can handle the error as needed
     }
   }
+
+  async function get_done_tests() {
+    try {
+      const queuedTests = await prisma.prescribed_tests.findMany({
+        select: {
+          prescription_id: true,
+          test_id: true,
+          test: {
+            select: {
+              test_name: true,
+            },
+          },
+          prescription:{
+            select:{
+              doctor_username: true,
+              date: true,
+              patient_id: true,
+            }
+          }
+        },
+      });
+  
+      return queuedTests;
+    // return result;
+    } catch (error) {
+      console.error("Error fetching queued tests:", error);
+      throw error; // You can handle the error as needed
+    }
+  }
   
 
 async function get_test_metadata(test_id) {
