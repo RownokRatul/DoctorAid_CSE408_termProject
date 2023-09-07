@@ -31,7 +31,7 @@ const LoginPage = () => {
             setDoctorInfo(data.user);
             navigate('/doctor_homepage');
             break;
-          case 'receptionist':
+          case 'intern':
             navigate('/intern');
             break;
           case 'diagnostician':

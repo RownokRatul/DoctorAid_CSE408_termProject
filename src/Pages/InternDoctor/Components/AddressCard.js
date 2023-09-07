@@ -2,6 +2,7 @@ import React from 'react';
 import { TextField, Button, Grid, Box, Typography } from '@mui/material';
 
 const AddressCard = ({ addresses, handleAddressChange, addAddress }) => {
+  console.log("addresses",addresses);
   return (
     <Box padding={2} bgcolor="azure" borderRadius={2} marginTop={0} paddingTop={5}>
       <Typography variant="h6" color="text.primary" gutterBottom align='center'>
