@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, Button } from '@mui/material';
+import { createClient } from '@supabase/supabase-js';
+
+import { PatientContext } from '../../PatientContext';
 
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 
-
 const DiagnosticianPage = () => {
+
+  const { SUPABASE_URL } = useContext(PatientContext);
+  const { SUPABASE_ANN_KEY } = useContext(PatientContext);
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [pendingTests, setPendingTests] = useState([]);
   const [selectedTest, setSelectedTest] = useState(null);
@@ -54,12 +60,13 @@ const DiagnosticianPage = () => {
         setPrescription_id(prescription_id);
         console.log(result.data);
         
-        console.log("hello");
-        console.log(result.data.row_name);
-        console.log(result.data.column_name);
-        console.log(result.data.values);
+        // console.log("hello");
+        // console.log(result.data.row_name);
+        // console.log(result.data.column_name);
+        // console.log(result.data.values);
 
         setTableData({
+            test_name: result.data.test_name,
             rowNames: result.data.row_name,
             columnNames: result.data.column_name,
             values: Array.from({ length: result.data.row_name.length }, () =>
@@ -74,6 +81,13 @@ const DiagnosticianPage = () => {
     }
   };
   
+
+  const handleFileChange = (rowIndex, colIndex, file) => {
+    setTableData(prevState => {
+      prevState.values[rowIndex][colIndex] = file;
+      return { ...prevState };
+    });
+  };
   
 
   const handleInputChange = (rowIndex, colIndex, value) => {
@@ -83,26 +97,49 @@ const DiagnosticianPage = () => {
     });
   };
 
-  // const handleSubmit = () => {
-  //   const data = {
-  //     prescription_id: selectedPrescription, // Make sure to set the correct prescription ID here
-  //     test_id: selectedTest, // Set the correct test ID here
-  //     test_values: tableData.values.flat(),
-  //     date: selectedDate.toISOString(),
-  //   };
-  //   console.log(data);
-  // };
+  
+  const uploadFileAndGetURL = async (file) => {
+    const bucket = "test_results";
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANN_KEY);
+
+    const { error } = await supabase.storage.from(bucket).upload(file.name, file);
+  
+    if (error) {
+      console.error("Upload error", error);
+      return null;
+    }
+    return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${encodeURIComponent(file.name)}`;
+  };
 
 
 
   const handleSubmit = async () => {
     // Create the payload
+
+    for (let rowIndex = 0; rowIndex < tableData.values.length; rowIndex++) {
+      for (let colIndex = 0; colIndex < tableData.values[rowIndex].length; colIndex++) {
+        const value = tableData.values[rowIndex][colIndex];
+        
+        if (value instanceof File) {
+          const fileURL = await uploadFileAndGetURL(value);
+          console.log(fileURL);
+          if (fileURL) {
+            tableData.values[rowIndex][colIndex] = fileURL;
+          } else {
+            console.error("File upload failed");
+          }
+        }
+      }
+    }
+
     const payload = {
       prescription_id: selectedPrescription, // Make sure to set the correct prescription ID here
       test_id: selectedTest, // Set the correct test ID here
       test_values: tableData.values.flat(),
       date: selectedDate.toISOString(),
     };
+
+    // console.log(payload);
   
     // Send the POST request
       try {
@@ -125,6 +162,7 @@ const DiagnosticianPage = () => {
         console.error('Failed to submit data:', error);
         // Handle the error here
       }
+      window.location.reload();
     };
   
   
@@ -164,6 +202,15 @@ const DiagnosticianPage = () => {
         <Paper style={{ flex: '100%', padding: '20px', overflow: 'auto' }}>
           
           <Table>
+            <caption style={{
+              captionSide: 'top', 
+              fontWeight: 'bold', 
+              textAlign: 'center', 
+              fontSize: '20px',
+              textDecoration: 'underline',
+            }}>
+              {tableData.test_name}
+            </caption>
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
@@ -178,16 +225,25 @@ const DiagnosticianPage = () => {
                   <TableCell>{rowName}</TableCell>
                   {tableData.columnNames.map((colName, colIndex) => (
                     <TableCell key={colIndex}>
-                      <TextField
-                        value={tableData.values?.[rowIndex]?.[colIndex] || ''}
-                        onChange={(e) => handleInputChange(rowIndex, colIndex, e.target.value)}
-                      />
+                      {colName.toLowerCase() === "image" ? (
+                        <input
+                          type="file"
+                          accept="image/png,image/jpeg,image/jpg,application/pdf"
+                          onChange={(e) => handleFileChange(rowIndex, colIndex, e.target.files[0])}
+                        />
+                      ) : (
+                        <TextField
+                          value={tableData.values?.[rowIndex]?.[colIndex] || ''}
+                          onChange={(e) => handleInputChange(rowIndex, colIndex, e.target.value)}
+                        />
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))}
             </TableBody>
           </Table>
+
           
 
           <div>
