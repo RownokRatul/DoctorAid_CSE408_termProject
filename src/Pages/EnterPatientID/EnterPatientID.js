@@ -16,32 +16,35 @@ import NewsCard from './Components/NewsCardComponent'; // Import the NewsCard co
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // Import the default styling
 import testStatus from './Components/testStatusTable';
+import { usePatientIDValidation } from '../../PatientIDValidation';
+import { useDoctorIDValidation } from '../../DoctorIDValidation';
 
 
 
 
 
 const DoctorHomepage = () => {
-
-
   // ...other code
+  console.log("Kire mama");
+  
 
   const [news, setNews] = useState([]);
   const [testStatus, setTestStatus] = useState([]);
+  const [doneTests, setDoneTests] = useState([]);
+  const [tests, setTests] = useState([]);
+  const [queuedTests, setQueuedTests] = useState([]);
   const {doctorInfo}=useContext(PatientContext);
   const { logoutDoctor } = useContext(PatientContext);
-  useEffect(() => {
-    console.log("IN use effect");
-    if(!doctorInfo){
-      navigate('/');
-    }
-  },[]);
+
+  console.log("Doctor Info  in enter: ",doctorInfo);
   
 
-  console.log("doctorInfo:",doctorInfo);
-
+  
 
   useEffect(() => {
+    
+    console.log("00000000000000------------------000000000");
+
     const fetchData = async () => {
       try {
         // const url = 'https://newsapi.org/v2/everything?' +
@@ -62,6 +65,21 @@ const DoctorHomepage = () => {
         const response = await fetch(req);
         const result = await response.json();
         setNews(result.articles.slice(0, 5)); // Keep the top 5 articles
+        const response2 = await fetch('api/v0/get_tests_by_doctor_id/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ doctor_username: doctorInfo.info.username }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("data:",data);
+            const fetchedList = data.data;
+            // console.log('Fetched list:', fetchedList); // Logging the fetched tags
+            setTests(fetchedList); // Updating the state
+          // console.log("list response",testStatus);
+          })
       } catch (error) {
         console.error('Failed to fetch data:', error);
       }
@@ -69,19 +87,49 @@ const DoctorHomepage = () => {
   
     fetchData();
 
+    
+    
 
-    const response = fetch('/api/v0/get_test_status', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("data:",data);
-        const fetchedList = data.data;
-        console.log('Fetched list:', fetchedList); // Logging the fetched tags
-        setTestStatus(fetchedList); // Updating the state
-      console.log("list response",testStatus);
-      })
+    // const response = fetch('/api/v0/get_test_status', {
+    //   method: 'GET',
+    //   headers: { 'Content-Type': 'application/json' },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log("data:",data);
+    //     const fetchedList = data.data;
+    //     console.log('Fetched list:', fetchedList); // Logging the fetched tags
+    //     setTestStatus(fetchedList); // Updating the state
+    //   console.log("list response",testStatus);
+    //   })
+
+    //   const response2 = fetch('/api/v0/get_queued_tests', {
+    //     method: 'GET',
+    //     headers: { 'Content-Type': 'application/json' },
+    //   })
+    //     .then((res) => res.json())
+    //     .then((data) => {
+    //       console.log("data:",data);
+    //       const fetchedList = data.data;
+    //       console.log('Fetched list:', fetchedList); // Logging the fetched tags
+    //       setQueuedTests(fetchedList); // Updating the state
+    //     console.log("list response",testStatus);
+    //     })
+
+    //     const response3 = fetch('/api/v0/get_queued_tests', {
+    //       method: 'GET',
+    //       headers: { 'Content-Type': 'application/json' },
+    //     })
+    //       .then((res) => res.json())
+    //       .then((data) => {
+    //         console.log("data:",data);
+    //         const fetchedList = data.data;
+    //         console.log('Fetched list:', fetchedList); // Logging the fetched tags
+    //         setQueuedTests(fetchedList); // Updating the state
+    //       console.log("list response",testStatus);
+    //       })
+
+      
 
   }, []);
 
@@ -115,6 +163,11 @@ const DoctorHomepage = () => {
     console.log("In handle logout");
     logoutDoctor();
     navigate('/');
+  }
+  if (!doctorInfo || !doctorInfo.info) {
+    // Redirect or return null, or render a spinner or some other placeholder
+    navigate('/');
+    return <div>Loading...</div>;
   }
 
   return (
@@ -219,7 +272,8 @@ const DoctorHomepage = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {testStatus.map((row) => (
+          { tests===null? (<div>loading</div>):(
+          tests.map((row) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -229,7 +283,8 @@ const DoctorHomepage = () => {
               <TableCell align="right">{row.test_name}</TableCell>
               <TableCell align="right">{row.status}</TableCell>
             </TableRow>
-          ))}
+          )))
+        }
         </TableBody>
       </Table>
     </TableContainer>
