@@ -16,15 +16,17 @@ import NewsCard from './Components/NewsCardComponent'; // Import the NewsCard co
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // Import the default styling
 import testStatus from './Components/testStatusTable';
+import { usePatientIDValidation } from '../../PatientIDValidation';
+import { useDoctorIDValidation } from '../../DoctorIDValidation';
 
 
 
 
 
 const DoctorHomepage = () => {
-
-
   // ...other code
+  console.log("Kire mama");
+  
 
   const [news, setNews] = useState([]);
   const [testStatus, setTestStatus] = useState([]);
@@ -33,18 +35,16 @@ const DoctorHomepage = () => {
   const [queuedTests, setQueuedTests] = useState([]);
   const {doctorInfo}=useContext(PatientContext);
   const { logoutDoctor } = useContext(PatientContext);
-  useEffect(() => {
-    console.log("IN use effect");
-    if(!doctorInfo){
-      navigate('/');
-    }
-  },[]);
+
+  console.log("Doctor Info  in enter: ",doctorInfo);
   
 
-  console.log("doctorInfo:",doctorInfo);
-
+  
 
   useEffect(() => {
+    
+    console.log("00000000000000------------------000000000");
+
     const fetchData = async () => {
       try {
         // const url = 'https://newsapi.org/v2/everything?' +
@@ -163,6 +163,11 @@ const DoctorHomepage = () => {
     console.log("In handle logout");
     logoutDoctor();
     navigate('/');
+  }
+  if (!doctorInfo || !doctorInfo.info) {
+    // Redirect or return null, or render a spinner or some other placeholder
+    navigate('/');
+    return <div>Loading...</div>;
   }
 
   return (
