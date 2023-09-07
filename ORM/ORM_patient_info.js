@@ -18,6 +18,9 @@ async function get_patient_basic_info(phone) {
             occupations: true,
             occupation_from: true,
             occupation_to: true,
+            travel_history: true,
+            travel_from: true,
+            travel_to: true,
             height: true,
             weight: true,
         }
