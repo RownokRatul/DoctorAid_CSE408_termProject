@@ -1,6 +1,7 @@
 
 import React, { useState,useContext, useEffect } from 'react';
 import { Button, Card, Container, Box } from '@mui/material';
+import { createClient } from '@supabase/supabase-js';
 
 import AddressCard from './Components/AddressCard';
 import CurrentAddressCard from './Components/CurrentAddressCard';
@@ -14,6 +15,8 @@ import { PatientContext } from '../../PatientContext';
 import axios from 'axios';
 
 const InternDoctor = () => {
+  const { SUPABASE_URL } = useContext(PatientContext);
+  const { SUPABASE_ANN_KEY } = useContext(PatientContext);
 
   const {phoneNumber}=useContext(PatientContext);
   const [patientInfo, setPatientInfo] = useState(null); // To store the search results
@@ -100,14 +103,14 @@ const InternDoctor = () => {
     };
 
     const handleOccupationChange = (index, field, value) => {
-    const newOccupations = [...info.occupations];
-    newOccupations[index][field] = value;
-    setInfo({ ...info, occupations: newOccupations });
+      const newOccupations = [...info.occupations];
+      newOccupations[index][field] = value;
+      setInfo({ ...info, occupations: newOccupations });
     };
     const handlehistoryChange = (index, field, value) => {
-    const newhistories = [...info.histories];
-    newhistories[index][field] = value;
-    setInfo({ ...info, histories: newhistories });
+      const newhistories = [...info.histories];
+      newhistories[index][field] = value;
+      setInfo({ ...info, histories: newhistories });
     };
 
     const addAddress = () => {
@@ -115,10 +118,10 @@ const InternDoctor = () => {
     };
 
     const addOccupation = () => {
-    setInfo({ ...info, occupations: [...info.occupations, { name: '', from: '', to: '' }] });
+      setInfo({ ...info, occupations: [...info.occupations, { name: '', from: '', to: '' }] });
     };
     const addhistory = () => {
-    setInfo({ ...info, histories: [...info.histories, { name: '', from: '', to: '' }] });
+      setInfo({ ...info, histories: [...info.histories, { name: '', from: '', to: '' }] });
     };
 
     const [selectedDiseases, setSelectedDiseases] = useState([]);
@@ -144,8 +147,31 @@ const InternDoctor = () => {
     
     setPage(2);
   }
-  const handleFinalSubmit = () => {
+
+  const uploadFileAndGetURL = async (file) => {
+
+    console.log(SUPABASE_URL);
+    console.log(SUPABASE_ANN_KEY);
+
+    const bucket = "prescriptions";
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANN_KEY);
+
+    const { error } = await supabase.storage.from(bucket).upload(file.name, file);
+  
+    if (error) {
+      console.error("Upload error", error);
+      return null;
+    }
+    return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${file.name}`;
+  };
+
+
+  const handleFinalSubmit = async () => {
     // Combine all the information collected across the two pages
+
+    const file_URL = await uploadFileAndGetURL(prescriptions[0].file);
+    console.log(file_URL);
+
     const result = {
       addresses: [info.currentAddress.name, ...info.addresses.map(a => a.name)],
       address_from: [info.currentAddress.from, ...info.addresses.map(a => a.from)],
@@ -157,17 +183,12 @@ const InternDoctor = () => {
       history_from: info.histories.map(a => a.from),
       history_to: info.histories.map(a => a.to),
       diseases: selectedDiseases,
-      prescriptions: prescriptions.map(p => ({ file: p.file, date: p.date }))
+      prescriptions: file_URL,
     };
   
     // Output the final result to the console
     console.log(JSON.stringify(result));
-}
-  
-  
-  
-  
-  ;
+  };
 
   return (
     <Container maxWidth="md">

@@ -5,6 +5,11 @@ import { Dialog, DialogTitle, DialogContentText, Typography } from '@mui/materia
 export const PatientContext = createContext();
 
 export const PatientProvider = ({ children }) => {
+
+  const SUPABASE_URL = 'https://kbvpvcrgrguscjhrleyg.supabase.co'
+  const SUPABASE_ANN_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtidnB2Y3Jncmd1c2NqaHJsZXlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTQwODQxODgsImV4cCI6MjAwOTY2MDE4OH0.8ZnACrblxO8M1gbqKqTvdjr8rM3b-EIN2azupW2GtWs'
+
+
   const initialPatientID = localStorage.getItem("patientID");
   const initialDoctorInfo = JSON.parse(localStorage.getItem("doctorInfo") || null);
   
@@ -70,7 +75,7 @@ export const PatientProvider = ({ children }) => {
   };
 
   return (
-    <PatientContext.Provider value={{ patientID, setPatientID, isPatientIDValid, doctorInfo, setDoctorInfo,logoutDoctor,isDoctorInfoValid,setPhoneNumber,phoneNumber}}>
+    <PatientContext.Provider value={{ patientID, setPatientID, isPatientIDValid, doctorInfo, setDoctorInfo,logoutDoctor,isDoctorInfoValid, SUPABASE_URL, SUPABASE_ANN_KEY ,setPhoneNumber,phoneNumber}}>
       {children}
       <Dialog open={showInvalidIDDialog} onClose={handleCloseDialog}>
         <DialogTitle style={{ backgroundColor: 'red', textAlign: 'center' }}>

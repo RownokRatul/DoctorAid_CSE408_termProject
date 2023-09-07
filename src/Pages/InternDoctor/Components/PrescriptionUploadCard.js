@@ -13,7 +13,7 @@ const PrescriptionCard = ({ prescriptions, handlePrescriptionChange, addPrescrip
             <Grid item xs={8}>
               <input
                 type="file"
-                accept="image/*"
+                accept=".png,.jpg,.jpeg,.pdf"
                 onChange={(e) => handlePrescriptionChange(index, 'file', e.target.files[0])}
               />
             </Grid>
