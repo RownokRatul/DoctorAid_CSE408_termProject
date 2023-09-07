@@ -18,7 +18,8 @@ async function prescribedTestsByPatientController(req) {
             prescription_id: test.prescription_id,
             test_id: test.test_id,
             test_name: test.test.test_name,
-            date: test.prescription.date
+            date: test.prescription.date,
+            doctor_username: test.prescription.doctor_username
           }))
         console.log(pseudo_view);
         // console.log(model_patient_basic_info);

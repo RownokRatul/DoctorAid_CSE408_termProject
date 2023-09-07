@@ -13,7 +13,8 @@ async function prescribedDrugsByPatientController(req) {
       drug_id: drug.drug_id,
       drug_name: drug.drug.name,
       generic_name: drug.drug.generic.name,
-      date: drug.prescription.date
+      date: drug.prescription.date,
+      doctor_username: drug.prescription.doctor_username
     }))
     console.log(pseudo_view);
     return pseudo_view;

@@ -98,6 +98,7 @@ async function getPrescriptionsByPatientAndTags(patientId, tagIds) {
           select: {
             id: true, // prescription_id
             date: true,
+            doctor_username: true,
           },
         },
       },
@@ -121,6 +122,7 @@ async function getPrescriptionsByPatientAndTags(patientId, tagIds) {
           select: {
             id: true,
             date: true,
+            doctor_username: true,
           },
         })
       )

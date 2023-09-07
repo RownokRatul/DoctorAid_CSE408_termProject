@@ -26,7 +26,9 @@ async function get_queued_tests() {
           },
           prescription:{
             select:{
-                date: true,
+              doctor_username: true,
+              date: true,
+              patient_id: true,
             }
           }
         },
@@ -126,7 +128,8 @@ async function get_prescribed_tests_by_patient(patient_id) {
       },
       prescription: {
         select: {
-          date: true
+          date: true,
+          doctor_username: true,
         }
       }
     }

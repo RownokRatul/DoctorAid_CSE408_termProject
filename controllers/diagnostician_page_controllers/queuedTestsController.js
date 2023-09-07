@@ -11,6 +11,8 @@ async function queuedTestsController(req) {
             test_id: item.test_id,
             test_name: item.test.test_name,
             date: item.prescription.date,
+            patient_id: item.prescription.patient_id,
+            doctor_username: item.prescription.doctor_username,
           }));
         console.log(pseudo_view);
         return pseudo_view;

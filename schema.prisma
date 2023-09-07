@@ -21,6 +21,10 @@ model doctor_info {
   degree         String
   phone          String
   email          String
+
+  prescriptions prescription[]
+
+  // Add other fields as needed
 }
 
 model receptionist_info {
@@ -120,10 +124,13 @@ model diseases {
 }
 
 model prescription {
-  id         Int                @id @default(autoincrement())
-  patient_id Int
-  date       DateTime?
-  patient    patient_basic_info @relation(fields: [patient_id], references: [id])
+  id              Int       @id @default(autoincrement())
+  patient_id      Int
+  doctor_username String
+  date            DateTime?
+
+  patient patient_basic_info @relation(fields: [patient_id], references: [id])
+  doctor  doctor_info        @relation(fields: [doctor_username], references: [username])
 
   prescribed_tests prescribed_tests[]
   queued_tests     queued_tests[]
@@ -131,6 +138,7 @@ model prescription {
   prescription_tag prescription_tag[]
 
   @@index([patient_id], name: "patient_id")
+  @@index([doctor_username], name: "doctor_username")
 }
 
 model test_metadata {
@@ -275,24 +283,23 @@ model prescription_tag {
   @@id([prescription_id, tag_id])
 }
 
-model practice{
-  id Int @id @default(autoincrement())
-  name String
-  relations practice_relation[] 
+model practice {
+  id        Int                 @id @default(autoincrement())
+  name      String
+  relations practice_relation[]
 }
-model practice_occupation{
-  id Int @id @default(autoincrement())
-  job_name String
+
+model practice_occupation {
+  id        Int                 @id @default(autoincrement())
+  job_name  String
   relations practice_relation[]
 }
 
 model practice_relation {
-  practice_id Int 
+  practice_id   Int
   occupation_id Int
-  practice practice @relation(fields: [practice_id], references: [id])
-  occupation practice_occupation @relation(fields: [occupation_id], references: [id])
+  practice      practice            @relation(fields: [practice_id], references: [id])
+  occupation    practice_occupation @relation(fields: [occupation_id], references: [id])
+
   @@id([practice_id, occupation_id])
 }
-
-
-

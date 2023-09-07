@@ -24,6 +24,7 @@ async function getPrescribedBrandDrugsByPatient(patientId) {
         },
         prescription: {
           select: {
+            doctor_username: true,
             date: true
           }
         }
@@ -57,6 +58,7 @@ async function getPrescribedBrandDrugsByPatient(patientId) {
         },
         prescription: {
           select: {
+            doctor_username: true,
             date: true
           }
         }
@@ -72,7 +74,8 @@ async function getPrescribedBrandDrugsByPatient(patientId) {
         prescribedDosage: prescribedDrug.prescribed_dosage,
         brandName: prescribedDrug.drug.name,
         genericName: prescribedDrug.drug.generic.name,
-        prescriptionDate: prescribedDrug.prescription.date
+        prescriptionDate: prescribedDrug.prescription.date,
+        doctor_username: prescribedDrug.prescription.doctor_username
     };
 
     return organizedPrescribedDrug;
