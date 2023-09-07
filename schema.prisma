@@ -105,10 +105,11 @@ model patient_heart_rates {
 // }
 
 model medical_history {
-  disease_id Int
-  date       DateTime
-  patient_id Int
-  diseases   diseases @relation(fields: [disease_id], references: [id])
+  disease_id   Int
+  date         DateTime
+  patient_id   Int
+  prescription String?
+  diseases     diseases @relation(fields: [disease_id], references: [id])
 
   @@id([disease_id, date, patient_id])
 }
@@ -142,10 +143,10 @@ model prescription {
 }
 
 model test_metadata {
-  id          Int      @id @default(autoincrement())
-  test_name   String
-  row_name    String[]
-  column_name String[]
+  id               Int      @id @default(autoincrement())
+  test_name        String
+  row_name         String[]
+  column_name      String[]
   prefilled_values String[]
 
   prescribed_tests prescribed_tests[]

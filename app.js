@@ -69,6 +69,8 @@ app.use(require('./routes/loginRoutes/logoutRoute'));
 app.use(require('./routes/rootRoutes/rootRoute'));
 app.use(require('./routes/registerRoutes/patientRegisterRoute'));
 app.use(require('./routes/registerRoutes/patientBasicInfoUpdateRoute'));
+app.use(require('./routes/registerRoutes/newMedicalHistoryEntryRoute'));
+
 app.use(require('./routes/searchRoutes/searchPatientRoute'));
 app.use(require('./routes/generalTabRoutes/patientSummaryRoute'));
 app.use(require('./routes/demographyRoutes/patientDemographyRoute'));
@@ -89,6 +91,7 @@ app.use(require('./routes/practiceRoutes/practiceTabRoutes'));
 app.use(require('./routes/medicationTabRoutes/getPrescribedDrugsRoute'));
 app.use(require('./routes/medicationTabRoutes/getPrescribedDrugDetailsRoute'));
 app.use(require('./routes/docHomeRoutes/showTestsRoute'));
+
 // const users = [
 //   { id: 1, username: 'john_doe', name: 'John Doe', email: 'john.doe@example.com' },
 //   { id: 2, username: 'jane_smith', name: 'Jane Smith', email: 'jane.smith@example.com' },
