@@ -4,13 +4,13 @@ content-type: application/json
 [
     {
         "disease_id": 4,
-        "patient_id": 1,
+        "patient_id": 22,
         "date": "2020-01-01",
         "prescription": "paracetamol"
     },
     {
         "disease_id": 5,
-        "patient_id": 1,
+        "patient_id": 22,
         "date": "2020-05-15",
         "prescription": null
     }

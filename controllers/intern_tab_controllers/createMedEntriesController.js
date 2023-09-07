@@ -1,6 +1,7 @@
 const ORM_add_medical_history_entry = require('../../ORM/ORM_add_medical_history_entry');
 
 async function createMedicalHistoryEntries(req) {
+    // const req_json = req;
     const req_json = req.body;
     console.log("createMedicalHistoryEntries");
     console.log(req_json);
