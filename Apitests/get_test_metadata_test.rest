@@ -1,5 +1,5 @@
 ## test_metadata
-GET http://localhost:5000/api/v0/get_test_metadata/
+POST http://localhost:5000/api/v0/get_test_metadata/
 content-type: application/json
 
 {

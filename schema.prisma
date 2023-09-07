@@ -146,6 +146,7 @@ model test_metadata {
   test_name   String
   row_name    String[]
   column_name String[]
+  prefilled_values String[]
 
   prescribed_tests prescribed_tests[]
   queued_tests     queued_tests[]

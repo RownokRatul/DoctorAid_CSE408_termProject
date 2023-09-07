@@ -82,6 +82,7 @@ async function get_test_metadata(test_id) {
           test_name: true,
           row_name: true,
           column_name: true,
+          prefilled_values: true,
         }
     });
     console.log(test_metadata);
