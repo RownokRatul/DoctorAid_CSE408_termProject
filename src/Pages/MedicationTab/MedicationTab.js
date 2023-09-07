@@ -1,11 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
-// import { Box, Dialog, DialogContent, DialogTitle, Typography, Button } from '@mui/material';
-import MedicationCard from './Components/MedicationCard'
-import RestrictedCard from './Components/RestrictedCard'
-import { Card, CardContent, Typography, Button, Box, Dialog, DialogContent, DialogTitle, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
+import { Typography, Button, Dialog, DialogContent, DialogTitle, Paper, Box } from '@mui/material';
+import MedicationCard from './Components/MedicationCard';
 import { usePatientIDValidation } from '../../PatientIDValidation';
-import { PatientContext } from '../../PatientContext'
-
+import { PatientContext } from '../../PatientContext';
 
 
 // // Mock data with additional details
@@ -36,14 +33,18 @@ import { PatientContext } from '../../PatientContext'
 const MedicationTab = () => {
 
 
+
+
   usePatientIDValidation();
   const [detail, setDetail] = useState(null);
 
   const { patientID } = useContext(PatientContext);
+  //convert to int
   const [prescribedDrugs, setPrescribedDrugs] = useState([]);
   const [selectedDrug, setSelectedDrug] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
+  console.log("Patient ID:", patientID);
 
   useEffect(() => {
     if(patientID === null) return;
@@ -96,100 +97,35 @@ const handleClickDetail = async (drugId, prescriptionId) => {
 const handleCloseDialog = () => {
   setDialogOpen(false);
 };
-
 return (
-  <div>
-  <h1 style={{textAlign:"center",marginTop:"50px"}}>Prescribed Drugs</h1>
-  {prescribedDrugs.length === 0 ? (
-    <Typography variant="body1" style={{ textAlign: 'center' }}>
-      No drugs prescribed.
-    </Typography>
-  ) : (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>Drug Name</TableCell>
-          <TableCell>Generic Name</TableCell>
-          <TableCell>Started From</TableCell>
-          <TableCell>Appointment No.</TableCell>
-          <TableCell>Details</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
+  <div style={{ backgroundColor: '#eaeaea', padding: '20px' }}>
+    <h1 style={{ textAlign: "center", marginTop: "50px" }}>Prescribed Drugs</h1>
+    {prescribedDrugs.length === 0 ? (
+      <Typography variant="body1" style={{ textAlign: 'center' }}>
+        No drugs prescribed.
+      </Typography>
+    ) : (
+      <Box>
         {prescribedDrugs.map((drug) => (
-          <TableRow key={drug.drug_id}>
-            <TableCell>{drug.drug_name}</TableCell>
-            <TableCell>{drug.generic_name}</TableCell>
-            <TableCell>{(new Date(drug.date)).toISOString().split("T")[0]}</TableCell>
-            {/* <TableCell>{drug.date}</TableCell> */}
-            <TableCell>{drug.prescription_id}</TableCell>
-            <TableCell>
-              <Button onClick={() => handleClickDetail(drug.drug_id, drug.prescription_id)}>Details</Button>
-            </TableCell>
-          </TableRow>
+          <MedicationCard key={drug.drug_id} drug={drug} onClickDetail={handleClickDetail} />
         ))}
-      </TableBody>
-    </Table>
-  )}
+      </Box>
+    )}
 
-  <Dialog open={dialogOpen} onClose={handleCloseDialog}>
-    <Paper style={{ padding: '20px' }}>
-      <Typography variant="h6">{selectedDrug?.brandName}</Typography>
-      <Typography variant="body2">Generic Name: {selectedDrug?.genericName}</Typography>
-      <Typography variant="body2">Prescription ID: {selectedDrug?.prescription_id}</Typography>
-      <Typography variant="body2">Dosage: {selectedDrug?.prescribedDosage}</Typography>
-      <Typography variant="body2">Prescription Date: {(new Date(selectedDrug?.prescriptionDate)).toISOString().split("T")[0]}</Typography>
-      {/* <Typography  variant="body2">Prescription Date: {selectedDrug?.prescriptionDate}</Typography> */}
-      <Button onClick={handleCloseDialog}>Close</Button>
-    </Paper>
-  </Dialog>
-  
+    <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+      <DialogTitle>{selectedDrug?.brandName}</DialogTitle>
+      <DialogContent>
+        <Paper style={{ padding: '20px' }}>
+          <Typography variant="body2">Generic Name: {selectedDrug?.genericName}</Typography>
+          <Typography variant="body2">Prescription ID: {selectedDrug?.prescription_id}</Typography>
+          <Typography variant="body2">Dosage: {selectedDrug?.prescribedDosage}</Typography>
+          <Typography variant="body2">Prescription Date: {selectedDrug?.prescriptionDate ? (new Date(selectedDrug?.prescriptionDate)).toISOString().split("T")[0] : "N/A"}</Typography>
+          <Button variant="contained" color="primary" onClick={handleCloseDialog}>Close</Button>
+        </Paper>
+      </DialogContent>
+    </Dialog>
   </div>
-)
-
-
-
-  // const showDetail = (medicine) => {
-  //   setDetail(medicine); // Set the detailed medicine information to display in the dialog
-  // };
-
-  // const handleClose = () => {
-  //   setDetail(null); // Close the dialog by setting the detail to null
-  // };
-
-  // return (
-  //   <Box display="flex" width="100%">
-  //     {/* Left Flexbox */}
-  //     <Box width="70%" overflow="auto">
-  //       {/* Add a heading here , and keep the heading at center, add little top margin*/}
-  //       <Typography variant="h4" style={{ textAlign: 'center', marginTop: '20px' }}>Medication List</Typography>
-        
-        
-  //       {medicationList.map((med, index) => (
-  //         <MedicationCard key={index} medicine={med} showDetail={showDetail} />
-  //       ))}
-  //     </Box>
-
-  //     {/* Right Flexbox */}
-  //     <Box width="30%" overflow="auto">
-  //       {/* Add a heading here , and keep the heading at center, add little top margin*/}
-  //       <Typography variant="h4" style={{ textAlign: 'center', marginTop: '20px' }}>Restrictions</Typography>
-  //       {restrictedList.map((med, index) => (
-  //         <RestrictedCard key={index} medicine={med} />
-  //       ))}
-  //     </Box>
-
-  //     <Dialog onClose={handleClose} open={detail !== null}>
-  //       <DialogTitle>{detail?.medicineName}</DialogTitle>
-  //       <DialogContent>
-  //         <Typography variant="body1">Generic Name: {detail?.genericName}</Typography>
-  //         <Typography variant="body1">Uses: {detail?.uses}</Typography>
-  //         <Typography variant="body1">Side Effects: {detail?.sideEffects}</Typography>
-  //         <Button onClick={handleClose}>Close</Button>
-  //       </DialogContent>
-  //     </Dialog>
-  //   </Box>
-  // );
+);
 };
 
 export default MedicationTab;

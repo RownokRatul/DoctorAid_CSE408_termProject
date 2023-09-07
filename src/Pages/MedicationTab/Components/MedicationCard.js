@@ -1,18 +1,14 @@
-import { Card, CardContent, Typography, Button } from '@mui/material';
 import React from 'react';
+import { Card, CardContent, Typography, Button } from '@mui/material';
 
-const MedicationCard = ({ medicine, showDetail }) => (
-  <Card style={{ margin: '10px', backgroundColor: '#f9f9f9' }}>
+const MedicationCard = ({ drug, onClickDetail }) => (
+  <Card style={{ marginBottom: '20px', backgroundColor: '#f5f5f5' }}>
     <CardContent>
-      <Typography variant="h5" style={{ color: 'blue' }}>
-        {medicine.medicineName}
-      </Typography>
-      <Typography variant="body2">Generic Name: {medicine.genericName}</Typography>
-      <Typography variant="body2">Started From: {medicine.startedFrom}</Typography>
-      <Typography variant="body2">Doses: {medicine.doses}</Typography>
-      <Typography variant="body2">Appointment No: {medicine.appointmentNo}</Typography>
-      <Button variant="contained" color="primary" onClick={() => showDetail(medicine)}>
-        Show Detail
+      <Typography variant="h6">{drug.drug_name}</Typography>
+      <Typography variant="body2">Generic Name: {drug.generic_name}</Typography>
+      <Typography variant="body2">Prescription ID: {drug.prescription_id}</Typography>
+      <Button variant="contained" color="primary" onClick={() => onClickDetail(drug.drug_id, drug.prescription_id)}>
+        Details
       </Button>
     </CardContent>
   </Card>

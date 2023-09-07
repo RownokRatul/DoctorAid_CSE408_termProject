@@ -20,6 +20,7 @@ import { useThemeContext } from './ThemeContext';
 import { PatientProvider } from './PatientContext';
 import DiagnosticianPage from './Pages/DiagnosticianTab/DiagnosticianTab';
 import PracticePage2 from './Pages/practicePage/practice2';
+import LoginPage from './Pages/LandingPage/landingPage';
 // ...
 
 
@@ -32,7 +33,8 @@ function App() {
       <MainLayout>
         <PatientProvider>
           <Routes>
-            <Route path="/" element={<PatientIDInput />} />
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/doctor_homepage" element={<PatientIDInput />} />
             <Route path="/general" element={<General />} />
             <Route path="/demography" element={<Demography />} />
             <Route path="/diagnostics" element={<Diagnostics />} />

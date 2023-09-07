@@ -12,20 +12,34 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import doctoravatar from './Components/Images/doctor.png';
 import { Line } from 'react-chartjs-2'; // Importing Line from react-chartjs-2 for the line graph
-
 import NewsCard from './Components/NewsCardComponent'; // Import the NewsCard component
-
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // Import the default styling
-
 import testStatus from './Components/testStatusTable';
 
+
+
+
+
 const DoctorHomepage = () => {
+
 
   // ...other code
 
   const [news, setNews] = useState([]);
   const [testStatus, setTestStatus] = useState([]);
+  const {doctorInfo}=useContext(PatientContext);
+  const { logoutDoctor } = useContext(PatientContext);
+  useEffect(() => {
+    console.log("IN use effect");
+    if(!doctorInfo){
+      navigate('/');
+    }
+  },[]);
+  
+
+  console.log("doctorInfo:",doctorInfo);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,19 +85,19 @@ const DoctorHomepage = () => {
 
   }, []);
 
+
+
+
+
+
   
   const [inputID, setInputID] = useState('');
   const { setPatientID } = useContext(PatientContext);
   const navigate = useNavigate();
 
   // Dummy data for the doctor's information
-  const doctorInfo = {
-    image: 'doctor-image.jpg', // Doctor's image URL
-    name: 'Dr. John Smith',
-    speciality: 'Cardiology',
-    contact: '123-456-7890',
-    email: 'johnsmith@example.com',
-    degrees: 'MBBS, MD',
+  const hospitalinfo = {
+    
     hospital: 'ABC Hospital, Address, City, Zip',
   };
   const handlePatientDetail = (patientID) => {
@@ -97,6 +111,11 @@ const DoctorHomepage = () => {
     console.log(inputID);
     navigate('/general'); // Navigate to the general tab
   };
+  const handleLogout = () => {
+    console.log("In handle logout");
+    logoutDoctor();
+    navigate('/');
+  }
 
   return (
     <div>
@@ -104,29 +123,29 @@ const DoctorHomepage = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#f0f0f0', padding: '10px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Avatar src={doctoravatar} alt="Doctor" sx={{ width: 100, height: 100 }} />
-          <Button variant="contained" color="primary" style={{ marginTop: '10px' }}>Logout</Button>
+          <Button variant="contained" color="primary" style={{ marginTop: '10px' }} onClick={handleLogout}>Logout</Button>
         </div>
         <Card style={{ flex: '1', marginLeft: '20px', padding: '15px', backgroundColor: '#f7f9fc', flex: '30%' }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Typography variant="h6" style={{ color: '#333', marginBottom: '10px' }}>{doctorInfo.name}</Typography>
-            <Typography variant="subtitle1" style={{ color: '#666', marginBottom: '10px' }}>{doctorInfo.speciality}</Typography>
+            <Typography variant="h6" style={{ color: '#333', marginBottom: '10px' }}>{doctorInfo.info.name}</Typography>
+            <Typography variant="subtitle1" style={{ color: '#666', marginBottom: '10px' }}>{doctorInfo.info.specialization}</Typography>
           </div>
           <div style={{ display: 'flex', gap: '15px' ,justifyContent:"center"}}>
             <div style={{ padding: '10px', border: '1px solid #eaeaea', borderRadius: '5px' }}>
               <Typography variant="body2" style={{ fontWeight: 'bold' }}>Contact:</Typography>
-              <Typography variant="body1">{doctorInfo.contact}</Typography>
+              <Typography variant="body1">{doctorInfo.info.phone}</Typography>
             </div>
             <div style={{ padding: '10px', border: '1px solid #eaeaea', borderRadius: '5px' }}>
               <Typography variant="body2" style={{ fontWeight: 'bold' }}>Email:</Typography>
-              <Typography variant="body1">{doctorInfo.email}</Typography>
+              <Typography variant="body1">{doctorInfo.info.email}</Typography>
             </div>
             <div style={{ padding: '10px', border: '1px solid #eaeaea', borderRadius: '5px' }}>
               <Typography variant="body2" style={{ fontWeight: 'bold' }}>Degrees:</Typography>
-              <Typography variant="body1">{doctorInfo.degrees}</Typography>
+              <Typography variant="body1">{doctorInfo.info.degree}</Typography>
             </div>
             <div style={{ padding: '10px', border: '1px solid #eaeaea', borderRadius: '5px' }}>
               <Typography variant="body2" style={{ fontWeight: 'bold' }}>Hospital:</Typography>
-              <Typography variant="body1">{doctorInfo.hospital}</Typography>
+              <Typography variant="body1">{hospitalinfo.hospital}</Typography>
             </div>
           </div>
         </Card>
