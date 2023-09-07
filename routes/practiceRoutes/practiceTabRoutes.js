@@ -4,10 +4,11 @@ const cookie = require('../../authentication/cookie_checker');
 require('dotenv').config();
 const testStatusController = require('../../controllers/practice_controller/practiceController');
 
+const ensureAuthenticated = require('../../ensure-auth');
 
 const router = express.Router();
 
-router.get('/api/v0/get_test_status', async (req, res) => { //post->get
+router.get('/api/v0/get_test_status',ensureAuthenticated, async (req, res) => { //post->get
     {
         console.log("req.body\n");
         const pseudo_view = await testStatusController.getPatientTestStatusController();
