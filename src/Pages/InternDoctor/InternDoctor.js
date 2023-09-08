@@ -175,7 +175,7 @@ const InternDoctor = () => {
       console.error("Upload error", error);
       return null;
     }
-    return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${file.name}`;
+    return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${encodeURIComponent(file.name)}`;
   };
 
   const convertDateToISO = (dateString) => {
