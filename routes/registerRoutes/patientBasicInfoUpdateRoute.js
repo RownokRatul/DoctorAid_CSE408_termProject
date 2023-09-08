@@ -7,8 +7,9 @@ const {patientUpdateController} = require('../../controllers/intern_tab_controll
 
 const router = express.Router({mergeParams : true});
 
+const ensureAuthenticated = require('../../authentication/ensure-auth');
 
-router.put('/api/v0/update_patient', async (req, res) => { //post->get
+router.put('/api/v0/update_patient', ensureAuthenticated, async (req, res) => { //post->get
     // console.log("Backend: requested-> /api/v0/search_patient");
     // req_json = req.body;
     const pseudo_view = await patientUpdateController(req);

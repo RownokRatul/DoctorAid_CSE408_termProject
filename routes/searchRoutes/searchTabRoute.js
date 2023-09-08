@@ -7,8 +7,8 @@ require('dotenv').config();
 
 const router = express.Router({mergeParams : true});
 
-
-router.post('/api/v0/search_by_tag', async (req, res) => { 
+const ensureAuthenticated = require('../../authentication/ensure-auth');
+router.post('/api/v0/search_by_tag', ensureAuthenticated, async (req, res) => { 
     console.log("Inside search by tag route!");
     const pseudo_view = await searchByTagController.searchByTagController(req);
     if(pseudo_view) {
@@ -22,7 +22,7 @@ router.post('/api/v0/search_by_tag', async (req, res) => {
 });
 
 
-router.get('/api/v0/search_by_tag', async (req, res) => { 
+router.get('/api/v0/search_by_tag', ensureAuthenticated, async (req, res) => { 
     console.log("Inside search by tag route!");
     const pseudo_view = await getAllTags.getAllTagsController(req);
     if(pseudo_view) {

@@ -13,8 +13,8 @@ const router = express.Router();
 //     res.json({ message: 'Successfully logged out' });
 //   });
 // });
-
-router.get('/api/v0/logout', (req, res) => {
+const ensureAuthenticated = require('../../authentication/ensure-auth');
+router.get('/api/v0/logout', ensureAuthenticated, (req, res) => {
   req.logout(function(err) {
     if (err) { return next(err); }
     res.json({ message: 'Successfully logged out' });

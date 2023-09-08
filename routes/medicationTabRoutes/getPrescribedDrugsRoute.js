@@ -4,8 +4,8 @@ const checkCookie = require('../../authentication/cookie_checker');
 require('dotenv').config();
 
 const router = express.Router();
-
-router.post('/api/v0/get_prescribed_drugs_by_patient_id/', async (req, res) => {
+const ensureAuthenticated = require('../../authentication/ensure-auth');
+router.post('/api/v0/get_prescribed_drugs_by_patient_id/', ensureAuthenticated, async (req, res) => {
   console.log("Prescribed drugs route");
   console.log(req.body);
   const pseudo_view = await prescribedDrugsByPatientController(req);

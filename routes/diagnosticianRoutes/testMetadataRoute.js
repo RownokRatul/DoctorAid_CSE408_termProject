@@ -4,8 +4,8 @@ require('dotenv').config();
 const {testMetadataController} = require('../../controllers/diagnostician_page_controllers/testMetadataController'); // Import the testMetadataController function
 
 const router = express.Router();
-
-router.post('/api/v0/get_test_metadata', async (req, res) => { 
+const ensureAuthenticated = require('../../authentication/ensure-auth');
+router.post('/api/v0/get_test_metadata',ensureAuthenticated, async (req, res) => { 
     // console.log(req.body);
     const pseudo_view = await testMetadataController(req);
     if(pseudo_view) {

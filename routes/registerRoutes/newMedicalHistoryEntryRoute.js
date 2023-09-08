@@ -7,8 +7,8 @@ const {createMedicalHistoryEntries} = require('../../controllers/intern_tab_cont
 
 const router = express.Router({mergeParams : true});
 
-
-router.post('/api/v0/add_medical_history', async (req, res) => { //post->get
+const ensureAuthenticated = require('../../authentication/ensure-auth');
+router.post('/api/v0/add_medical_history', ensureAuthenticated, async (req, res) => { //post->get
     // console.log("Backend: requested-> /api/v0/search_patient");
     // req_json = req.body;
     console.log(req);

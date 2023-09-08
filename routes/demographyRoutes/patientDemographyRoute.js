@@ -4,10 +4,10 @@ const express = require('express');
 const checkCookie = require('../../authentication/cookie_checker');
 const {patientDemographyController} = require('../../controllers/demography_tab_controllers/patientdemographycontroller'); // Import the loginController function
 require('dotenv').config();
-
+const ensureAuthenticated = require('../../authentication/ensure-auth');
 const router = express.Router();
 
-router.post('/api/v0/patients/get_demography_tab_info/', async (req, res) => { //post->get
+router.post('/api/v0/patients/get_demography_tab_info/',ensureAuthenticated , async (req, res) => { //post->get
     // console.log("Backend: requested-> /api/v0/login");
     // req_json = req.body;
     console.log("demography_tab_route");

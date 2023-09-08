@@ -7,8 +7,9 @@ require('dotenv').config();
 
 const router = express.Router({mergeParams : true});
 
+const ensureAuthenticated = require('../../authentication/ensure-auth');
 
-router.post('/api/v0/search_patient', async (req, res) => { //post->get
+router.post('/api/v0/search_patient', ensureAuthenticated, async (req, res) => { //post->get
     // console.log("Backend: requested-> /api/v0/search_patient");
     // req_json = req.body;
     const pseudo_view = await patientSearchController(req);

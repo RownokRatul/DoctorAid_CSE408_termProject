@@ -4,8 +4,8 @@ require('dotenv').config();
 const {createPrescribedTestController} = require('../../controllers/diagnostician_page_controllers/createPrescribedTestController'); // Import the testMetadataController function
 
 const router = express.Router();
-
-router.post('/api/v0/create_prescribed_test', async (req, res) => { 
+const ensureAuthenticated = require('../../authentication/ensure-auth');
+router.post('/api/v0/create_prescribed_test',ensureAuthenticated, async (req, res) => { 
     // console.log(req.body);
     const pseudo_view = await createPrescribedTestController(req);
     if(pseudo_view) {

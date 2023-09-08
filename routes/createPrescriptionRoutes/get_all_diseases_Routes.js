@@ -1,13 +1,14 @@
 const express = require('express');
 const cookie = require('../../authentication/cookie_checker');
 const getAllDiseasesController = require('../../controllers/create_prescription_controller/getAllDiseasesController');
+const ensureAuthenticated = require('../../authentication/ensure-auth');
 
 require('dotenv').config();
 
 const router = express.Router({mergeParams : true});
 
 
-router.get('/api/v0/get_all_diseases', async (req, res) => { 
+router.get('/api/v0/get_all_diseases',ensureAuthenticated, async (req, res) => { 
     // console.log("Inside search by tag route!");
     const pseudo_view = await getAllDiseasesController.getAllDiseasesController(req);
     if(pseudo_view) {

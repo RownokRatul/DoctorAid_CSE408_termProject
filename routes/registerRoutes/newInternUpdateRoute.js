@@ -9,8 +9,8 @@ const {patientUpdateController} = require('../../controllers/intern_tab_controll
 
 const router = express.Router({mergeParams : true});
 
-
-router.put('/api/v0/update_new_patient', async (req, res) => { //post->get
+const ensureAuthenticated = require('../../authentication/ensure-auth');
+router.put('/api/v0/update_new_patient', ensureAuthenticated, async (req, res) => { //post->get
     // console.log("Backend: requested-> /api/v0/search_patient");
     // req_json = req.body;
     console.log(req);

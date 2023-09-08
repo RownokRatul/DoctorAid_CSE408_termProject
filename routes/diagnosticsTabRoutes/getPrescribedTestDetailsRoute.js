@@ -6,8 +6,8 @@ const {prescribedTestByTestIDController} = require('../../controllers/diagnostic
 require('dotenv').config();
 
 const router = express.Router();
-
-router.post('/api/v0/get_prescribed_test_by_test_id', async (req, res) => { //post->get
+const ensureAuthenticated = require('../../authentication/ensure-auth');
+router.post('/api/v0/get_prescribed_test_by_test_id', ensureAuthenticated, async (req, res) => { //post->get
     // console.log("Backend: requested-> /api/v0/login");
     // req_json = req.body;
     console.log("diagnostics tab route details");

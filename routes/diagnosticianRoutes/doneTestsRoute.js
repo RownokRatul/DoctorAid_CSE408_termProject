@@ -4,8 +4,8 @@ require('dotenv').config();
 const {doneTestsController} = require('../../controllers/diagnostician_page_controllers/doneTestsController'); // Import the loginController function
 
 const router = express.Router();
-
-router.get('/api/v0/get_done_tests', async (req, res) => { 
+const ensureAuthenticated = require('../../authentication/ensure-auth');
+router.get('/api/v0/get_done_tests', ensureAuthenticated, async (req, res) => { 
     // console.log(req.body);
     const pseudo_view = await doneTestsController(req);
     if(pseudo_view) {
