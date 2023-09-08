@@ -62,9 +62,10 @@ require('dotenv').config();
 
 // app.use(cookieParser());
 // app.use(ensureAuthenticated);
+app.use(require('./routes/rootRoutes/rootRoute'));
+
 app.use(require('./routes/loginRoutes/loginRoute'));
 app.use(require('./routes/loginRoutes/logoutRoute'));
-app.use(require('./routes/rootRoutes/rootRoute'));
 
 app.use(require('./routes/registerRoutes/patientRegisterRoute'));
 app.use(require('./routes/registerRoutes/patientBasicInfoUpdateRoute'));
@@ -72,9 +73,14 @@ app.use(require('./routes/registerRoutes/newInternUpdateRoute'));
 app.use(require('./routes/registerRoutes/newMedicalHistoryEntryRoute'));
 app.use(require('./routes/registerRoutes/addBPandHeartRateRoute'));
 
-app.use(require('./routes/searchRoutes/searchPatientRoute'));
+app.use(require('./routes/docHomeRoutes/showTestsRoute'));
+
 app.use(require('./routes/generalTabRoutes/patientSummaryRoute'));
+
 app.use(require('./routes/demographyRoutes/patientDemographyRoute'));
+
+app.use(require('./routes/medicationTabRoutes/getPrescribedDrugsRoute'));
+app.use(require('./routes/medicationTabRoutes/getPrescribedDrugDetailsRoute'));
 
 app.use(require('./routes/diagnosticianRoutes/queuedTestsRoute'));
 app.use(require('./routes/diagnosticianRoutes/doneTestsRoute'));
@@ -84,14 +90,17 @@ app.use(require('./routes/diagnosticianRoutes/updateTestResultRoute'));
 app.use(require('./routes/diagnosticsTabRoutes/getPrescribedTestsRoute'));
 app.use(require('./routes/diagnosticsTabRoutes/getPrescribedTestDetailsRoute'));
 
+app.use(require('./routes/searchRoutes/searchPatientRoute'));
 app.use(require('./routes/searchRoutes/searchTabRoute'));
+
 app.use(require('./routes/createPrescriptionRoutes/get_all_diseases_Routes'));
+app.use(require('./routes/createPrescriptionRoutes/get_all_tests_Route'));
+
 app.use(require('./routes/practiceRoutes/practiceTabRoutes'));
 
 
-app.use(require('./routes/medicationTabRoutes/getPrescribedDrugsRoute'));
-app.use(require('./routes/medicationTabRoutes/getPrescribedDrugDetailsRoute'));
-app.use(require('./routes/docHomeRoutes/showTestsRoute'));
+
+
 
 // const users = [
 //   { id: 1, username: 'john_doe', name: 'John Doe', email: 'john.doe@example.com' },
