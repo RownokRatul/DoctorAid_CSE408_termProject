@@ -8,10 +8,13 @@ import CurrentAddressCard from './Components/CurrentAddressCard';
 
 import CurrentOccupationCard from './Components/CurrentOccupation';
 import OccupationCard from './Components/Occupation';
-import historyCard from './Components/TravelHistory';
+import HistoryCard from './Components/TravelHistory';
 import DiseasesCard from './Components/DiseaseCard';
 import PrescriptionCard from './Components/PrescriptionUploadCard';
 import { PatientContext } from '../../PatientContext';
+
+import DiseasePrescriptionCard from './Components/DiseasePrescriptionCard'; // Import the new component
+
 import axios from 'axios';
 
 const InternDoctor = () => {
@@ -31,6 +34,10 @@ const InternDoctor = () => {
     histories: [] 
 
   });
+  // In InternDoctor.js
+
+  const [diseasePrescriptionPairs, setDiseasePrescriptionPairs] = useState([{ disease: null, file: null, date: null }]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,8 +82,14 @@ const InternDoctor = () => {
           from: new Date(patientInfo.occupation_from[index]).toISOString().split('T')[0],
           to: new Date(patientInfo.occupation_to[index]).toISOString().split('T')[0]
         })),
-        histories: [] // Assuming patientInfo doesn't have histories for now
-      });
+        histories: patientInfo.travel_history.map((history, index) => ({
+          name: history,
+          from: new Date(patientInfo.travel_from[index]).toISOString().split('T')[0],
+          to: new Date(patientInfo.travel_to[index]).toISOString().split('T')[0]
+        })),
+
+        
+        });
       setSelectedDiseases([]); // Assuming patientInfo doesn't have diseases for now
       setPrescriptions([{ file: '', date: '' }]); // Assuming patientInfo doesn't have prescriptions for now
     }
@@ -165,29 +178,103 @@ const InternDoctor = () => {
     return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${file.name}`;
   };
 
+  const convertDateToISO = (dateString) => {
+    const dateObj = new Date(dateString);
+    dateObj.setUTCHours(0, 0, 0, 0);
+    return dateObj.toISOString();
+  };
+
 
   const handleFinalSubmit = async () => {
     // Combine all the information collected across the two pages
 
-    const file_URL = await uploadFileAndGetURL(prescriptions[0].file);
-    console.log(file_URL);
+    // const file_URL = await uploadFileAndGetURL(prescriptions[0].file);
+    // console.log(file_URL);
+    // Add this in handleFinalSubmit in InternDoctor.js
 
-    const result = {
+      const diseasePrescriptions = await Promise.all(
+        diseasePrescriptionPairs.map(async (pair) => {
+          const file_URL = await uploadFileAndGetURL(pair.file);
+          return {
+            disease: pair.disease,
+            prescription: file_URL,
+            date: pair.date
+          };
+        })
+      );
+
+
+    const result_1 = {
+
+//       "id": 17,
+// #     "name": "John Smith",
+// #     "phone": "0987654321",
+// #     "nid": "987654321",
+// #     "dob": "1995-05-15T00:00:00.000Z",
+// #     "gender": "F",
+// #     "hometown": "Hometown B",
+
+
+      id: patientInfo.id,
+      height: patientInfo.height,
+      weight: patientInfo.weight,
+      
       addresses: [info.currentAddress.name, ...info.addresses.map(a => a.name)],
       address_from: [info.currentAddress.from, ...info.addresses.map(a => a.from)],
       address_to: info.addresses.map(a => a.to),
       occupations: [info.currentOccupation.name, ...info.occupations.map(a => a.name)],
       occupation_from: [info.currentOccupation.from, ...info.occupations.map(a => a.from)],
       occupation_to: info.occupations.map(a => a.to),
-      histories: info.histories.map(a => a.name),
-      history_from: info.histories.map(a => a.from),
-      history_to: info.histories.map(a => a.to),
-      diseases: selectedDiseases,
-      prescriptions: file_URL,
+      travel_history: info.histories.map(a => a.name),
+      travel_from: info.histories.map(a => a.from),
+      travel_to: info.histories.map(a => a.to),
+      
+      
     };
+    const result_2 = {
+      disease: diseasePrescriptionPairs.map(pair => pair.disease),
+      id: patientInfo.id,
+      prescription: diseasePrescriptions.map(pair => pair.prescription),
+      date: diseasePrescriptions.map(pair => pair.date)
+
+
+    };
+
   
     // Output the final result to the console
-    console.log(JSON.stringify(result));
+    console.log("Final result:");
+    console.log(JSON.stringify(result_2));
+
+    // Send the result to the backend
+    
+        try {
+            const response = await axios.put("api/v0/update_patient/", 
+            {
+              id: patientInfo.id,
+              height: patientInfo.height,
+              weight: patientInfo.weight,
+              addresses: [info.currentAddress.name, ...info.addresses.map(a => a.name)],
+              address_from: [info.currentAddress.from, ...info.addresses.map(a => a.from)].map(convertDateToISO),
+              address_to: info.addresses.map(a => a.to).map(convertDateToISO),
+              occupations: [info.currentOccupation.name, ...info.occupations.map(a => a.name)],
+              occupation_from: [info.currentOccupation.from, ...info.occupations.map(a => a.from)].map(convertDateToISO),
+              occupation_to: info.occupations.map(a => a.to).map(convertDateToISO),
+              travel_history: info.histories.map(a => a.name),
+              travel_from: info.histories.map(a => a.from).map(convertDateToISO),
+              travel_to: info.histories.map(a => a.to).map(convertDateToISO)
+            }
+            );
+            console.log("response", response.data);
+            // Assuming the API response contains the search result data
+            if (response.status === 200 ) {
+                console.log("response", response.data);
+            } else {
+               console.log("response", response.data);
+            }
+          } catch (error) {
+            console.error("Error updating:", error);
+            
+          }
   };
 
   return (
@@ -222,21 +309,18 @@ const InternDoctor = () => {
 
         <Box mb={2}>
           <Card>
-            <historyCard histories={info.histories} handlehistoryChange={handlehistoryChange} addhistory={addhistory} />
+            <HistoryCard histories={info.histories} handlehistoryChange={handlehistoryChange} addhistory={addhistory} />
           </Card>
         </Box>
             <Button variant="contained" color="primary" onClick={handleNext}>Next</Button>
           </>
         ) : (
           <>
+           
+            
             <Box mb={2}>
               <Card>
-                <DiseasesCard selectedDiseases={selectedDiseases} handleDiseaseSelection={handleDiseaseSelection} />
-              </Card>
-            </Box>
-            <Box mb={2}>
-              <Card>
-                <PrescriptionCard prescriptions={prescriptions} handlePrescriptionChange={handlePrescriptionChange} addPrescription={addPrescription} />
+                <DiseasePrescriptionCard diseasePrescriptionPairs={diseasePrescriptionPairs} setDiseasePrescriptionPairs={setDiseasePrescriptionPairs} />
               </Card>
             </Box>
             <Button variant="contained" color="primary" onClick={handleFinalSubmit}>Submit</Button>
