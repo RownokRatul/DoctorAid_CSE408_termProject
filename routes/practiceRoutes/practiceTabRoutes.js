@@ -4,7 +4,7 @@ const cookie = require('../../authentication/cookie_checker');
 require('dotenv').config();
 const testStatusController = require('../../controllers/practice_controller/practiceController');
 
-const ensureAuthenticated = require('../../ensure-auth');
+const ensureAuthenticated = require('../../authentication/ensure-auth');
 
 const router = express.Router();
 

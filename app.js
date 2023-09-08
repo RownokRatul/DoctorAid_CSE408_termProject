@@ -4,10 +4,8 @@ const sessions = require('express-session');
 const morgan = require('morgan');
 var bodyParser = require('body-parser')
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const ensureAuthenticated = require('./ensure-auth');
-
-require('./passport-config');  // Adjust the path
+const LocalStrategy = require('./authentication/passport-config').Strategy;
+const ensureAuthenticated = require('./authentication/ensure-auth');
 
 const app = express();
 const PORT = process.env.PORT || 5000;

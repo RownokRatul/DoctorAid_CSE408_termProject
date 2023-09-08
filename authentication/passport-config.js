@@ -1,7 +1,7 @@
 // passport-config.js
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const orm_login = require('./ORM/ORM_login'); // Update this path
+const orm_login = require('../ORM/ORM_login'); // Update this path
 
 passport.use(new LocalStrategy(
   async (username, password, done) => {
