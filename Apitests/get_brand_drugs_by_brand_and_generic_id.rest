@@ -1,0 +1,7 @@
+POST http://localhost:5000/api/v0/get_brand_drug_by_brand_generic_id/
+content-type: application/json
+
+{
+    "brand_id": 2,
+    "generic_drug_id": 2
+}

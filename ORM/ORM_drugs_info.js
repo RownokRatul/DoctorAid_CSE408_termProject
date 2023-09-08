@@ -95,5 +95,52 @@ async function getPrescribedBrandDrugsByPatient(patientId) {
     return organizedPrescribedDrug;
   }
   
+  async function getAllBrandDrugsByBrandAndGenericId(brandId, genericId) {
+    try {
+      const brandDrugs = await prisma.brand_drugs.findMany({
+        where: {
+          brand_id: brandId,
+          generic_id: genericId,
+        },
+        select: {
+          id: true,
+          name: true,
+          adult_dosage: true,
+          child_dosage: true,
+          generic: {
+            select: {
+              name: true,
+              usecases: true,
+              adverse_effects: true,
+            },
+          },
+          brand: {
+            select: {
+              brand_name: true,
+            },
+          },
+        },
+      });
   
-  module.exports = { getPrescribedBrandDrugsByPatient, getPrescribedBrandDrugByDrugId};
+      if (!brandDrugs || brandDrugs.length === 0) return null;
+  
+      // Structuring the data in a more readable format
+      const organizedBrandDrugs = brandDrugs.map((brandDrug) => ({
+        drugId: brandDrug.id,
+        brandName: brandDrug.name,
+        genericName: brandDrug.generic.name,
+        adultDosage: brandDrug.adult_dosage,
+        childDosage: brandDrug.child_dosage,
+        brand: brandDrug.brand.brand_name,
+        usecases: brandDrug.generic.usecases,
+        adverseEffects: brandDrug.generic.adverse_effects,
+      }));
+  
+      return organizedBrandDrugs;
+    } catch (error) {
+      console.error("An error occurred while fetching brand drugs:", error);
+      return null;
+    }
+  }
+  
+  module.exports = { getPrescribedBrandDrugsByPatient, getPrescribedBrandDrugByDrugId, getAllBrandDrugsByBrandAndGenericId};

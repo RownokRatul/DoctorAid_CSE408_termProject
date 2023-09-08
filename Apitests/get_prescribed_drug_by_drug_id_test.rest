@@ -14,6 +14,18 @@ content-type: application/json
 #     "prescribedDosage": "1+1+1, 7 days a week",
 #     "brandName": "Zestril:10mg",
 #     "genericName": "Lisinopril",
-#     "prescriptionDate": "2023-08-17T00:00:00.000Z"
+#     "prescriptionDate": "2023-08-17T00:00:00.000Z",
+#     "doctor_username": "doc_oc",
+#     "adultDosage": "1+1+1, 7 days a week",
+#     "childDosage": "1+0+1, 3 days a week",
+#     "brand": "AstraZeneca",
+#     "usecases": [
+#       "Hypertension",
+#       "Heart Disease"
+#     ],
+#     "adverseEffects": [
+#       "Dizziness",
+#       "Cough"
+#     ]
 #   }
 # }
