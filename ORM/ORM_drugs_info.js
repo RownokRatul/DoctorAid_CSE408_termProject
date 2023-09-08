@@ -51,7 +51,9 @@ async function getPrescribedBrandDrugsByPatient(patientId) {
             name: true,
             generic: {
               select: {
-                name: true
+                name: true,
+                adverse_effects: true,
+                usecases: true
               }
             },
             adult_dosage: true,
@@ -85,7 +87,9 @@ async function getPrescribedBrandDrugsByPatient(patientId) {
         doctor_username: prescribedDrug.prescription.doctor_username,
         adultDosage: prescribedDrug.drug.adult_dosage,
         childDosage: prescribedDrug.drug.child_dosage,
-        brand: prescribedDrug.drug.brand.brand_name
+        brand: prescribedDrug.drug.brand.brand_name,
+        usecases: prescribedDrug.drug.generic.usecases,
+        adverseEffects: prescribedDrug.drug.generic.adverse_effects,
     };
 
     return organizedPrescribedDrug;

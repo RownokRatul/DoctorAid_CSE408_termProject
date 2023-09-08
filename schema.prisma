@@ -200,18 +200,6 @@ model generic_drugs {
   drug_tag    drug_tag[]
 }
 
-// model brand_drugs {
-//   id           Int    @id @default(autoincrement())
-//   generic_id   Int?
-//   name         String
-//   company      String
-//   adult_dosage String
-//   child_dosage String
-
-//   generic          generic_drugs?     @relation(fields: [generic_id], references: [id])
-//   prescribed_drugs prescribed_drugs[]
-// }
-
 model brand_drugs {
   id           Int    @id @default(autoincrement())
   generic_id   Int?
