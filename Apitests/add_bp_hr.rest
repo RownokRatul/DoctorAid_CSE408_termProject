@@ -1,0 +1,10 @@
+POST http://localhost:5000/api/v0/add_bp_hr/
+content-type: application/json
+
+{
+    "patient_id":  2,
+    "taken_at": "2022-05-01",
+    "hr_value" : 80,
+    "bp_value_low" : 75,
+    "bp_value_high" : 115
+}

@@ -65,10 +65,12 @@ require('dotenv').config();
 app.use(require('./routes/loginRoutes/loginRoute'));
 app.use(require('./routes/loginRoutes/logoutRoute'));
 app.use(require('./routes/rootRoutes/rootRoute'));
+
 app.use(require('./routes/registerRoutes/patientRegisterRoute'));
 app.use(require('./routes/registerRoutes/patientBasicInfoUpdateRoute'));
 app.use(require('./routes/registerRoutes/newInternUpdateRoute'));
 app.use(require('./routes/registerRoutes/newMedicalHistoryEntryRoute'));
+app.use(require('./routes/registerRoutes/addBPandHeartRateRoute'));
 
 app.use(require('./routes/searchRoutes/searchPatientRoute'));
 app.use(require('./routes/generalTabRoutes/patientSummaryRoute'));
