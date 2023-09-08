@@ -1,2 +1,28 @@
 GET http://localhost:5000/api/v0/get_all_generic_drugs
 content-type: application/json
+
+# {
+#   "message": "Success",
+#   "data": [
+#     {
+#       "id": 2,
+#       "name": "Ibuprofen"
+#     },
+#     {
+#       "id": 3,
+#       "name": "Aspirin"
+#     },
+#     {
+#       "id": 4,
+#       "name": "Lisinopril"
+#     },
+#     {
+#       "id": 5,
+#       "name": "Amoxicillin"
+#     },
+#     {
+#       "id": 1,
+#       "name": "Paracetamol"
+#     }
+#   ]
+# }

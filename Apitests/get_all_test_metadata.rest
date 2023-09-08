@@ -1,3 +1,28 @@
 GET http://localhost:5000/api/v0/get_all_tests
 content-type: application/json
 
+# {
+#   "message": "Success",
+#   "data": [
+#     {
+#       "id": 2,
+#       "test_name": "Lipid Panel"
+#     },
+#     {
+#       "id": 3,
+#       "test_name": "Ultrasound"
+#     },
+#     {
+#       "id": 1,
+#       "test_name": "CBC"
+#     },
+#     {
+#       "id": 4,
+#       "test_name": "MRI"
+#     },
+#     {
+#       "id": 5,
+#       "test_name": "X-Ray"
+#     }
+#   ]
+# }

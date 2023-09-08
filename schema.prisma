@@ -213,12 +213,12 @@ model generic_drugs {
 // }
 
 model brand_drugs {
-  id           Int     @id @default(autoincrement())
+  id           Int    @id @default(autoincrement())
   generic_id   Int?
   name         String
   adult_dosage String
   child_dosage String
-  brand_id     BigInt?
+  brand_id     Int?
 
   generic          generic_drugs?     @relation(fields: [generic_id], references: [id])
   brand            brands?            @relation(fields: [brand_id], references: [id])
@@ -229,7 +229,7 @@ model brand_drugs {
 }
 
 model brands {
-  id         BigInt  @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   brand_name String?
 
   brand_drugs brand_drugs[]
