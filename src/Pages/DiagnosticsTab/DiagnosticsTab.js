@@ -3,7 +3,7 @@ import { PatientContext } from '../../PatientContext'
 
 import { usePatientIDValidation } from '../../PatientIDValidation';
 import React, { useState, useContext, useEffect } from 'react';
-import { Card, CardContent, Typography, Button, Dialog, Table, TableHead, TableRow, TableCell, TableBody, Paper, CircularProgress } from '@mui/material';
+import { Card, CardContent, Typography, Button, Dialog, Table, TableHead, TableRow, TableCell, TableBody, Paper, CircularProgress, FormControlLabel, Switch } from '@mui/material';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 // import { use } from 'passport';
 
@@ -118,7 +118,7 @@ const Diagnostics = () => {
         </div>
       ) : (
         <div>
-          <ToggleButtonGroup
+          {/* <ToggleButtonGroup
             value={filterMine}
             exclusive
             onChange={handleToggleFilter}
@@ -127,8 +127,20 @@ const Diagnostics = () => {
             <ToggleButton value={true} aria-label="show">
               Filter
             </ToggleButton>
-          </ToggleButtonGroup>
-          
+          </ToggleButtonGroup> */}
+
+          <FormControlLabel
+            control={
+              <Switch
+                checked={filterMine}
+                onChange={handleToggleFilter}
+                name="filterMine"
+                color="primary"
+              />
+            }
+            label="Filter"
+          />
+
           <h1 style={{textAlign:"center",marginTop:"50px"}}>Previous Tests</h1>
           {filteredTests.map((test) => (
             <Card key={test.test_id} style={{ margin: '10px' ,backgroundColor:"azure",textAlign:"center",marginTop:"50px"}}>
