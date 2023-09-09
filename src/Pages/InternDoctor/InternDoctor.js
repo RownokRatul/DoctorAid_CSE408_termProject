@@ -261,9 +261,13 @@ const InternDoctor = () => {
   //   // return <h1>Access Denied!</h1>
   // }
 
+      console.log('diseasePairs: ' ,diseasePrescriptionPairs);
+      const validDiseasePrescriptionPairs = diseasePrescriptionPairs.filter(pair => pair.disease !== null);
+      console.log('valid diseasePairs' ,validDiseasePrescriptionPairs);
+
       const diseasePrescriptions = await Promise.all(
-        diseasePrescriptionPairs.map(async (pair) => {
-          if(pair.file ===null){
+        validDiseasePrescriptionPairs.map(async (pair) => {
+          if(pair.file === null){
             return {
               disease_id: pair.diseaseId,
               patient_id: patientInfo.id,
@@ -281,16 +285,11 @@ const InternDoctor = () => {
         })
       );
 
+      console.log("diseasePrescriptions", diseasePrescriptions);
 
     
-
-    
-     console.log("HealthInfo",healthInfo.height);
-     console.log("PatientInfo",patientInfo.height);
-    
-    
-
-
+     console.log("HealthInfo", healthInfo.height);
+     console.log("PatientInfo", patientInfo);
 
     // Send the result to the backend
     
@@ -328,7 +327,7 @@ const InternDoctor = () => {
            
         try {
           const response = await axios.post("api/v0/add_medical_history/", 
-          diseasePrescriptions
+            diseasePrescriptions
           );
           console.log("response", response.data);
           // Assuming the API response contains the search result data
@@ -343,6 +342,7 @@ const InternDoctor = () => {
         }
 
         try {
+          console.log(patientInfo.id);
           const response = await axios.post("api/v0/add_bp_hr/", 
           {
             patient_id:  patientInfo.id,
@@ -366,7 +366,7 @@ const InternDoctor = () => {
   };
   return (
     <Container maxWidth="md">
-      <Box bgcolor="background.paper" p={3} boxShadow={20} borderRadius={2} marginTop={10}>
+      <Box bgcolor="background.paper" p={3} boxShadow={20} borderRadius={2} marginTop={10} marginBottom={10}>
         {page === 1 ? (
           <>
             <Box mb={2}>

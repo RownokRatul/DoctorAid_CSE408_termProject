@@ -1,8 +1,10 @@
 import React, { useState,useContext } from 'react';
-import { useHistory, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Paper, TextField, Button, Typography, Container, Box, CircularProgress  } from '@mui/material';
 import { PatientContext } from '../../PatientContext';
+
+// import { SHA256 } from 'crypto-js';
 
 const LoginPage = () => {
   const { setDoctorInfo } = useContext(PatientContext);  // Destructure setDoctorInfo from context
@@ -21,10 +23,14 @@ const LoginPage = () => {
     setIsLoading(true);
     e.preventDefault();
     try {
+      // const hashPassword = SHA256(password).toString();
+      // console.log(hashPassword);
+
       const response = await axios.post('/api/v0/login', {
         username,
         password,
       });
+
       const { data } = response;
       if (data.message === 'Authenticated') {
         
@@ -43,14 +49,18 @@ const LoginPage = () => {
             setRole(role.toLowerCase());
             navigate('/diagnostician');
             break;
+          case 'receptionist':
+            setRole(role.toLowerCase());
+            navigate('/register');
+            break;
           default:
             setError('Unknown role');
         }
       } else {
-        setError('Login failed');
+        setError('Something went wrong!');
       }
     } catch (error) {
-      setError('Something went wrong');
+      setError('Login failed: Incorrect ID or Password');
     } finally {
       setIsLoading(false);
     }
