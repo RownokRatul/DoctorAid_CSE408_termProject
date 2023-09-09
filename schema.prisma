@@ -211,6 +211,19 @@ model generic_drugs {
 
   brand_drugs brand_drugs[]
   drug_tag    drug_tag[]
+  interactionsAsDrug1 drug_drug_interactions[] @relation("Drug1ToInteraction")
+  interactionsAsDrug2 drug_drug_interactions[] @relation("Drug2ToInteraction")
+}
+
+model drug_drug_interactions {
+  drug1_id  Int
+  drug2_id  Int
+  comment   String
+
+  drug1     generic_drugs @relation("Drug1ToInteraction", fields: [drug1_id], references: [id])
+  drug2     generic_drugs @relation("Drug2ToInteraction", fields: [drug2_id], references: [id])
+
+  @@id([drug1_id, drug2_id])
 }
 
 model brand_drugs {
@@ -308,6 +321,9 @@ model prescription_tag {
 
   @@id([prescription_id, tag_id])
 }
+
+
+
 
 model practice {
   id        Int                 @id @default(autoincrement())

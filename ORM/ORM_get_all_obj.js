@@ -59,6 +59,24 @@ async function getAllBrands() {
     console.log(branddata);
     return branddata;
 }
+
+
+async function getAllDrugInteractions() {
+  try {
+    const interactions = await prisma.drug_drug_interactions.findMany({
+      select: {
+        drug1_id: true,
+        drug2_id: true,
+        comment: true,
+      },
+    });
+
+    return interactions;
+  } catch (error) {
+    console.error("Error fetching all drug-drug interactions:", error);
+    throw error;
+  }
+}
   
 module.exports = {
     getAllTags,
@@ -66,4 +84,5 @@ module.exports = {
     getAllDiseases,
     getAllGenericDrugs,
     getAllBrands,
+    getAllDrugInteractions,
 }

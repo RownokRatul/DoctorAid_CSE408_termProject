@@ -63,9 +63,29 @@ async function getAllBrandsController(req) {
     }
 }
 
+async function getAllDrugInteractionsController(req) {
+    const req_json = req.body;
+    // if(!cookie.checkCookie(req.session)) {
+    //     // Force to login. And return a status
+    //     return;
+    // }
+    console.log(req_json);
+    const model_interactions = await orm_get_all_obj.getAllDrugInteractions();
+    if(model_interactions) {
+        const pseudo_view = model_interactions;
+        return pseudo_view;
+    }
+    else {
+        console.log('NO user Found!');
+        return null;
+    }
+  }
+  
+
 module.exports = {
     getAllTestsController,
     getAllDrugsController,
     getAllDiseasesController,
     getAllBrandsController,
+    getAllDrugInteractionsController,
 }

@@ -52,4 +52,14 @@ router.get('/api/v0/get_all_tests',ensureAuthenticated, async (req, res) => {
     }
 });
 
+router.get('/api/v0/get_all_drug_interactions',ensureAuthenticated, async (req, res) => {
+    const pseudo_view = await getAllObjController.getAllDrugInteractionsController(req);
+    if(pseudo_view) {
+        res.status(200).json({message : 'Success', data : pseudo_view});
+    }
+    else {
+        res.status(404).json({error : 'Not Found'});
+    }
+});
+
 module.exports = router;
