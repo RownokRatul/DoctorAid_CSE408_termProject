@@ -9,6 +9,7 @@ content-type: application/json
     "patient_id" : 1,
     "doctor_username" : "doc_oc",
     "date" : "2021-05-01T00:00:00.000Z",
-    "findings" : "Classic Viral Fever"
+    "findings" : "Classic Viral Fever",
+    "tags" : [1,2,3,4,5]
 
 }

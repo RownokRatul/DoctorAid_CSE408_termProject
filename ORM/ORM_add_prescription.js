@@ -75,6 +75,24 @@ async function createNewPrescription(patientId, doctorUsername, date, findings) 
     }
   });
 }
+
+async function addTagsForPrescription(prescriptionId, tagIds) {
+  // Prepare the data for bulk insert
+  const prescriptionTagData = tagIds.map((tagId) => ({
+    prescription_id: prescriptionId,
+    tag_id: tagId,
+  }));
+
+  // Insert records in a transaction
+  return prisma.$transaction(
+    prescriptionTagData.map((tagData) =>
+      prisma.prescription_tag.create({
+        data: tagData,
+      })
+    )
+  );
+}
+
   
 
 
@@ -101,14 +119,15 @@ async function createNewPrescription(patientId, doctorUsername, date, findings) 
 //   }
 // }
 
-async function addPrescriptionEntry(testIds, drugIds, prescribedDosages, diseaseIds, patientId, doctorUsername, date, findings) {
+async function addPrescriptionEntry(testIds, drugIds, prescribedDosages, diseaseIds, patientId, doctorUsername, date, findings, tagIds) {
   try {
     const temp_model = await createNewPrescription(patientId, doctorUsername, date, findings);
     const prescriptionId = temp_model.id;
     await Promise.all([
       queueTestsForPrescription(prescriptionId, testIds),
       addPrescribedDrugs(prescriptionId, drugIds, prescribedDosages),
-      addDiseasesForPrescription(prescriptionId, diseaseIds)
+      addDiseasesForPrescription(prescriptionId, diseaseIds),
+      addTagsForPrescription(prescriptionId, tagIds)
     ]);
     return temp_model;
   } catch (error) {
