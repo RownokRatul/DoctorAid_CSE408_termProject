@@ -5,3 +5,26 @@ content-type: application/json
     "brand_id": 2,
     "generic_drug_id": 2
 }
+
+# {
+#   "message": "Success",
+#   "data": [
+#     {
+#       "drugId": 2,
+#       "genericID": 2,
+#       "brandName": "Advil:200mg",
+#       "genericName": "Ibuprofen",
+#       "adultDosage": "1+1+1, 7 days a week",
+#       "childDosage": "1+0+1, 3 days a week",
+#       "brand": "Pfizer",
+#       "usecases": [
+#         "Inflammation",
+#         "Pain Relief"
+#       ],
+#       "adverseEffects": [
+#         "Stomach Ulcer",
+#         "High Blood Pressure"
+#       ]
+#     }
+#   ]
+# }

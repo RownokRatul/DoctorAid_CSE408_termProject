@@ -223,4 +223,8 @@ async function deleteDiagnostician(username) {
 
 
 
+
+
+
+
 module.exports = {getAllUsers, addDoctor, addReceptionist, addIntern, addDiagnostician, deleteDoctor, deleteReceptionist, deleteIntern, deleteDiagnostician};

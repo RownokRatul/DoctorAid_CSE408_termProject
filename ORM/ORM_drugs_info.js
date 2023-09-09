@@ -105,6 +105,7 @@ async function getPrescribedBrandDrugsByPatient(patientId) {
         select: {
           id: true,
           name: true,
+          generic_id: true,
           adult_dosage: true,
           child_dosage: true,
           generic: {
@@ -127,6 +128,7 @@ async function getPrescribedBrandDrugsByPatient(patientId) {
       // Structuring the data in a more readable format
       const organizedBrandDrugs = brandDrugs.map((brandDrug) => ({
         drugId: brandDrug.id,
+        genericID: brandDrug.generic_id,
         brandName: brandDrug.name,
         genericName: brandDrug.generic.name,
         adultDosage: brandDrug.adult_dosage,
