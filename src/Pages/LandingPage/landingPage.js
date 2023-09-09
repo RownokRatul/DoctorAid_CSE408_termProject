@@ -33,7 +33,7 @@ const LoginPage = () => {
         switch (role.toLowerCase()) {
           case 'doctor':
             setDoctorInfo(data.user);
-            navigate('/doctor_homepage');
+            navigate('/home');
             break;
           case 'intern':
             setRole(role.toLowerCase());
@@ -73,7 +73,7 @@ const LoginPage = () => {
         {isLoading && (
           <div style={{
             position: 'absolute', // Position it absolutely
-            top: '50%',  // Center vertically
+            top: '70%',  // Center vertically
             left: '50%', // Center horizontally
             transform: 'translate(-50%, -50%)'  // Adjust for true centering
           }}>

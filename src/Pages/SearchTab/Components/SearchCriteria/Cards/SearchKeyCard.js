@@ -8,9 +8,9 @@ const SearchKeyCard = ({ criteria, handleCriteriaChange, handleSearch, tags }) =
   const [selectedTags, setSelectedTags] = useState([]);
   const { patientID } = useContext(PatientContext);
 
-  const filteredTags = searchText
-    ? tags.filter((tag) => tag.tag_name.toLowerCase().includes(searchText.toLowerCase()))
-    : [];
+  const filteredTags = searchText ? tags.filter((tag) => tag.tag_name.toLowerCase().includes(searchText.toLowerCase())): [];
+
+  console.log('Before Searching Finally: ', criteria );
 
   const handleCheckboxChange = (e, tag) => {
     if (e.target.checked) {
@@ -47,10 +47,70 @@ const SearchKeyCard = ({ criteria, handleCriteriaChange, handleSearch, tags }) =
       .then((data) => {
         // Process the response data here if necessary
         //handleSearch({ ...criteria, searchKey: selectedTags.map((tag) => tag.tag_name).join(', ') });
-        handleSearch(data.data); 
+
+        // console.log("body part from backend:",data);  
+        
+        // Filtering based on criteria
+        let filteredData = data.data;
+        // console.log("Before Filtered data:",filteredData);
+        // filteredData.tests = filteredData.tests.map(test => ({
+        //   ...test, date: test.prescription_date,
+        // }));
+        console.log("Before Filtered data:",filteredData);
+
+        if(!criteria.domains.medicalHistory) {
+          filteredData.medical_history = [];
+        }
+        if(!criteria.domains.prescription) {
+          filteredData.prescriptions = [];
+        }
+        if(!criteria.domains.tests) {
+          filteredData.tests = [];
+        }
+
+        const filterByDate = (items, dateField) => {
+          return items.filter(item => {
+            let itemDate = new Date(item[dateField]);
+            let fromDate = criteria.fromDate ? new Date(criteria.fromDate) : null;
+            let toDate = criteria.toDate ? new Date(criteria.toDate) : null;
+
+            fromDate.setDate(fromDate.getDate() + 1);
+            toDate.setDate(toDate.getDate() + 1);
+            
+            // let today = new Date();
+            // if (new Date(fromDate).toISOString().split('T')[0] === today.toISOString().split('T')[0]) {
+            //   console.log('From date is today');
+            //   fromDate = today;
+            // }
+            // console.log("To date:",new Date(toDate).toISOString().split('T')[0]);
+            // console.log("From date:",new Date(fromDate).toISOString().split('T')[0]);
+            // console.log("today", today.toISOString().split('T')[0]);
+
+            // if (new Date(toDate).toISOString().split('T')[0] === today.toISOString().split('T')[0]) {
+            //   console.log('To date is today');
+            //   toDate = today;
+            // }
+  
+            if (fromDate && toDate) {
+              return itemDate >= fromDate && itemDate <= toDate;
+            } else if (fromDate) {
+              return itemDate >= fromDate;
+            } else if (toDate) {
+              return itemDate <= toDate;
+            }
+            return true; // If both fromDate and toDate are null
+          });
+        };
+
+        filteredData.medical_history = filterByDate(filteredData.medical_history, 'date');
+        filteredData.prescriptions = filterByDate(filteredData.prescriptions, 'date');
+        filteredData.tests = filterByDate(filteredData.tests, 'prescription_date');
+
+        console.log("After Filtered data:",filteredData);
+        handleSearch(filteredData); 
         console.log("Real tag:",requestBody);
-      }
-      )
+
+      })
       .catch((err) => {
         console.error('Failed to search by tag:', err);
         // Handle the error here if necessary

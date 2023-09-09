@@ -304,26 +304,8 @@ const DoctorHomepage = () => {
     </TableContainer>
     </div>
 
-
-
-
-
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-        
-      
         {/* Right Panel */}
         <div style={{ flex: '30%', height: '690px', padding: '20px' }}> {/* Adjusted flex value */}
           <Card style={{ padding: '5px', backgroundColor: "azure", marginBottom: "20px" }}>
