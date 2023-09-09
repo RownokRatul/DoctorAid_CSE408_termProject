@@ -1,0 +1,24 @@
+## login
+POST http://localhost:5000/api/v0/get_disease_tags_by_id
+content-type: application/json
+
+{
+    "disease_ids": [2,3]
+}
+
+
+# {
+#   "message": "Success",
+#   "data": [
+#     7,
+#     10,
+#     15,
+#     35,
+#     41,
+#     26,
+#     27,
+#     34,
+#     40,
+#     44
+#   ]
+# }

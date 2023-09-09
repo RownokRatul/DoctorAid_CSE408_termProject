@@ -1,0 +1,19 @@
+## login
+POST http://localhost:5000/api/v0/get_drug_tags_by_id
+content-type: application/json
+
+{
+    "drug_ids": [1,2,3,4,5]
+}
+
+
+# {
+#   "message": "Success",
+#   "data": [
+#     40,
+#     44,
+#     5,
+#     25,
+#     6
+#   ]
+# }

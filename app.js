@@ -98,6 +98,7 @@ app.use(require('./routes/createPrescriptionRoutes/get_all_tests_Route'));
 app.use(require('./routes/createPrescriptionRoutes/get_all_drugs_Routes'));
 app.use(require('./routes/createPrescriptionRoutes/get_all_brands_Routes'));
 app.use(require('./routes/createPrescriptionRoutes/get_brand_drugs_Routes'));
+app.use(require('./routes/createPrescriptionRoutes/get_obj_tags_Routes'));
 
 app.use(require('./routes/practiceRoutes/practiceTabRoutes'));
 

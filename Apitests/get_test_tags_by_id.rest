@@ -1,0 +1,22 @@
+## login
+POST http://localhost:5000/api/v0/get_test_tags_by_id
+content-type: application/json
+
+{
+    "test_ids": [1,2,3,4,5]
+}
+
+
+# {
+#   "message": "Success",
+#   "data": [
+#     40,
+#     2,
+#     45,
+#     1,
+#     4,
+#     5,
+#     29,
+#     39
+#   ]
+# }
