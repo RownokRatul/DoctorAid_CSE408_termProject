@@ -156,13 +156,29 @@ const DoctorHomepage = () => {
     console.log(inputID);
     navigate('/general'); // Navigate to the general tab
   };
-  const handleLogout = () => {
+
+  const handleLogout = async () => {
     console.log("In handle logout");
-    logout();
-    navigate('/');
+    fetch('/api/v0/logout', {
+      method: 'GET', // Use GET since the API is set up to handle GET requests for logout
+      headers: {
+        // Include any headers your API may need, like an authentication token
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Logout successful:', data);
+      logout(); // Assuming this clears local state or local storage
+      navigate('/'); // Navigate to home page
+    })
+    .catch((error) => {
+      console.error('Failed to logout:', error);
+    });
+    // navigate('/');
   }
 
-  //access control
+  
+  
   if (!doctorInfo || !doctorInfo.info) {
     // navigate('/');
     return <div>Loading...</div>;
@@ -328,6 +344,6 @@ const DoctorHomepage = () => {
       </div>
     </div>
   );
-};
+}
 
 export default DoctorHomepage;
