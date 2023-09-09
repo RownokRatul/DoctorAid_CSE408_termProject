@@ -158,6 +158,34 @@ async function getPrescriptionsByPatientId(patient_id) {
   }
 }
 
+async function getPrescriptionById(prescriptionId) {
+  try {
+    const prescription = await prisma.prescription.findUnique({
+      where: {
+        id: prescriptionId
+      },
+      // Include any related models you might want to fetch
+      include: {
+        prescribed_tests: true,
+        queued_tests: true,
+        prescribed_drugs: true,
+        prescription_tag: true,
+        prescription_diseases: true
+      }
+    });
+
+    if (!prescription) {
+      return null; // or throw an error if you prefer
+    }
+
+    return prescription;
+  } catch (error) {
+    console.error("Error fetching prescription:", error);
+    throw error;
+  }
+}
 
 
-module.exports = {addPrescriptionEntry, getPrescriptionsByPatientId};
+
+
+module.exports = {addPrescriptionEntry, getPrescriptionsByPatientId, getPrescriptionById};

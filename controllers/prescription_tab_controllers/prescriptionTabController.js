@@ -17,4 +17,23 @@ async function prescriptionTabController(req) {
     }
 }
 
-module.exports = {prescriptionTabController};
+async function prescriptionByIDController(req) {
+    const req_json = req.body;
+    // console.log(req_json);
+    const prescription_id = req_json.prescription_id;
+    // const drug_id = req_json.drug_id;
+    const model_prescription = await orm_prescription.getPrescriptionById(prescription_id);
+    if(model_prescription) {
+      console.log(model_prescription)
+      const pseudo_view = model_prescription;
+      console.log(pseudo_view);
+      return pseudo_view;
+    }
+    else {
+      console.log('No prescription Found!');
+      return null;
+    }
+  }
+
+
+module.exports = {prescriptionTabController, prescriptionByIDController};

@@ -1,0 +1,6 @@
+POST http://localhost:5000/api/v0/get_prescription_by_id/
+content-type: application/json
+
+{
+    "prescription_id": 24
+}
