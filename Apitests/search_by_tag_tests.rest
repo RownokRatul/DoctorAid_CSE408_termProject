@@ -3,5 +3,5 @@ content-type: application/json
 
 {
   "patient_id": 1,
-  "tags" : [2, 35, 40]
+  "tags" : [1,4,5,29,39,59]
 }

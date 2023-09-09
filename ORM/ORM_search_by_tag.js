@@ -19,6 +19,15 @@ async function getTestsByPatientAndTags(patientId, tagIds) {
         },
         select: {
           test_id: true,
+          test: {
+            select: {
+              prescribed_tests: {
+                select: {
+                  prescription_id: true,
+                },
+              },
+            },
+          },
         },
       });
   
@@ -60,6 +69,7 @@ async function getTestsByPatientAndTags(patientId, tagIds) {
                     prescription: {
                       select: {
                         date: true,
+                        id: true,
                       },
                     },
                   },
@@ -76,7 +86,8 @@ async function getTestsByPatientAndTags(patientId, tagIds) {
         test_id: item.test_id,
         test_name: item.test.test_name,
         prescription_date: item.test.prescribed_tests[0]?.prescription?.date, 
-        prescribed_date: item.test.prescribed_tests[0]?.date
+        prescribed_date: item.test.prescribed_tests[0]?.date,
+        prescription_id: item.test.prescribed_tests[0]?.prescription?.id,
       }));
       
     return formattedResult;
