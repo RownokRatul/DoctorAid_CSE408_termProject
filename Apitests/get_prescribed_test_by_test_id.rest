@@ -1,9 +1,9 @@
-GET http://localhost:5000/api/v0/get_prescribed_test_by_test_id/
+POST http://localhost:5000/api/v0/get_prescribed_test_by_test_id/
 content-type: application/json
 
 {
-    "prescription_id": 2,
-    "test_id": 2
+    "prescription_id": 3,
+    "test_id": 3
 }
 
 # {

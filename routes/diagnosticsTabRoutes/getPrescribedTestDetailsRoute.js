@@ -19,7 +19,7 @@ router.post('/api/v0/get_prescribed_test_by_test_id', ensureAuthenticated, async
         res.status(200).json({message : 'Success', data : pseudo_view});
     }
     else {
-        res.status(401).json({error : 'Invalid Login'});
+        res.status(401).json({error : 'No data found'});
     }
 });
 

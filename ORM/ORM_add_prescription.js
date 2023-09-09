@@ -136,4 +136,28 @@ async function addPrescriptionEntry(testIds, drugIds, prescribedDosages, disease
   }
 }
 
-module.exports = {addPrescriptionEntry};
+async function getPrescriptionsByPatientId(patient_id) {
+  try {
+    const prescriptions = await prisma.prescription.findMany({
+      where: {
+        patient_id: patient_id,
+      },
+      include: {
+        prescribed_tests: true,
+        queued_tests: true,
+        prescribed_drugs: true,
+        prescription_tag: true,
+        prescription_diseases: true,
+      },
+    });
+
+    return prescriptions;
+  } catch (error) {
+    console.error('Error retrieving prescriptions:', error);
+    throw error;
+  }
+}
+
+
+
+module.exports = {addPrescriptionEntry, getPrescriptionsByPatientId};

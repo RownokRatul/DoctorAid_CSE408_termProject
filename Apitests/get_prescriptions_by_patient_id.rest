@@ -1,0 +1,59 @@
+POST http://localhost:5000/api/v0/get_prescriptions_by_patient_id/
+content-type: application/json
+
+{
+    "patient_id": 2
+}
+
+# {
+#   "message": "Success",
+#   "data": [
+#     {
+#       "id": 2,
+#       "patient_id": 2,
+#       "doctor_username": "doc_oc",
+#       "date": "2023-08-17T00:00:00.000Z",
+#       "findings": null,
+#       "prescribed_tests": [
+#         {
+#           "prescription_id": 2,
+#           "test_id": 3,
+#           "test_values": [
+#             "no abnormalities detected"
+#           ],
+#           "attachments": null,
+#           "date": "2022-06-12T00:00:00.000Z"
+#         }
+#       ],
+#       "queued_tests": [
+#         {
+#           "prescription_id": 2,
+#           "test_id": 4
+#         }
+#       ],
+#       "prescribed_drugs": [
+#         {
+#           "prescription_id": 2,
+#           "drug_id": 2,
+#           "prescribed_dosage": "1+1+1, 6 days a week"
+#         },
+#         {
+#           "prescription_id": 2,
+#           "drug_id": 4,
+#           "prescribed_dosage": "1+1+1, 7 days a week"
+#         }
+#       ],
+#       "prescription_tag": [
+#         {
+#           "prescription_id": 2,
+#           "tag_id": 41
+#         },
+#         {
+#           "prescription_id": 2,
+#           "tag_id": 10
+#         }
+#       ],
+#       "prescription_diseases": []
+#     }
+#   ]
+# }

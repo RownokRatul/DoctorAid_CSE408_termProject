@@ -80,6 +80,8 @@ app.use(require('./routes/generalTabRoutes/patientSummaryRoute'));
 
 app.use(require('./routes/demographyRoutes/patientDemographyRoute'));
 
+app.use(require('./routes/prescriptionTabRoutes/getPrescriptionTabRoute'));
+
 app.use(require('./routes/medicationTabRoutes/getPrescribedDrugsRoute'));
 app.use(require('./routes/medicationTabRoutes/getPrescribedDrugDetailsRoute'));
 
