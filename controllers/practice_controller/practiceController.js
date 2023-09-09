@@ -1,4 +1,5 @@
-const orm_test_status = require('../../ORM/ORM_test_status');
+// const orm_test_status = require('../../ORM/ORM_test_status');
+const orm_practice = require('../../ORM/ORM_practice');
 
 
 async function getPatientTestStatusController() {
@@ -67,7 +68,6 @@ async function editPracticeController(req) {
 }
 
 module.exports = {
-    getPatientTestStatusController,
     createPracticeController,
     deletePracticeController,
     editPracticeController,
