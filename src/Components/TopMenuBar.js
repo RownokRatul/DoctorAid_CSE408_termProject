@@ -62,10 +62,11 @@ const TopMenuBar = () => {
             <Tab label="Prescriptions" component={Link} to="/prescription" />
             <Tab label="Search" component={Link} to="/search" />
             <Tab label="Diagnostics" component={Link} to="/diagnostics" />
-            {/* <Tab label="Practice" component={Link} to="/demo" /> */}
             <IconButton component={Link} to="/home">
-            <img src={Home} alt="Home" style={{ width: '24px', height: '24px' }} />
-          </IconButton>
+              <img src={Home} alt="Home" style={{ width: '24px', height: '24px' }} />
+            </IconButton>
+            {/* <Tab label="Practice" component={Link} to="/demo" /> */}
+            
           </Tabs>
           
           {/* <Switch

@@ -1,8 +1,25 @@
-import React, { useState } from 'react';
-import { Button, Card, Container, Box } from '@mui/material';
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, Card, Container, Box, Avatar } from '@mui/material';
 import BasicInfoCard from './Components/Cards/PateintInfoCard';
+import RecepAvatar from './Components/images/recep.png';
+import { PatientContext } from '../../PatientContext'
+
 import axios from 'axios';
+
 const PatientRegistration = () => {
+
+  const { role } = useContext(PatientContext);
+  const { logout } = useContext(PatientContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(role !== 'receptionist') {
+      navigate('/');
+    }
+  }, []);
+
   const [info, setInfo] = useState({
     name: '', phone: '', nid: '', dob: '', gender: '', hometown: '',
     currentAddress: { name: '', from: '' },
@@ -13,7 +30,11 @@ const PatientRegistration = () => {
     setInfo({ ...info, [field]: value });
   };
 
-  
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
 
   const handleSubmit =  async () => {
     const result = {
@@ -58,7 +79,20 @@ const PatientRegistration = () => {
   }
   return (
     <Container maxWidth="md">
-      <Box bgcolor="background.paper" p={3} boxShadow={20} borderRadius={2} marginTop={10}>
+
+      <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center',
+        position: 'fixed',
+        bottom: '100px',
+        right: '40px',
+      }}>
+          <Avatar src={RecepAvatar} alt="Intern" sx={{ width: 100, height: 100 }} />
+          <Button variant="contained" color="primary" style={{ marginTop: '10px' }} onClick={handleLogout}>Logout</Button>
+      </div>
+
+      <Box bgcolor="background.paper" p={3} boxShadow={20} borderRadius={2} marginTop={5} marginBottom={10}>
         <Box mb={2}>
           <h1 align="center"
           >Patient Registration</h1>
