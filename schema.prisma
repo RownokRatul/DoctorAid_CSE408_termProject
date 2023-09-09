@@ -12,6 +12,9 @@ model user_login_info {
   hash_password      String
   user_role          String
   diagnostician_info diagnostician_info[]
+  doctor_info        doctor_info[]
+  receptionist_info  receptionist_info[]
+  intern_info        intern_info[]
 }
 
 model doctor_info {
@@ -21,8 +24,9 @@ model doctor_info {
   degree         String
   phone          String
   email          String
-
+  
   prescriptions prescription[]
+  user_login_info user_login_info @relation(fields: [username], references: [username])
 
   // Add other fields as needed
 }
@@ -31,12 +35,17 @@ model receptionist_info {
   username String @unique
   name     String
   phone    String
+
+  user_login_info user_login_info @relation(fields: [username], references: [username])
 }
 
 model intern_info {
   username String @unique
   name     String
   phone    String
+  email   String
+
+  user_login_info user_login_info @relation(fields: [username], references: [username])
 }
 
 model patient_basic_info {
@@ -286,6 +295,7 @@ model diagnostician_info {
   username String @id
   name     String
   phone    String
+  email   String
 
   user_login_info user_login_info @relation(fields: [username], references: [username])
 }

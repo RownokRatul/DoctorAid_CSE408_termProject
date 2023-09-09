@@ -1,0 +1,7 @@
+post http://localhost:5000/api/v0/login
+content-type: application/json
+
+{
+    "username": "admin",
+    "password": "admin"
+}

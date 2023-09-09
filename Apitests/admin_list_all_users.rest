@@ -1,0 +1,2 @@
+GET http://localhost:5000/api/v0/admin/list_all_users
+content-type: application/json

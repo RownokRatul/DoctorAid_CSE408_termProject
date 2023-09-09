@@ -100,6 +100,7 @@ app.use(require('./routes/createPrescriptionRoutes/get_brand_drugs_Routes'));
 app.use(require('./routes/createPrescriptionRoutes/get_obj_tags_Routes'));
 app.use(require('./routes/createPrescriptionRoutes/add_prescription_Routes'));
 
+app.use(require('./routes/adminRoutes/adminRoute'));
 
 app.use(require('./routes/practiceRoutes/practiceTabRoutes'));
 
