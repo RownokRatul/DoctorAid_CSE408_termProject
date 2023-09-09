@@ -1,0 +1,14 @@
+POST http://localhost:5000/api/v0/add_prescription/
+content-type: application/json
+
+{
+    "test_ids": [1,2],
+    "drug_ids" : [3,4],
+    "prescribed_dosages" : ["1+0+0. take after food", "1+0+1. take before food"],
+    "disease_ids" : [1,4],
+    "patient_id" : 1,
+    "doctor_username" : "doc_oc",
+    "date" : "2021-05-01T00:00:00.000Z",
+    "findings" : "Classic Viral Fever"
+
+}
