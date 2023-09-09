@@ -27,7 +27,7 @@ const MainLayout = ({ children }) => {
       <Banner src={doctoraid_logo} />
       {location.pathname !== '/' && (
         <div>
-          
+        
       	  <TopMenuBar logo={logo} />
           {!open && (
            <IconButton onClick={toggleDrawer} style={{ position: 'absolute', left: 0, top: '50%' }}>

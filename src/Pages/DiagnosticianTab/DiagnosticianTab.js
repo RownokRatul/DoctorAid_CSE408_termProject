@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, Button } from '@mui/material';
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, Button, Avatar } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
 import { createClient } from '@supabase/supabase-js';
+
+import diagnosticianAvatar from './Components/images/diagnostician.png'
 
 import { PatientContext } from '../../PatientContext';
 
@@ -12,6 +16,10 @@ const DiagnosticianPage = () => {
 
   const { SUPABASE_URL } = useContext(PatientContext);
   const { SUPABASE_ANN_KEY } = useContext(PatientContext);
+  const { logout } = useContext(PatientContext);
+  const { role } = useContext(PatientContext);
+
+  const navigate = useNavigate();
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [pendingTests, setPendingTests] = useState([]);
@@ -41,7 +49,13 @@ const DiagnosticianPage = () => {
       }
     };
 
-    fetchData();
+    // access control
+    if(role !== 'diagnostician') {
+      navigate('/');
+    }else {
+      fetchData();
+    }
+
   }, []);
 
   const handleClickRow = async (testId,prescription_id) => {
@@ -59,20 +73,31 @@ const DiagnosticianPage = () => {
         setSelectedTest(testId);
         setPrescription_id(prescription_id);
         console.log(result.data);
-        
-        // console.log("hello");
-        // console.log(result.data.row_name);
-        // console.log(result.data.column_name);
-        // console.log(result.data.values);
+
+        const numRows = result.data.row_name.length;
+        const numCols = result.data.column_name.length;
+
+        let prefilled2D = [];
+
+        if (result.data.prefilled_values) {
+          for (let i = 0; i < numRows; i++) {
+            const row = [];
+            for (let j = 0; j < numCols; j++) {
+              const index = i * numCols + j;
+              row.push(result.data.prefilled_values[index]);
+            }
+            prefilled2D.push(row);
+          }
+        } else {
+          prefilled2D = Array.from({ length: numRows }, () => Array(numCols).fill(''));
+        }
 
         setTableData({
             test_name: result.data.test_name,
             rowNames: result.data.row_name,
             columnNames: result.data.column_name,
-            values: Array.from({ length: result.data.row_name.length }, () =>
-                Array(result.data.column_name.length).fill('')
-            ),
-            });
+            values: prefilled2D
+        });
 
         console.log(tableData);
       }
@@ -95,6 +120,11 @@ const DiagnosticianPage = () => {
       prevState.values[rowIndex][colIndex] = value;
       return { ...prevState };
     });
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   
@@ -165,9 +195,14 @@ const DiagnosticianPage = () => {
       window.location.reload();
     };
   
-  
+  // access control
+  if(role !== 'diagnostician') {
+    // navigate('/');
+    return <div>Loading...</div>;
+  }
 
   return (
+    
     <div style={{ display: 'flex', padding: '20px' }}>
 
       {/* Left Flexbox with Prescriptions */}
@@ -255,6 +290,19 @@ const DiagnosticianPage = () => {
           </div>
          </Paper>
       )}
+      
+      <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center',
+        position: 'fixed',
+        bottom: '100px',
+        right: '40px',
+      }}>
+          <Avatar src={diagnosticianAvatar} alt="Diagnostician" sx={{ width: 100, height: 100 }} />
+          <Button variant="contained" color="primary" style={{ marginTop: '10px' }} onClick={handleLogout}>Logout</Button>
+      </div>
+
     </div>
   );
 };

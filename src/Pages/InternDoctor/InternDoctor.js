@@ -13,12 +13,20 @@ import DiseasesCard from './Components/DiseaseCard';
 import PrescriptionCard from './Components/PrescriptionUploadCard';
 import { PatientContext } from '../../PatientContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const InternDoctor = () => {
+
   const { SUPABASE_URL } = useContext(PatientContext);
   const { SUPABASE_ANN_KEY } = useContext(PatientContext);
 
-  const {phoneNumber}=useContext(PatientContext);
+  const { role } = useContext(PatientContext);
+
+  const navigate = useNavigate();
+
+  console.log("Role: ", role);
+
+  const { phoneNumber }=useContext(PatientContext);
   const [patientInfo, setPatientInfo] = useState(null); // To store the search results
 
   const [page, setPage] = useState(1); // State to manage the current page
@@ -33,6 +41,7 @@ const InternDoctor = () => {
   });
 
   useEffect(() => {
+
     const fetchData = async () => {
       try {
         const response = await axios.post('api/v0/search_patient/', {
@@ -47,7 +56,17 @@ const InternDoctor = () => {
       }
     };
 
-    fetchData();
+    // access control
+    if(role !== 'intern') {
+      navigate('/');
+    }
+    else if(!phoneNumber) {
+      navigate('/intern');
+    }
+    else {
+      fetchData();
+    }
+
   }, []); 
 
  
@@ -80,7 +99,7 @@ const InternDoctor = () => {
       setSelectedDiseases([]); // Assuming patientInfo doesn't have diseases for now
       setPrescriptions([{ file: '', date: '' }]); // Assuming patientInfo doesn't have prescriptions for now
     }
-}, [patientInfo]);
+  }, [patientInfo]);
 
 
 
@@ -92,7 +111,7 @@ const InternDoctor = () => {
 
   const handleCurrentOccupationChange = (field, value) => {
     setInfo({ ...info, currentOccupation: { ...info.currentOccupation, [field]: value } });
-};
+  };
 
   
 
@@ -188,7 +207,13 @@ const InternDoctor = () => {
   
     // Output the final result to the console
     console.log(JSON.stringify(result));
-  };
+  }
+
+  // access control
+  // if(role !== 'intern') {
+  //   navigate('/');
+  //   // return <h1>Access Denied!</h1>
+  // }
 
   return (
     <Container maxWidth="md">

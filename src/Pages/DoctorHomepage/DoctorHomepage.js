@@ -33,17 +33,17 @@ const DoctorHomepage = () => {
   const [doneTests, setDoneTests] = useState([]);
   const [tests, setTests] = useState([]);
   const [queuedTests, setQueuedTests] = useState([]);
-  const {doctorInfo}=useContext(PatientContext);
-  const { logoutDoctor } = useContext(PatientContext);
+
+  const { doctorInfo }=useContext(PatientContext);
+  const { logout } = useContext(PatientContext);
+  const { role } = useContext(PatientContext);
 
   console.log("Doctor Info  in enter: ",doctorInfo);
   
 
-  
-
   useEffect(() => {
     
-    console.log("00000000000000------------------000000000");
+    // console.log("00000000000000------------------000000000");
 
     const fetchData = async () => {
       try {
@@ -54,7 +54,7 @@ const DoctorHomepage = () => {
         //             'apiKey=af17597cd9564f5bb7615fa5ff39b6ad';
 
 
-               const     url = 'https://newsapi.org/v2/everything?'+
+        const url = 'https://newsapi.org/v2/everything?'+
        'q=Apple&'+
        'from=2023-08-27&'+
        'sortBy=popularity&'+
@@ -85,10 +85,14 @@ const DoctorHomepage = () => {
       }
     };
   
-    fetchData();
-
-    
-    
+    // access control
+    if (!doctorInfo || !doctorInfo.info) {
+      navigate('/');
+      // return <div>Loading...</div>;
+    }
+    else {
+      fetchData();
+    }
 
     // const response = fetch('/api/v0/get_test_status', {
     //   method: 'GET',
@@ -129,14 +133,7 @@ const DoctorHomepage = () => {
     //       console.log("list response",testStatus);
     //       })
 
-      
-
   }, []);
-
-
-
-
-
 
   
   const [inputID, setInputID] = useState('');
@@ -161,12 +158,13 @@ const DoctorHomepage = () => {
   };
   const handleLogout = () => {
     console.log("In handle logout");
-    logoutDoctor();
+    logout();
     navigate('/');
   }
+
+  //access control
   if (!doctorInfo || !doctorInfo.info) {
-    // Redirect or return null, or render a spinner or some other placeholder
-    navigate('/');
+    // navigate('/');
     return <div>Loading...</div>;
   }
 

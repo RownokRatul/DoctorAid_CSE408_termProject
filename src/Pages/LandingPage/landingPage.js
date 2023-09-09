@@ -1,20 +1,24 @@
 import React, { useState,useContext } from 'react';
 import { useHistory, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Paper, TextField, Button, Typography, Container, Box } from '@mui/material';
+import { Paper, TextField, Button, Typography, Container, Box, CircularProgress  } from '@mui/material';
 import { PatientContext } from '../../PatientContext';
 
 const LoginPage = () => {
-    const { setDoctorInfo } = useContext(PatientContext);  // Destructure setDoctorInfo from context
+  const { setDoctorInfo } = useContext(PatientContext);  // Destructure setDoctorInfo from context
+  const { setRole } = useContext(PatientContext);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate =useNavigate();
 
 
-  
+
   const handleLogin = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     try {
       const response = await axios.post('/api/v0/login', {
@@ -32,9 +36,11 @@ const LoginPage = () => {
             navigate('/doctor_homepage');
             break;
           case 'intern':
+            setRole(role.toLowerCase());
             navigate('/intern');
             break;
           case 'diagnostician':
+            setRole(role.toLowerCase());
             navigate('/diagnostician');
             break;
           default:
@@ -45,21 +51,35 @@ const LoginPage = () => {
       }
     } catch (error) {
       setError('Something went wrong');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    
+    <Container component="main" maxWidth="xs" style={{ height: '100vh', overflow: 'hidden' }}>
       <Box
         display="flex"
         flexDirection="column"
         alignItems="center"
-        sx={{
+        justifyContent="center"
+        style={{
           minHeight: '100vh',
-          justifyContent: 'center',
-          bgcolor: '#f2f2f2',
+          backgroundColor: '#f2f2f2',
+          position: 'relative',  // Added for loader positioning
         }}
       >
+        {isLoading && (
+          <div style={{
+            position: 'absolute', // Position it absolutely
+            top: '50%',  // Center vertically
+            left: '50%', // Center horizontally
+            transform: 'translate(-50%, -50%)'  // Adjust for true centering
+          }}>
+            <CircularProgress color="success" />
+          </div>
+        )}
         <Paper elevation={3} style={{ padding: '20px', width: '100%' }}>
           <Typography variant="h4" align="center" gutterBottom>
             Login

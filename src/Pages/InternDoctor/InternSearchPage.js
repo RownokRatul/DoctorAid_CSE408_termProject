@@ -1,18 +1,41 @@
-import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // If using react-router v6
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
+import { redirect, useNavigate } from 'react-router-dom'; // If using react-router v6
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Avatar } from '@mui/material';
 import axios from 'axios';
 
 import { PatientContext } from '../../PatientContext'
+import internAvatar from './Components/images/intern.png';
+
+import { red } from '@mui/material/colors';
+// import { use } from 'passport';
 
 const SearchPatient = () => {
+
+  console.log("Intern Doctor Search Page");
+
+  const { role } = useContext(PatientContext);
+  const { logout } = useContext(PatientContext);
+  console.log("Role: ", role);
+
   const [phone, setPhone] = useState('');
   const [open, setOpen] = useState(false);
   const {setPhoneNumber}=useContext(PatientContext);
   const navigate = useNavigate();
 
+  // access control
+  useEffect(() => {
+    if(role !== 'intern') {
+      navigate('/');
+    }
+  }, []);
+
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   const handleSearch = async () => {
@@ -36,17 +59,35 @@ const SearchPatient = () => {
     }
   };
 
+  // access control
+  if(role !== 'intern') {
+    // navigate('/');
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
-      <TextField 
-        label="Search Patient" 
-        value={phone} 
-        onChange={(e) => setPhone(e.target.value)} 
-      />
-      <Button variant="contained" color="primary" onClick={handleSearch}>
-        Search
-      </Button>
-
+      <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center',
+        position: 'fixed',
+        bottom: '100px',
+        right: '40px',
+      }}>
+          <Avatar src={internAvatar} alt="Intern" sx={{ width: 100, height: 100 }} />
+          <Button variant="contained" color="primary" style={{ marginTop: '10px' }} onClick={handleLogout}>Logout</Button>
+      </div>
+      <div>
+        <TextField
+          label="Search Patient" 
+          value={phone} 
+          onChange={(e) => setPhone(e.target.value)} 
+        />
+        <Button variant="contained" color="primary" onClick={handleSearch}>
+          Search
+        </Button>
+      </div>
       {/* Dialog box for "Patient not found" */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{"Patient not found"}</DialogTitle>

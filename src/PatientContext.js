@@ -12,25 +12,28 @@ export const PatientProvider = ({ children }) => {
 
   const initialPatientID = localStorage.getItem("patientID");
   const initialDoctorInfo = JSON.parse(localStorage.getItem("doctorInfo") || null);
+  const initialRole = JSON.parse(localStorage.getItem("role") || null);
   
   const [patientID, setPatientID] = useState(initialPatientID ? parseInt(initialPatientID, 10) : null);
   const [doctorInfo, setDoctorInfo] = useState(initialDoctorInfo);
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [showInvalidIDDialog, setShowInvalidIDDialog] = useState(false);
+  const [role, setRole] = useState(initialRole);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
 
   useEffect(() => {
     const timer = setTimeout(() => {
       localStorage.removeItem("patientID");
       localStorage.removeItem("doctorInfo");
+      localStorage.removeItem("role");
     }, 15 * 60 * 1000);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [patientID, doctorInfo]);
+  }, [patientID, doctorInfo, role]);
 
   useEffect(() => {
     if(patientID !== null) {
@@ -39,7 +42,10 @@ export const PatientProvider = ({ children }) => {
     if(doctorInfo) {
       localStorage.setItem("doctorInfo", JSON.stringify(doctorInfo));
     }
-  }, [patientID, doctorInfo]);
+    if(role) {
+      localStorage.setItem("role", JSON.stringify(role));
+    }
+  }, [patientID, doctorInfo, role]);
 
   const isPatientIDValid = () => {
     const isValid = patientID !== null && !isNaN(patientID);
@@ -61,12 +67,14 @@ export const PatientProvider = ({ children }) => {
     return isValid;
   }
   
-  const logoutDoctor = () => {
+  const logout = () => {
     console.log("Logging out doctor");
     setDoctorInfo(null);
     setPatientID(null);
+    setRole(null);
     localStorage.removeItem("doctorInfo");
     localStorage.removeItem("patientID");
+    localStorage.removeItem("role");
   };
   
 
@@ -75,7 +83,7 @@ export const PatientProvider = ({ children }) => {
   };
 
   return (
-    <PatientContext.Provider value={{ patientID, setPatientID, isPatientIDValid, doctorInfo, setDoctorInfo,logoutDoctor,isDoctorInfoValid, SUPABASE_URL, SUPABASE_ANN_KEY ,setPhoneNumber,phoneNumber}}>
+    <PatientContext.Provider value={{ patientID, setPatientID, isPatientIDValid, doctorInfo, setDoctorInfo, logout, isDoctorInfoValid, SUPABASE_URL, SUPABASE_ANN_KEY ,setPhoneNumber,phoneNumber, role, setRole}}>
       {children}
       <Dialog open={showInvalidIDDialog} onClose={handleCloseDialog}>
         <DialogTitle style={{ backgroundColor: 'red', textAlign: 'center' }}>

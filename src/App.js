@@ -12,7 +12,7 @@ import Prescription from './Pages/PrescriptionTab/PrescriptionTab';
 import AdminPage from './Pages/AdminPage/AdminPage';
 import FloatingActionButton from './Pages/CreatePrescriptionTab/Components/FloatingActionButton';
 import CreatePrescriptionPage from './Pages/CreatePrescriptionTab/CreatePrescriptionTab';
-import PatientIDInput from './Pages/EnterPatientID/EnterPatientID';
+import PatientIDInput from './Pages/DoctorHomepage/DoctorHomepage';
 import PatientRegistration from './Pages/PatientRegistrationTab/PatientRegistration'
 import InternDoctor from './Pages/InternDoctor/InternDoctor';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
