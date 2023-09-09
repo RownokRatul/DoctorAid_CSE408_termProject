@@ -1,0 +1,7 @@
+POST http://localhost:5000/api/v0/get_recent_patients/
+content-type: application/json
+
+{
+  "doctor_username": "doc_oc",
+  "limit": 3
+}

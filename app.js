@@ -74,6 +74,7 @@ app.use(require('./routes/registerRoutes/newMedicalHistoryEntryRoute'));
 app.use(require('./routes/registerRoutes/addBPandHeartRateRoute'));
 
 app.use(require('./routes/docHomeRoutes/showTestsRoute'));
+app.use(require('./routes/docHomeRoutes/getPatientsRoute'));
 
 app.use(require('./routes/generalTabRoutes/patientSummaryRoute'));
 

@@ -195,11 +195,49 @@ async function get_patient_demography_info(patientId) {
     return model_patient_demography_info;
 }
 
+async function get_most_recent_patients(doctorUsername, limit) {
+  try {
+    const recentPatients = await prisma.prescription.findMany({
+      where: {
+        doctor_username: doctorUsername,
+      },
+      orderBy: {
+        date: 'desc',
+      },
+      take: limit,
+      select: {
+        patient_id: true,
+        patient: {
+          select: {
+            name: true,
+            phone: true, // Assuming the field name is "phoneNumber" in the "patient_basic_info" model
+          },
+        },
+        date: true,
+        findings: true,
+      },
+    });
+
+    return recentPatients.map((entry) => ({
+      patient_id: entry.patient_id,
+      name: entry.patient.name,
+      phoneNumber: entry.patient.phone,
+      date: entry.date,
+      findings: entry.findings,
+    }));
+  } catch (error) {
+    console.error('Error fetching most recent patients:', error);
+    throw error;
+  }
+}
+
+
 module.exports = {
     get_patient_basic_info,
     get_patient_summary_info,
     get_patient_demography_info,
     get_chronic_disease_by_pid,
+    get_most_recent_patients,
 };
 
 

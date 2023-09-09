@@ -81,29 +81,6 @@ model patient_heart_rates {
   value      Int
 }
 
-// model medical_history {
-//   disease_id Int
-//   date       DateTime
-//   patient_id Int
-
-//   diseases   diseases 			@relation(fields: [disease_id], references: [id])
-//   patient    patient_basic_info @relation(fields: [patient_id], references: [id])
-
-//   @@id([disease_id, date, patient_id])
-//   @@index([disease_id], name: "disease_id")
-//   @@index([patient_id], name: "patient_id")
-// }
-
-// model diseases {
-//   id         			Int       @id @default(autoincrement())
-//   disease_name       	String
-//   symptoms   			String[]
-//   is_chronic			String?   @map("is_chronic")
-//   medical_history 		medical_history[]
-
-//   @@index([disease_name], name: "disease_name")
-// }
-
 model medical_history {
   disease_id   Int
   date         DateTime
@@ -115,11 +92,11 @@ model medical_history {
 }
 
 model diseases {
-  id              Int               @id @default(autoincrement())
-  disease_name    String
-  is_chronic      String?
-  medical_history medical_history[]
-  disease_tag     disease_tag[]
+  id                    Int                     @id @default(autoincrement())
+  disease_name          String
+  is_chronic            String?
+  medical_history       medical_history[]
+  disease_tag           disease_tag[]
   prescription_diseases prescription_diseases[]
 
   @@index([disease_name], name: "disease_name")
@@ -135,10 +112,10 @@ model prescription {
   patient patient_basic_info @relation(fields: [patient_id], references: [id])
   doctor  doctor_info        @relation(fields: [doctor_username], references: [username])
 
-  prescribed_tests prescribed_tests[]
-  queued_tests     queued_tests[]
-  prescribed_drugs prescribed_drugs[]
-  prescription_tag prescription_tag[]
+  prescribed_tests      prescribed_tests[]
+  queued_tests          queued_tests[]
+  prescribed_drugs      prescribed_drugs[]
+  prescription_tag      prescription_tag[]
   prescription_diseases prescription_diseases[]
 
   @@index([patient_id], name: "patient_id")
@@ -164,7 +141,7 @@ model prescription_diseases {
   disease_id      Int
 
   prescription prescription @relation(fields: [prescription_id], references: [id])
-  diseases      diseases    @relation(fields: [disease_id], references: [id])
+  diseases     diseases     @relation(fields: [disease_id], references: [id])
 
   @@id([prescription_id, disease_id])
 }
@@ -209,19 +186,19 @@ model generic_drugs {
   usecases        String[]
   adverse_effects String[]
 
-  brand_drugs brand_drugs[]
-  drug_tag    drug_tag[]
+  brand_drugs         brand_drugs[]
+  drug_tag            drug_tag[]
   interactionsAsDrug1 drug_drug_interactions[] @relation("Drug1ToInteraction")
   interactionsAsDrug2 drug_drug_interactions[] @relation("Drug2ToInteraction")
 }
 
 model drug_drug_interactions {
-  drug1_id  Int
-  drug2_id  Int
-  comment   String
+  drug1_id Int
+  drug2_id Int
+  comment  String
 
-  drug1     generic_drugs @relation("Drug1ToInteraction", fields: [drug1_id], references: [id])
-  drug2     generic_drugs @relation("Drug2ToInteraction", fields: [drug2_id], references: [id])
+  drug1 generic_drugs @relation("Drug1ToInteraction", fields: [drug1_id], references: [id])
+  drug2 generic_drugs @relation("Drug2ToInteraction", fields: [drug2_id], references: [id])
 
   @@id([drug1_id, drug2_id])
 }
@@ -321,9 +298,6 @@ model prescription_tag {
 
   @@id([prescription_id, tag_id])
 }
-
-
-
 
 model practice {
   id        Int                 @id @default(autoincrement())
