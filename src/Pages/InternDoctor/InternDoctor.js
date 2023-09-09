@@ -11,6 +11,7 @@ import OccupationCard from './Components/Occupation';
 import HistoryCard from './Components/TravelHistory';
 import DiseasesCard from './Components/DiseaseCard';
 import PrescriptionCard from './Components/PrescriptionUploadCard';
+import HealthInfoCard from './Components/HealthInfoCard';
 import { PatientContext } from '../../PatientContext';
 
 import DiseasePrescriptionCard from './Components/DiseasePrescriptionCard'; // Import the new component
@@ -34,6 +35,15 @@ const InternDoctor = () => {
     histories: [] 
 
   });
+
+  const [healthInfo, setHealthInfo] = useState({
+    height: '',
+    weight: '',
+    heartRate: '',
+    bpLow: '',
+    bpHigh: ''
+  });
+
   // In InternDoctor.js
 
   const [diseasePrescriptionPairs, setDiseasePrescriptionPairs] = useState([{ disease: null, file: null, date: null }]);
@@ -60,52 +70,65 @@ const InternDoctor = () => {
  
   useEffect(() => {
     if(patientInfo) {
-      const addressLen = patientInfo.addresses.length;
-      const occupationLen = patientInfo.occupations.length;
-
-      setInfo({
-        currentAddress: { 
-          name: patientInfo.addresses[addressLen - 1], 
-          from: new Date(patientInfo.address_from[addressLen - 1]).toISOString().split('T')[0]
-        },
-        addresses: patientInfo.addresses.slice(0, addressLen - 1).map((addr, index) => ({
+      let addresses = [], occupations = [], histories = [];
+  
+      if (patientInfo.addresses && patientInfo.addresses.length > 0) {
+        const addressLen = patientInfo.addresses.length;
+        addresses = patientInfo.addresses.slice(0, addressLen - 1).map((addr, index) => ({
           name: addr,
           from: new Date(patientInfo.address_from[index]).toISOString().split('T')[0],
           to: new Date(patientInfo.address_to[index]).toISOString().split('T')[0]
-        })),
-        currentOccupation: {
-          name: patientInfo.occupations[occupationLen - 1],
-          from: new Date(patientInfo.occupation_from[occupationLen - 1]).toISOString().split('T')[0]
-        },
-        occupations: patientInfo.occupations.slice(0, occupationLen - 1).map((occupation, index) => ({
+        }));
+      }
+  
+      if (patientInfo.occupations && patientInfo.occupations.length > 0) {
+        const occupationLen = patientInfo.occupations.length;
+        occupations = patientInfo.occupations.slice(0, occupationLen - 1).map((occupation, index) => ({
           name: occupation,
           from: new Date(patientInfo.occupation_from[index]).toISOString().split('T')[0],
           to: new Date(patientInfo.occupation_to[index]).toISOString().split('T')[0]
-        })),
-        histories: patientInfo.travel_history.map((history, index) => ({
+        }));
+      }
+  
+      if (patientInfo.travel_history && patientInfo.travel_history.length > 0) {
+        histories = patientInfo.travel_history.map((history, index) => ({
           name: history,
           from: new Date(patientInfo.travel_from[index]).toISOString().split('T')[0],
           to: new Date(patientInfo.travel_to[index]).toISOString().split('T')[0]
-        })),
-
-        
-        });
+        }));
+      }
+  
+      setInfo({
+        currentAddress: patientInfo.addresses && patientInfo.addresses.length > 0 ? { 
+          name: patientInfo.addresses[patientInfo.addresses.length - 1], 
+          from: new Date(patientInfo.address_from[patientInfo.addresses.length - 1]).toISOString().split('T')[0]
+        } : { name: '', from: '' },
+        addresses,
+        currentOccupation: patientInfo.occupations && patientInfo.occupations.length > 0 ? {
+          name: patientInfo.occupations[patientInfo.occupations.length - 1],
+          from: new Date(patientInfo.occupation_from[patientInfo.occupations.length - 1]).toISOString().split('T')[0]
+        } : { name: '', from: '' },
+        occupations,
+        histories
+      });
+  
       setSelectedDiseases([]); // Assuming patientInfo doesn't have diseases for now
       setPrescriptions([{ file: '', date: '' }]); // Assuming patientInfo doesn't have prescriptions for now
     }
-}, [patientInfo]);
+  }, [patientInfo]);
+  
 
 
 
 
  
-  const handleCurrentAddressChange = (field, value) => {
-    setInfo({ ...info, currentAddress: { ...info.currentAddress, [field]: value } });
-  };
+    const handleCurrentAddressChange = (field, value) => {
+      setInfo({ ...info, currentAddress: { ...info.currentAddress, [field]: value } });
+    };
 
-  const handleCurrentOccupationChange = (field, value) => {
-    setInfo({ ...info, currentOccupation: { ...info.currentOccupation, [field]: value } });
-};
+      const handleCurrentOccupationChange = (field, value) => {
+        setInfo({ ...info, currentOccupation: { ...info.currentOccupation, [field]: value } });
+    };
 
   
 
@@ -124,6 +147,10 @@ const InternDoctor = () => {
       const newhistories = [...info.histories];
       newhistories[index][field] = value;
       setInfo({ ...info, histories: newhistories });
+    };
+    
+    const handleHealthInfoChange = (field, value) => {
+      setHealthInfo({ ...healthInfo, [field]: value });
     };
 
     const addAddress = () => {
@@ -160,6 +187,9 @@ const InternDoctor = () => {
     
     setPage(2);
   }
+  const handleNext2= () => {
+    setPage(3);
+  }
 
   const uploadFileAndGetURL = async (file) => {
 
@@ -194,56 +224,34 @@ const InternDoctor = () => {
 
       const diseasePrescriptions = await Promise.all(
         diseasePrescriptionPairs.map(async (pair) => {
+          if(pair.file ===null){
+            return {
+              disease_id: pair.diseaseId,
+              patient_id: patientInfo.id,
+              date: pair.date,
+              prescription: null
+            };
+          }
           const file_URL = await uploadFileAndGetURL(pair.file);
           return {
-            disease: pair.disease,
-            prescription: file_URL,
-            date: pair.date
+            disease_id: pair.diseaseId,
+            patient_id: patientInfo.id,
+            date: pair.date,
+            prescription: file_URL
           };
         })
       );
 
 
-    const result_1 = {
+    
 
-//       "id": 17,
-// #     "name": "John Smith",
-// #     "phone": "0987654321",
-// #     "nid": "987654321",
-// #     "dob": "1995-05-15T00:00:00.000Z",
-// #     "gender": "F",
-// #     "hometown": "Hometown B",
+    
+     console.log("HealthInfo",healthInfo.height);
+     console.log("PatientInfo",patientInfo.height);
+    
+    
 
 
-      id: patientInfo.id,
-      height: patientInfo.height,
-      weight: patientInfo.weight,
-      
-      addresses: [info.currentAddress.name, ...info.addresses.map(a => a.name)],
-      address_from: [info.currentAddress.from, ...info.addresses.map(a => a.from)],
-      address_to: info.addresses.map(a => a.to),
-      occupations: [info.currentOccupation.name, ...info.occupations.map(a => a.name)],
-      occupation_from: [info.currentOccupation.from, ...info.occupations.map(a => a.from)],
-      occupation_to: info.occupations.map(a => a.to),
-      travel_history: info.histories.map(a => a.name),
-      travel_from: info.histories.map(a => a.from),
-      travel_to: info.histories.map(a => a.to),
-      
-      
-    };
-    const result_2 = {
-      disease: diseasePrescriptionPairs.map(pair => pair.disease),
-      id: patientInfo.id,
-      prescription: diseasePrescriptions.map(pair => pair.prescription),
-      date: diseasePrescriptions.map(pair => pair.date)
-
-
-    };
-
-  
-    // Output the final result to the console
-    console.log("Final result:");
-    console.log(JSON.stringify(result_2));
 
     // Send the result to the backend
     
@@ -251,8 +259,10 @@ const InternDoctor = () => {
             const response = await axios.put("api/v0/update_patient/", 
             {
               id: patientInfo.id,
-              height: patientInfo.height,
-              weight: patientInfo.weight,
+              height: healthInfo.height ? parseFloat(healthInfo.height) : null,
+              weight: healthInfo.weight ? parseFloat(healthInfo.weight) : null,
+              // height: patientInfo.height,
+              // weight: patientInfo.weight,
               addresses: [info.currentAddress.name, ...info.addresses.map(a => a.name)],
               address_from: [info.currentAddress.from, ...info.addresses.map(a => a.from)].map(convertDateToISO),
               address_to: info.addresses.map(a => a.to).map(convertDateToISO),
@@ -275,52 +285,92 @@ const InternDoctor = () => {
             console.error("Error updating:", error);
             
           }
-  };
 
+           
+        try {
+          const response = await axios.post("api/v0/add_medical_history/", 
+          diseasePrescriptions
+          );
+          console.log("response", response.data);
+          // Assuming the API response contains the search result data
+          if (response.status === 200 ) {
+              console.log("response", response.data);
+          } else {
+             console.log("response", response.data);
+          }
+        } catch (error) {
+          console.error("Error updating history:", error);
+          
+        }
+
+        try {
+          const response = await axios.post("api/v0/add_bp_hr/", 
+          {
+            patient_id:  patientInfo.id,
+            taken_at: "2022-05-01",
+            hr_value : parseInt(healthInfo.heartRate,10),
+            bp_value_low : parseInt(healthInfo.bpLow,10),
+            bp_value_high : parseInt(healthInfo.bpHigh,10)
+          }
+          );
+          console.log("response", response.data);
+          // Assuming the API response contains the search result data
+          if (response.status === 200 ) {
+              console.log("response", response.data);
+          } else {
+             console.log("response", response.data);
+          }
+        } catch (error) {
+          console.error("Error updating:", error);
+          
+        }
+  };
   return (
     <Container maxWidth="md">
       <Box bgcolor="background.paper" p={3} boxShadow={20} borderRadius={2} marginTop={10}>
         {page === 1 ? (
           <>
-             <Box mb={2}>
-          <Card>
-            <CurrentAddressCard currentAddress={info.currentAddress} handleChange={handleCurrentAddressChange} />
-          </Card>
-        </Box>
-        <Box mb={2}>
-          <Card>
-            <AddressCard addresses={info.addresses} handleAddressChange={handleAddressChange} addAddress={addAddress} />
-          </Card>
-        </Box>
-
-
-        <Box mb={2}>
-          <Card>
-            <CurrentOccupationCard currentOccupation={info.currentOccupation} handleChange={handleCurrentOccupationChange} />
-          </Card>
-        </Box>
-        <Box mb={2}>
-          <Card>
-            <OccupationCard occupations={info.occupations} handleOccupationChange={handleOccupationChange} addOccupation={addOccupation} />
-          </Card>
-        </Box>
-
-        
-
-        <Box mb={2}>
-          <Card>
-            <HistoryCard histories={info.histories} handlehistoryChange={handlehistoryChange} addhistory={addhistory} />
-          </Card>
-        </Box>
+            <Box mb={2}>
+              <Card>
+                <CurrentAddressCard currentAddress={info.currentAddress} handleChange={handleCurrentAddressChange} />
+              </Card>
+            </Box>
+            <Box mb={2}>
+              <Card>
+                <AddressCard addresses={info.addresses} handleAddressChange={handleAddressChange} addAddress={addAddress} />
+              </Card>
+            </Box>
+            <Box mb={2}>
+              <Card>
+                <CurrentOccupationCard currentOccupation={info.currentOccupation} handleChange={handleCurrentOccupationChange} />
+              </Card>
+            </Box>
+            <Box mb={2}>
+              <Card>
+                <OccupationCard occupations={info.occupations} handleOccupationChange={handleOccupationChange} addOccupation={addOccupation} />
+              </Card>
+            </Box>
+            <Box mb={2}>
+              <Card>
+                <HistoryCard histories={info.histories} handlehistoryChange={handlehistoryChange} addhistory={addhistory} />
+              </Card>
+            </Box>
             <Button variant="contained" color="primary" onClick={handleNext}>Next</Button>
           </>
-        ) : (
+        ) : page === 2 ? (
           <>
-           
-            
             <Box mb={2}>
               <Card>
                 <DiseasePrescriptionCard diseasePrescriptionPairs={diseasePrescriptionPairs} setDiseasePrescriptionPairs={setDiseasePrescriptionPairs} />
+              </Card>
+            </Box>
+            <Button variant="contained" color="primary" onClick={handleNext2}>Next</Button>
+          </>
+        ) : (
+          <>
+            <Box mb={2}>
+              <Card>
+                <HealthInfoCard healthInfo={info.healthInfo} handleHealthInfoChange={handleHealthInfoChange} />
               </Card>
             </Box>
             <Button variant="contained" color="primary" onClick={handleFinalSubmit}>Submit</Button>
@@ -329,6 +379,7 @@ const InternDoctor = () => {
       </Box>
     </Container>
   );
-};
 
+}
 export default InternDoctor;
+  

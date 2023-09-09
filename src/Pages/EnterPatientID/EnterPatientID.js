@@ -161,9 +161,24 @@ const DoctorHomepage = () => {
   };
   const handleLogout = () => {
     console.log("In handle logout");
-    logoutDoctor();
-    navigate('/');
+  
+    fetch('/api/v0/logout', {
+      method: 'GET', // Use GET since the API is set up to handle GET requests for logout
+      headers: {
+        // Include any headers your API may need, like an authentication token
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Logout successful:', data);
+      logoutDoctor(); // Assuming this clears local state or local storage
+      navigate('/'); // Navigate to home page
+    })
+    .catch((error) => {
+      console.error('Failed to logout:', error);
+    });
   }
+  
   if (!doctorInfo || !doctorInfo.info) {
     // Redirect or return null, or render a spinner or some other placeholder
     navigate('/');

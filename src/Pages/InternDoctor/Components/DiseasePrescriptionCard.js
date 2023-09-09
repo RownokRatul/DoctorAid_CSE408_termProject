@@ -19,18 +19,25 @@ const DiseasePrescriptionCard = ({ diseasePrescriptionPairs, setDiseasePrescript
 
   const handleFieldChange = (index, field, value) => {
     const newPairs = [...diseasePrescriptionPairs];
-    // jsonify the newPairs
-
-    const jsonNewPairs = JSON.stringify(newPairs);
-
-    console.log("Here is the new pairs:",jsonNewPairs);
     newPairs[index][field] = value;
+  
+    if (field === 'disease') {
+      const selectedTag = tags.find(tag => tag.disease_name === value);
+      newPairs[index]['diseaseId'] = selectedTag ? selectedTag.id : null;
+    }
+    console.log("newPairs:", newPairs);
+  
     setDiseasePrescriptionPairs(newPairs);
   };
+  
 
   const addDiseasePrescriptionPair = () => {
-    setDiseasePrescriptionPairs([...diseasePrescriptionPairs, { disease: '', file: '', date: '' }]);
+    setDiseasePrescriptionPairs([
+      ...diseasePrescriptionPairs,
+      { disease: '', diseaseId: null, file: null, date: '' }
+    ]);
   };
+  
 
   const filteredTags = searchText
     ? tags.filter((tag) => tag.disease_name.toLowerCase().includes(searchText.toLowerCase()))
@@ -62,14 +69,15 @@ const DiseasePrescriptionCard = ({ diseasePrescriptionPairs, setDiseasePrescript
                       key={i}
                       control={
                         <Checkbox
-                          checked={pair.disease === tag.disease_name}
-                          onChange={(e) => {
-                            if (e.target.checked) {
-                              handleFieldChange(index, 'disease', tag.disease_name);
-                            }
-                          }}
-                          name={tag.disease_name}
+                            checked={pair.disease === tag.disease_name}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                handleFieldChange(index, 'disease', tag.disease_name);
+                              }
+                            }}
+                            name={tag.disease_name}
                         />
+
                       }
                       label={tag.disease_name}
                     />
