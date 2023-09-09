@@ -1,4 +1,4 @@
-const orm_get_all_tags = require('../../ORM/ORM_get_all_tags');
+const orm_get_all_tags = require('../../ORM/ORM_get_all_obj');
 
 async function getAllTagsController(req) {
     const req_json = req.body;
