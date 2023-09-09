@@ -25,13 +25,9 @@ const SearchCriteria = ({ onSearch, tags }) => {
     console.log("Updated results:", results);
   }, [results]);
 
-  // Define some common tags
-  const commonTags = ['headache', 'stroke', 'brain', 'migraine'];
-
   const handleCriteriaChange = (key, value) => {
-    
     setCriteria((prev) => ({ ...prev, [key]: value }));
-    console.log("Criteria:",criteria)
+    console.log("From Search Criteria:",criteria)
   };
 
   const handleSearch = (newResults) => {

@@ -5,8 +5,6 @@ import humanBodyImage from './human_body.png';
 import { BorderAllRounded } from '@mui/icons-material';
 
 
-
-
 // HumanBody.js
 const HumanBody = ({ onSelectPart }) => {
 
@@ -52,7 +50,7 @@ const HumanBody = ({ onSelectPart }) => {
             </g>
             <g style={{ cursor: 'pointer' }}>
                 <title>Pelvic Region</title>
-                <circle cx="32%" cy="52%" r="1.3%" fill="#2effff" onClick={() => handleBodyPartClick('pelvic-region')} />
+                <circle cx="32%" cy="52%" r="1.3%" fill="#2effff" onClick={() => handleBodyPartClick('pelvic region')} />
             </g>
             <g style={{ cursor: 'pointer' }}>
                 <title>Hand</title>

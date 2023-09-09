@@ -36,7 +36,7 @@ function App() {
         <PatientProvider>
           <Routes>
             <Route path="/" element={<LoginPage />} />
-            <Route path="/doctor_homepage" element={<PatientIDInput />} />
+            <Route path="/home" element={<PatientIDInput />} />
             <Route path="/general" element={<General />} />
             <Route path="/demography" element={<Demography />} />
             <Route path="/diagnostics" element={<Diagnostics />} />

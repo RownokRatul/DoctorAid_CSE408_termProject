@@ -11,7 +11,7 @@ export const usePatientIDValidation = () => {
     // console.log("In patient validation useEffect");
     if (!isPatientIDValid()) {
       // console.log("In patient validation useEffect if");
-      navigate('/'); // Redirect to the enter patient ID page
+      navigate('/home'); // Redirect to the enter patient ID page
     }
   }, [isPatientIDValid, navigate]);
 };

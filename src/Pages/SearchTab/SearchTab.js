@@ -12,10 +12,11 @@ const SearchTab = () => {
   usePatientIDValidation();
   const [results, setResults] = useState([]); // To store the search results
   const [selectedResult, setSelectedResult] = useState(null);
+  const { patientID } = useContext(PatientContext);
+  const [filteredResults, setFilteredResults] = useState([]);
 
   const [tags, setTags] = useState([]); // To store the fetched tags
-  const[bodyPart,setBodyPart]=useState(null);
-
+  const [bodyPart,setBodyPart]=useState(null);
 
     useEffect(() => {
       // Fetching the tags when the component mounts
@@ -30,18 +31,18 @@ const SearchTab = () => {
     }, []);
     
 
-    useEffect(() => {
-      console.log("search updated results:", results);
-    }, [results]);
+    // useEffect(() => {
+    //   console.log("search updated results:", results);
+    // }, [results]);
   
   
 
 
-  const handleSearch = (criteria) => {
-    console.log("Criteria:", criteria);
+  const handleSearch = (data) => {
+    console.log("Data:", data);
   
     // Extracting the relevant fields from the criteria
-    const { tests, prescriptions, medical_history } = criteria;
+    const { tests, prescriptions, medical_history } = data;
   
     // Transforming the data into the desired results format
     const transformedResults = [];
@@ -71,8 +72,7 @@ const SearchTab = () => {
         tags: [], // Add tags if available
       });
     });
-  
-    // Update the state with the transformed results
+
     setResults(transformedResults);
     console.log("Newresults:",results);
   };
@@ -85,22 +85,15 @@ const SearchTab = () => {
   const handleClose = () => {
     setSelectedResult(null);
   };
-  const { patientID } = useContext(PatientContext);
+
   // SearchTabs Component
     const handlePartSelected = (part) => {
-      const selectedTag = tags.find(tag => tag.tag_name === part);
+      const selectedTag = tags.find(tag => tag.tag_name.toLowerCase() === part.toLowerCase());
       if (selectedTag) {
         console.log('Selected tag ID:', selectedTag.id);
       } else {
         console.log('Tag not found');
       }
-      
-      // // Do something with the selected part, such as filtering search results...
-      // console.log(part);
-      // console.log(patientID);
-      // setBodyPart(part);
-
-      // lets now send the part data as a tag and call the search api
 
       const requestBody = {
         patient_id: patientID,
@@ -133,11 +126,11 @@ const SearchTab = () => {
       <SearchCriteria onSearch={handleSearch} tags={tags} />
 
       {/* Middle Flexbox */}
-      <Box width="40%" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <Box width="40%" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         
-          <MiddleFlexBox onPartSelected={handlePartSelected} />
+      <MiddleFlexBox onPartSelected={handlePartSelected} />
       
-      </Box>
+    </Box>
 
       {/* Right Flexbox */}
       {/* Right Flexbox */}
@@ -151,8 +144,8 @@ const SearchTab = () => {
                   <Box key={index} mb={2} p={2} boxShadow={3} borderRadius="borderRadius" bgcolor="azure">
                     <Typography variant="h6">{result.type}</Typography>
                     <Typography variant="body1">Test Name: {result.name}</Typography>
-                    <Typography variant="body1">Date: {result.date}</Typography>
-                    <Typography variant="body1">Prescribed Date: {result.prescribedDate}</Typography>
+                    <Typography variant="body1">Date: {new Date(result.date).toISOString().split('T')[0]}</Typography>
+                    <Typography variant="body1">Prescribed Date: {new Date(result.prescribedDate).toISOString().split('T')[0]}</Typography>
                     <Button color="primary" onClick={() => handleSeeMore(result)}>See More</Button>
                   </Box>
                 );
@@ -160,7 +153,7 @@ const SearchTab = () => {
                 return (
                   <Box key={index} mb={2} p={2} boxShadow={3} borderRadius="borderRadius" bgcolor="azure">
                     <Typography variant="h6">{result.type}</Typography>
-                    <Typography variant="body1">Date: {result.date}</Typography>
+                    <Typography variant="body1">Date: {new Date(result.date).toISOString().split('T')[0]}</Typography>
                     <Button color="primary" onClick={() => handleSeeMore(result)}>See More</Button>
                   </Box>
                 );
@@ -176,11 +169,6 @@ const SearchTab = () => {
                 return null;
             }
           }
-          
-          
-          
-          
-          
 
           )
         ) : (

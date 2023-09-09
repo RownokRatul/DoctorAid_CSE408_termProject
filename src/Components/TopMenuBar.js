@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AppBar, Tabs, Tab, ThemeProvider, createTheme, Toolbar, Switch } from '@mui/material';
+import { AppBar, Tabs, Tab, ThemeProvider, createTheme, Toolbar, Switch, IconButton } from '@mui/material';
 import { useThemeContext } from '../ThemeContext';
+// import HomeIcon from '@mui/icons-material/Home';
+import Home from './images/home.png';
 
 const TopMenuBar = () => {
   const { darkMode, setDarkMode } = useThemeContext();
@@ -15,7 +17,7 @@ const TopMenuBar = () => {
     '/prescription',
     '/search',
     '/diagnostics',
-    '/practice',
+    '/home'
   ];
 
   const currentTabIndex = paths.indexOf(currentPath);
@@ -60,14 +62,17 @@ const TopMenuBar = () => {
             <Tab label="Prescriptions" component={Link} to="/prescription" />
             <Tab label="Search" component={Link} to="/search" />
             <Tab label="Diagnostics" component={Link} to="/diagnostics" />
-            <Tab label="Practice" component={Link} to="/demo" />
+            {/* <Tab label="Practice" component={Link} to="/demo" /> */}
           </Tabs>
-          <Switch
+          <IconButton component={Link} to="/home">
+            <img src={Home} alt="Home" style={{ width: '24px', height: '24px' }} />
+          </IconButton>
+          {/* <Switch
             checked={darkMode}
             onChange={() => setDarkMode(!darkMode)}
             name="darkModeSwitch"
             inputProps={{ 'aria-label': 'dark mode switch' }}
-          />
+          /> */}
         </Toolbar>
       </AppBar>
     </ThemeProvider>
