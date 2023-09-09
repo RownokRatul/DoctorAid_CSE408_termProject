@@ -3,7 +3,7 @@ function ensureAdmin(req, res, next) {
         if (req.user && req.user.user_role === 'admin') {
         return next();
         } else {
-        res.status(403).send('Unauthorized');
+            return res.status(401).json({ message: 'You are not admin authenticated' });
         }
     } else {
         return next();
