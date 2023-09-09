@@ -1,0 +1,36 @@
+DELETE http://localhost:5000/api/v0/admin/delete_user
+content-type: application/json
+
+# {
+#     "user_role" : "doctor",
+#     "username" : "OcK"
+# }
+
+# {
+#   "message": "Success",
+#   "data": {
+#     "username": "OcK",
+#     "name": "Octavious",
+#     "specialization": "General Medicine",
+#     "degree": "MBBS",
+#     "phone": "1243567890",
+#     "email": "octopus@mail.com"
+#   }
+# }
+
+
+# {
+#     "user_role" : "receptionist",
+#     "username" : "rec2"
+# }
+
+# {
+#     "user_role" : "intern",
+#     "username" : "int2"
+# }
+
+# {
+#     "user_role" : "diagnostician",
+#     "username" : "diag2"
+# }
+

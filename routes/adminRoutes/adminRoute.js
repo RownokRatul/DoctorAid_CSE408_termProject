@@ -18,4 +18,25 @@ router.get('/api/v0/admin/list_all_users', ensureAuthenticated, ensureAdmin, asy
     }
 });
 
+router.post('/api/v0/admin/create_user', ensureAuthenticated, ensureAdmin, async (req, res) => {
+    const pseudo_view = await adminControllers.addUser(req);
+    if(pseudo_view) {
+        res.status(200).json({message : 'Success', data : pseudo_view});
+    }
+    else {
+        res.status(404).json({error : 'Not Found'});
+    }
+});
+
+
+router.delete('/api/v0/admin/delete_user', ensureAuthenticated, ensureAdmin, async (req, res) => {
+    const pseudo_view = await adminControllers.deleteUser(req);
+    if(pseudo_view) {
+        res.status(200).json({message : 'Success', data : pseudo_view});
+    }
+    else {
+        res.status(404).json({error : 'Not Found'});
+    }
+});
+
 module.exports = router;

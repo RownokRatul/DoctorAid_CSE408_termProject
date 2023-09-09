@@ -1,0 +1,75 @@
+POST http://localhost:5000/api/v0/admin/create_user
+content-type: application/json
+
+# {
+#     "user_role" : "doctor",
+#     "username" : "OcK",
+#     "hash_password" : "password",
+#     "name": "Octavious",
+#     "specialization": "General Medicine",
+#     "degree" : "MBBS",
+#     "phone" : "1243567890",
+#     "email" : "octopus@mail.com"
+# }
+
+# {
+#   "message": "Success",
+#   "data": {
+#     "username": "OcK",
+#     "name": "Octavious",
+#     "specialization": "General Medicine",
+#     "degree": "MBBS",
+#     "phone": "1243567890",
+#     "email": "octopus@mail.com"
+#   }
+# }
+
+# REceptionist
+# {
+#     "user_role" : "receptionist",
+#     "username" : "rec2",
+#     "hash_password" : "password",
+#     "name": "Octavious",
+#     "phone" : "12435678901"
+# }
+
+# {
+#   "message": "Success",
+#   "data": {
+#     "username": "rec2",
+#     "name": "Octavious",
+#     "phone": "12435678901"
+#   }
+# }
+
+# INtern
+
+# {
+#     "user_role" : "intern",
+#     "username" : "int2",
+#     "hash_password" : "password",
+#     "name": "Octavious",
+#     "phone" : "12435678901",
+#     "email" : "lol@gmail.com"
+# }
+
+# {
+#   "message": "Success",
+#   "data": {
+#     "username": "int2",
+#     "name": "Octavious",
+#     "phone": "12435678901",
+#     "email": "lol@gmail.com"
+#   }
+# }
+
+# Diag
+
+{
+    "user_role" : "diagnostician",
+    "username" : "diag2",
+    "hash_password" : "password",
+    "name": "Octavious",
+    "phone" : "12435678901",
+    "email" : "lol@gmail.com"
+}

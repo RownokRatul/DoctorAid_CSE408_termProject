@@ -72,7 +72,7 @@ async function addReceptionist(username, hashedPassword, name, phone) {
   }
 }
 
-async function addIntern(username, hashedPassword, name, phone) {
+async function addIntern(username, hashedPassword, name, phone, email) {
   try {
     // Create new user login info
     await prisma.user_login_info.create({
@@ -89,6 +89,7 @@ async function addIntern(username, hashedPassword, name, phone) {
         username,
         name,
         phone,
+        email,
       },
     });
 
@@ -99,7 +100,7 @@ async function addIntern(username, hashedPassword, name, phone) {
   }
 }
 
-async function addDiagnostician(username, hashedPassword, name, phone) {
+async function addDiagnostician(username, hashedPassword, name, phone, email) {
   try {
     // Create new user login info
     await prisma.user_login_info.create({
@@ -116,6 +117,7 @@ async function addDiagnostician(username, hashedPassword, name, phone) {
         username,
         name,
         phone,
+        email,
       },
     });
 
