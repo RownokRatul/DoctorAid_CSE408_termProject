@@ -1,0 +1,144 @@
+POST http://localhost:3000/api/v0/admin/add_test_metadata
+Content-Type: application/json
+
+{
+  "test_name": "Blood Test",
+  "row_name": ["RBC", "WBC"],
+  "column_name": ["Value", "Unit"],
+  "prefilled_values": ["4.5", "g/dL"]
+}
+
+
+DELETE http://localhost:3000/api/v0/admin/delete_test_metadata
+Content-Type: application/json
+
+{
+  "id": 1
+}
+
+
+POST http://localhost:3000/api/v0/admin/add_tag
+Content-Type: application/json
+
+{
+  "tag_name": "Cardiology"
+}
+DELETE http://localhost:3000/api/v0/admin/delete_tag
+Content-Type: application/json
+
+{
+  "id": 1
+}
+
+POST http://localhost:3000/api/v0/admin/add_test_tag
+Content-Type: application/json
+
+{
+  "test_id": 1,
+  "tag_id": 1
+}
+DELETE http://localhost:3000/api/v0/admin/delete_test_tag
+Content-Type: application/json
+
+{
+  "test_id": 1,
+  "tag_id": 1
+}
+
+POST http://localhost:5000/api/v0/admin/add_drug_interaction
+Content-Type: application/json
+
+{
+  "drug1_id": 1,
+  "drug2_id": 2,
+  "comment": "May cause drowsiness"
+}
+
+DELETE http://localhost:5000/api/v0/admin/delete_drug_interaction
+Content-Type: application/json
+
+{
+  "drug1_id": 1,
+  "drug2_id": 2
+}
+
+POST http://localhost:5000/api/v0/admin/add_brand
+Content-Type: application/json
+
+{
+  "brand_name": "MediBrand"
+}
+
+DELETE http://localhost:5000/api/v0/admin/delete_brand
+Content-Type: application/json
+
+{
+  "id": 1
+}
+
+POST http://localhost:5000/api/v0/admin/add_brand_drug
+Content-Type: application/json
+
+{
+  "generic_id": 1,
+  "name": "MedicineX",
+  "adult_dosage": "500mg",
+  "child_dosage": "250mg",
+  "brand_id": 1
+}
+
+DELETE http://localhost:5000/api/v0/admin/delete_brand_drug
+Content-Type: application/json
+
+{
+  "id": 1
+}
+
+POST http://localhost:5000/api/v0/admin/add_generic_drug
+Content-Type: application/json
+
+{
+  "name": "DrugY",
+  "usecases": ["Headache", "Pain"],
+  "adverse_effects": ["Nausea", "Vomiting"]
+}
+
+DELETE http://localhost:5000/api/v0/admin/delete_generic_drug
+Content-Type: application/json
+
+{
+  "id": 1
+}
+
+POST http://localhost:5000/api/v0/admin/add_disease
+Content-Type: application/json
+
+{
+  "disease_name": "Migraine",
+  "is_chronic": "Yes"
+}
+
+DELETE http://localhost:5000/api/v0/admin/delete_disease
+Content-Type: application/json
+
+{
+  "id": 1
+}
+
+POST http://localhost:5000/api/v0/admin/add_disease_tag
+Content-Type: application/json
+
+{
+  "disease_id": 1,
+  "tag_id": 1
+}
+
+DELETE http://localhost:5000/api/v0/admin/delete_disease_tag
+Content-Type: application/json
+
+{
+  "disease_id": 1,
+  "tag_id": 1
+}
+
+
