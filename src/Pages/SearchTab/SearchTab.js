@@ -78,9 +78,23 @@ const SearchTab = () => {
   };
   
 
-  const handleSeeMore = (result) => {
+  const handleSeeMoreTest = (result) => {
+
+    console.log("result:",result)
     setSelectedResult(result);
   };
+
+  const handleSeeMorePrescription = (result) => {
+    setSelectedResult(result);
+  };
+
+  const handleSeeMoreHistory = (result) => {
+    setSelectedResult(result);
+
+  };
+
+
+
 
   const handleClose = () => {
     setSelectedResult(null);
@@ -146,7 +160,7 @@ const SearchTab = () => {
                     <Typography variant="body1">Test Name: {result.name}</Typography>
                     <Typography variant="body1">Date: {new Date(result.date).toISOString().split('T')[0]}</Typography>
                     <Typography variant="body1">Prescribed Date: {new Date(result.prescribedDate).toISOString().split('T')[0]}</Typography>
-                    <Button color="primary" onClick={() => handleSeeMore(result)}>See More</Button>
+                    <Button color="primary" onClick={() => handleSeeMoreTest(result)}>See More</Button>
                   </Box>
                 );
               case 'Prescription':
@@ -154,7 +168,7 @@ const SearchTab = () => {
                   <Box key={index} mb={2} p={2} boxShadow={3} borderRadius="borderRadius" bgcolor="azure">
                     <Typography variant="h6">{result.type}</Typography>
                     <Typography variant="body1">Date: {new Date(result.date).toISOString().split('T')[0]}</Typography>
-                    <Button color="primary" onClick={() => handleSeeMore(result)}>See More</Button>
+                    <Button color="primary" onClick={() => handleSeeMorePrescription(result)}>See More</Button>
                   </Box>
                 );
               case 'Medical History':
@@ -162,7 +176,7 @@ const SearchTab = () => {
                   <Box key={index} mb={2} p={2} boxShadow={3} borderRadius="borderRadius" bgcolor="azure">
                     <Typography variant="h6">{result.type}</Typography>
                     <Typography variant="body1">Description: {result.description}</Typography>
-                    <Button color="primary" onClick={() => handleSeeMore(result)}>See More</Button>
+                    <Button color="primary" onClick={() => handleSeeMoreHistory(result)}>See More</Button>
                   </Box>
                 );
               default:

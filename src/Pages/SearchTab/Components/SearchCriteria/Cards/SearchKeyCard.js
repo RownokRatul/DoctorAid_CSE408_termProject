@@ -74,8 +74,14 @@ const SearchKeyCard = ({ criteria, handleCriteriaChange, handleSearch, tags }) =
             let fromDate = criteria.fromDate ? new Date(criteria.fromDate) : null;
             let toDate = criteria.toDate ? new Date(criteria.toDate) : null;
 
-            fromDate.setDate(fromDate.getDate() + 1);
-            toDate.setDate(toDate.getDate() + 1);
+            if(fromDate) {
+              fromDate.setDate(fromDate.getDate() + 1);
+            }
+            if(toDate) {
+              toDate.setDate(toDate.getDate() + 1);
+            }
+            // fromDate.setDate(fromDate.getDate() + 1);
+            // toDate.setDate(toDate.getDate() + 1);
             
             // let today = new Date();
             // if (new Date(fromDate).toISOString().split('T')[0] === today.toISOString().split('T')[0]) {

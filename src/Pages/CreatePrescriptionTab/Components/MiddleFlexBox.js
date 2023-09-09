@@ -10,6 +10,7 @@ function MiddleFlexbox({ selectedMedicines, setSelectedMedicines, selectedMedici
   const [allGenericDrugs, setAllGenericDrugs] = useState([]);
   const [allBrands, setAllBrands] = useState([]);
   const [customDose, setCustomDose] = useState('');  // State for customized dose
+  const [selectedGenericID, setSelectedGenericID] = useState([]); // State for selected generic ID
 
 
   const [showInitialDialog, setShowInitialDialog] = useState(true);
@@ -28,7 +29,6 @@ function MiddleFlexbox({ selectedMedicines, setSelectedMedicines, selectedMedici
       .then(res => res.json())
       .then(data => {
         setAllInteractions(data.data);
-        setShowInitialDialog(false);  // Set the dialog box to close after data is fetched
       });
 
   }, []);
@@ -102,6 +102,14 @@ function MiddleFlexbox({ selectedMedicines, setSelectedMedicines, selectedMedici
     console.log("Eta to kaaj kore na");
   };
 
+    // State to manage interaction dialog visibility and content
+    const [interactionDialogOpen, setInteractionDialogOpen] = useState(false);
+    const [interactionDetails, setInteractionDetails] = useState({
+      drug1: '',
+      drug2: '',
+      comment: ''
+    });
+
 
   const handleDetailsClose = (choice) => {
     if (choice === 'custom') {
@@ -110,15 +118,44 @@ function MiddleFlexbox({ selectedMedicines, setSelectedMedicines, selectedMedici
         dose: customDose,
         sideEffects: selectedDetails.adverseEffects.join(', ')
       };
-      
-      setSelectedMedicines([...selectedMedicines, medicine]); // Updating selectedMedicines
-      setSelectedMedicineNames([...selectedMedicineNames, selectedDetails.drugId]); // Updating selectedMedicineNames
-      setDoses([...doses, customDose]); // Updating doses
+  
+      const newSelectedMedicineNames = [...selectedMedicineNames, selectedDetails.drugId]; // Tentatively updating selectedMedicineNames
+      const newDoses = [...doses, customDose]; // Tentatively updating doses
+      const newSelectedGenericID = [...selectedGenericID, selectedDetails.genericID]; // Tentatively updating selectedGenericID
+  
+      // Check for interactions with existing selected generic IDs
+      newSelectedGenericID.forEach((existingGenericID, index) => {
+        const interaction = allInteractions.find((interaction) => {
+          return (
+            (interaction.drug1_id === existingGenericID && interaction.drug2_id === selectedDetails.genericID) ||
+            (interaction.drug2_id === existingGenericID && interaction.drug1_id === selectedDetails.genericID)
+          );
+        });
+  
+        if (interaction) {
+          console.log(`Conflict found between drug with generic ID: ${existingGenericID} and ${selectedDetails.genericID}`);
+          console.log(`Comment: ${interaction.comment}`);
+
+          // Update interactionDetails and show dialog
+          setInteractionDetails({
+            drug1: allGenericDrugs.find(drug => drug.id === existingGenericID)?.name,
+            drug2: allGenericDrugs.find(drug => drug.id === selectedDetails.genericID)?.name,
+            comment: interaction.comment
+          });
+          setInteractionDialogOpen(true);
+        }
+      });
+  
+      setSelectedMedicines([...selectedMedicines, medicine]); // Finally updating selectedMedicines
+      setSelectedMedicineNames(newSelectedMedicineNames); // Finally updating selectedMedicineNames
+      setDoses(newDoses); // Finally updating doses
+      setSelectedGenericID(newSelectedGenericID); // Finally updating selectedGenericID
     }
   
     setCustomDose('');  // Reset custom dose
     setDetailsDialogOpen(false);
   };
+  
 
 
 
@@ -191,20 +228,7 @@ function MiddleFlexbox({ selectedMedicines, setSelectedMedicines, selectedMedici
       </div>
       </Card>
 
-      <Dialog
-        open={showInitialDialog}
-        onClose={() => setShowInitialDialog(false)}
-      >
-        <DialogTitle>{"All Interactions Data"}</DialogTitle>
-        <DialogContent>
-          <pre>{JSON.stringify(allInteractions, null, 2)}</pre>  {/* Pretty-print the data */}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setShowInitialDialog(false)} color="primary">
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
+      
       <Dialog
         open={detailsDialogOpen}
         onClose={() => handleDetailsClose(null)}
@@ -253,6 +277,26 @@ function MiddleFlexbox({ selectedMedicines, setSelectedMedicines, selectedMedici
           </Button>
         </DialogActions>
       </Dialog>
+      <Dialog
+        open={interactionDialogOpen}
+        onClose={() => setInteractionDialogOpen(false)}
+      >
+        <DialogTitle>{"Drug Interaction Warning!"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <strong>{interactionDetails.drug1}</strong> and <strong>{interactionDetails.drug2}</strong> should not be taken together.
+          </DialogContentText>
+          <DialogContentText>
+            <strong>Reason:</strong> {interactionDetails.comment}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setInteractionDialogOpen(false)} color="primary">
+            Acknowledge
+          </Button>
+        </DialogActions>
+      </Dialog>
+
     </div>
   );
   

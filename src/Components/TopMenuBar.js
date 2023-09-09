@@ -63,10 +63,11 @@ const TopMenuBar = () => {
             <Tab label="Search" component={Link} to="/search" />
             <Tab label="Diagnostics" component={Link} to="/diagnostics" />
             {/* <Tab label="Practice" component={Link} to="/demo" /> */}
-          </Tabs>
-          <IconButton component={Link} to="/home">
+            <IconButton component={Link} to="/home">
             <img src={Home} alt="Home" style={{ width: '24px', height: '24px' }} />
           </IconButton>
+          </Tabs>
+          
           {/* <Switch
             checked={darkMode}
             onChange={() => setDarkMode(!darkMode)}
