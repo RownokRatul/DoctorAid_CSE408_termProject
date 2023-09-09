@@ -44,12 +44,43 @@ async function addPrescribedDrugs(prescriptionId, drugIds, prescribedDosages) {
     );
   }
 
+  async function addDiseasesForPrescription(prescriptionId, diseaseIds) {
+    // Prepare the data for bulk insert
+    const prescriptionDiseasesData = diseaseIds.map((diseaseId) => ({
+      prescription_id: prescriptionId,
+      disease_id: diseaseId,
+    }));
+  
+    // Insert records in a transaction
+    return prisma.$transaction(
+      prescriptionDiseasesData.map((diseaseData) =>
+        prisma.prescription_diseases.create({
+          data: diseaseData,
+        })
+      )
+    );
+  }
 
-async function addPrescriptionEntry(prescription_id, queued_test_ids, drug_ids, prescribed_dosages) {
+  async function createNewPrescription(patientId, doctorUsername, date, findings) {
+    return await prisma.prescription.create({
+      data: {
+        patient_id: patientId,
+        doctor_username: doctorUsername,
+        date: date,
+        findings: findings
+      }
+    });
+  }
+
+
+
+async function addPrescriptionEntry(prescriptionId, testIds, drugIds, prescribedDosages, diseaseIds, patientId, doctorUsername, date, findings) {
   try {
     const newEntry =  await prisma.$transaction([
         queueTestsForPrescription(prescriptionId, testIds),
         addPrescribedDrugs(prescriptionId, drugIds, prescribedDosages),
+        addDiseasesForPrescription(prescriptionId, diseaseIds),
+        createNewPrescription(patientId, doctorUsername, date, findings)
       ]);
     return newEntry;
   } catch (error) {
