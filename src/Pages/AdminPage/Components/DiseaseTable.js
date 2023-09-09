@@ -4,10 +4,14 @@ import DiseasesDialog from './DiseasesDialog';
 import remove from './Image/trash-bin.png';
 
 function DiseasesTable() {
-  const [diseases, setDiseases] = useState([
-    { id: 1, name: 'Diabetes' },
-    { id: 2, name: 'Hypertension' },
-  ]);
+  const [diseases, setDiseases] = useState([]);
+
+
+  useState(() => {
+    fetch('/api/v0/get_all_diseases')
+      .then(res => res.json())
+      .then(data => setDiseases(data.data));
+  }, []);
 
   const handleRemoveDisease = (index) => {
     const newDiseases = [...diseases];
@@ -28,7 +32,7 @@ function DiseasesTable() {
         {diseases.map((disease, index) => (
           <TableRow key={index}>
             <TableCell>{disease.id}</TableCell>
-            <TableCell>{disease.name}</TableCell>
+            <TableCell>{disease.disease_name}</TableCell>
             <TableCell>
               <Button onClick={() => handleRemoveDisease(index)}>
                 <img src={remove} alt="Delete" style={{ width: '40px', height: '40px' }} />

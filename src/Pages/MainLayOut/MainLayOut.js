@@ -17,35 +17,39 @@ const MainLayout = ({ children }) => {
   const logo = './Components/Images/doctoraid_logo.jpg'; // Add your logo path here
   const bannerSrc = './Components/Images/doctoraid_logo.jpg'; // Add your banner path here
 
-
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', paddingBottom: '60px' }}>
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'column',
+      position: 'relative'
+    }}>
       <Banner src={doctoraid_logo} />
       {location.pathname !== '/' && (
         <div>
-        
-      	  <TopMenuBar logo={logo} />
+          <TopMenuBar logo={logo} />
           {!open && (
-           <IconButton onClick={toggleDrawer} style={{ position: 'absolute', left: 0, top: '50%' }}>
-           <ChevronRight />
-          </IconButton>
+            <IconButton onClick={toggleDrawer} style={{ position: 'absolute', left: 0, top: '50%' }}>
+              <ChevronRight />
+            </IconButton>
           )}
         </div>
       )}
       
-      <div style={{backgroundColor:"",width:"90%" , marginLeft:"5%"}}>
-        {/* <Container style={{width:"90%"}}> */}
-        {children}
-        {/* </Container> */}
+      <div style={{
+        flex: 1,  // Take up all available space
+        width: '90%',
+        marginLeft: '5%',
         
+        overflow: 'hidden'  // Hide overflow
+      }}>
+        {children}
       </div>
       
       <Footer />
-      
     </div>
   );
 };

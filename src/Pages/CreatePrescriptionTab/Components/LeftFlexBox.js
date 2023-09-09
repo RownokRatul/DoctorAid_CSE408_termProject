@@ -62,10 +62,7 @@ function LeftFlexbox({ diseasesList, setDiseasesList, testsList, setTestsList,se
 
   return (
     <div className="left-flexbox" style={{ width: '95%', backgroundColor: '#f9f9f9' }}>
-      <Card style={{ padding: '5px', marginBottom: '5px', height: '31%', backgroundColor: 'azure' }}>
-      <TextField fullWidth label="BP" />
-      <TextField fullWidth label="Pulse Rate" />
-      </Card>
+      
       <Card style={{ padding: '5px', marginBottom: '5px', height: '31%', backgroundColor: 'azure' }}>
         <h3 style={{ textAlign: 'center', paddingTop: '5px' }}>Add Symptoms</h3>
         <Autocomplete

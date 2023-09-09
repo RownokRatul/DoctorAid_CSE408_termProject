@@ -11,6 +11,7 @@ import BottomBanner from './Components/BottomBanner';
 import { useState } from 'react';
 import { usePatientIDValidation } from '../../PatientIDValidation';
 import { PatientContext } from '../../PatientContext';
+import { set } from 'lodash';
 
 
 
@@ -28,6 +29,7 @@ const CreatePrescriptionPage = () => {
   usePatientIDValidation();
 
   const {patientID}=useContext(PatientContext);
+  const { doctorInfo }=useContext(PatientContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -41,8 +43,16 @@ const CreatePrescriptionPage = () => {
   const [selectedTags, setSelectedTags] = useState([]);
 
   const [allResults, setAllResults] = useState([]); // To store all the results
+  const [finding,setFinding]=useState(''); // To store the findings
+
+  const [doses, setDoses] = useState([]); // To store the doses of the selected medicines
+  const [allInteractions, setAllInteractions] = useState([]); // To store all the interactions
 
 
+
+  useEffect(() => {
+    console.log("All interactions: ", allInteractions);
+  }, [allInteractions]);
 
   useEffect(() => {
     console.log("Selected tags: ", selectedTags,selectedMedicineNames);
@@ -75,13 +85,6 @@ const CreatePrescriptionPage = () => {
         console.error('Failed to search by tag:', err);
         // Handle the error here if necessary
       });  
-
-
-
-
-
-
-
 
 
   }, [selectedTags]);
@@ -204,12 +207,6 @@ const CreatePrescriptionPage = () => {
 
   }, [selectedMedicineNames]);
 
-    
-
-
-
-
-
 
   const resetData = async () => {
     // Reset all states to their initial values
@@ -226,13 +223,58 @@ const CreatePrescriptionPage = () => {
   };
 
 
-  const handleClearAll = () => {
+  const handleClearAll = async () => {
     // Clear all the states
-    console.log('Clearing all the states');
     setDiseasesList([]);
     setTestsList([]);
     setSelectedMedicines([]);
+    
+    console.log('Clearing all the states');
   };
+
+
+  const handleSave = async () => {
+    // Clear all the states
+
+    const currentDate = new Date().toISOString();
+
+    try {
+      const response = await fetch('api/v0/add_prescription/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          test_ids: testsList,
+          drug_ids : selectedMedicineNames,
+          prescribed_dosages : doses,
+          disease_ids : diseasesList,
+          patient_id : patientID,
+          doctor_username : doctorInfo.info.username,
+          date : currentDate,
+          findings : finding,
+          tags : selectedTags,
+        }),
+      });
+
+      console.log("RESPONSE:", response);
+
+      if (response.status === 404) {
+        console.log("Ekhane onek kichu missing");
+      }
+
+      const result = await response.json(); // Await the result here
+      if (result.message === 'Success') {
+        console.log("Prescription added successfully");
+      }
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    }
+    
+    
+  };
+
+  
 
   return (
     
@@ -273,7 +315,7 @@ const CreatePrescriptionPage = () => {
             />
         </Grid>
         <Grid item xs={5}>
-            <MiddleFlexbox selectedMedicines={selectedMedicines} setSelectedMedicines={setSelectedMedicines} selectedMedicineNames={selectedMedicineNames} setSelectedMedicineNames={setSelectedMedicineNames}/>
+            <MiddleFlexbox selectedMedicines={selectedMedicines} setSelectedMedicines={setSelectedMedicines} selectedMedicineNames={selectedMedicineNames} setSelectedMedicineNames={setSelectedMedicineNames} doses={doses} setDoses={setDoses} allInteractions={allInteractions} setAllInteractions={setAllInteractions} />
         </Grid>
         <Grid item xs={4}>
           <RightFlexbox  SearchResults={allResults} />
@@ -281,7 +323,8 @@ const CreatePrescriptionPage = () => {
       </Grid>
 
       {/* Bottom Banner with 15% height */}
-      <BottomBanner handleClearAll={handleClearAll}/>
+      <BottomBanner handleClearAll={handleClearAll} handleSave={handleSave} setFinding={setFinding}/>
+      
     </div>
   );
 };

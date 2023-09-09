@@ -26,6 +26,7 @@ import { useDoctorIDValidation } from '../../DoctorIDValidation';
 const DoctorHomepage = () => {
   // ...other code
   console.log("Kire mama");
+
   
 
   const [news, setNews] = useState([]);
@@ -39,6 +40,29 @@ const DoctorHomepage = () => {
   const { role } = useContext(PatientContext);
 
   console.log("Doctor Info  in enter: ",doctorInfo);
+
+
+    const [patients, setPatients] = useState([]);
+
+    
+
+    
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        const response = await axios.post('/api/v0/get_recent_patients/', {
+          doctor_username: 'doc_oc',
+          limit: 3,
+        });
+  
+        if (response.data.message === 'Success') {
+          setPatients(response.data.data);
+        }
+      };
+  
+      fetchData();
+    }, []);
+   
   
 
   useEffect(() => {
@@ -94,44 +118,7 @@ const DoctorHomepage = () => {
       fetchData();
     }
 
-    // const response = fetch('/api/v0/get_test_status', {
-    //   method: 'GET',
-    //   headers: { 'Content-Type': 'application/json' },
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log("data:",data);
-    //     const fetchedList = data.data;
-    //     console.log('Fetched list:', fetchedList); // Logging the fetched tags
-    //     setTestStatus(fetchedList); // Updating the state
-    //   console.log("list response",testStatus);
-    //   })
-
-    //   const response2 = fetch('/api/v0/get_queued_tests', {
-    //     method: 'GET',
-    //     headers: { 'Content-Type': 'application/json' },
-    //   })
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //       console.log("data:",data);
-    //       const fetchedList = data.data;
-    //       console.log('Fetched list:', fetchedList); // Logging the fetched tags
-    //       setQueuedTests(fetchedList); // Updating the state
-    //     console.log("list response",testStatus);
-    //     })
-
-    //     const response3 = fetch('/api/v0/get_queued_tests', {
-    //       method: 'GET',
-    //       headers: { 'Content-Type': 'application/json' },
-    //     })
-    //       .then((res) => res.json())
-    //       .then((data) => {
-    //         console.log("data:",data);
-    //         const fetchedList = data.data;
-    //         console.log('Fetched list:', fetchedList); // Logging the fetched tags
-    //         setQueuedTests(fetchedList); // Updating the state
-    //       console.log("list response",testStatus);
-    //       })
+   
 
   }, []);
 
@@ -258,17 +245,19 @@ const DoctorHomepage = () => {
 
 
           {/* Bottom Card with 3 Patient Info Cards */}
-          <Card style={{ padding: '15px' ,backgroundColor:"beige"}}>
+          <Card style={{ padding: '15px', backgroundColor: 'beige' }}>
           <Typography variant="h6" style={{ marginBottom: '10px' }}>Last 3 Visited Patients</Typography>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            {[1, 2, 3].map((patient, index) => (
-              <Card key={index} style={{ padding: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: "#f5f5f5", borderTop: '0.5px solid gray' }}>
-              <Avatar src={'dummyAvatar' + index} alt="Patient" />
-              <Typography variant="body1">Name: Dummy Name {index}</Typography>
-              <Typography variant="body2">Patient ID: {index}</Typography>
-              <Button onClick={() => handlePatientDetail(index)}>Detail</Button>
-            </Card>
-            
+            {patients.map((patient, index) => (
+              <Card key={index} style={{ padding: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#f5f5f5', borderTop: '0.5px solid gray' }}>
+                <Avatar src={'dummyAvatar' + index} alt="Patient" />
+                <Typography variant="body1">Name: {patient.name}</Typography>
+                <Typography variant="body2">Patient ID: {patient.patient_id}</Typography>
+                <Typography variant="body2">Phone: {patient.phoneNumber}</Typography>
+                <Typography variant="body2">Date: {new Date(patient.date).toLocaleDateString()}</Typography>
+                <Typography variant="body2">Findings: {patient.findings}</Typography>
+                <Button onClick={() => handlePatientDetail(patient.patient_id)}>Detail</Button>
+              </Card>
             ))}
           </div>
         </Card>
