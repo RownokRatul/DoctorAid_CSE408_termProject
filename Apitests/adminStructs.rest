@@ -115,7 +115,7 @@ Content-Type: application/json
 
 {
   "disease_name": "Migraine",
-  "is_chronic": "Yes"
+  "is_chronic": "Y"
 }
 
 DELETE http://localhost:5000/api/v0/admin/delete_disease
