@@ -1,7 +1,7 @@
 // pages/CreatePrescriptionPage.js
 
 import {React,useEffect,useContext} from 'react';
-import { Button, Grid } from '@mui/material';
+import { Button, CircularProgress, Grid, LinearProgress } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import LeftFlexbox from './Components/LeftFlexBox';
 import MiddleFlexbox from './Components/MiddleFlexBox';
@@ -59,6 +59,7 @@ const CreatePrescriptionPage = () => {
   const [allInteractions, setAllInteractions] = useState([]); // To store all the interactions
 
   const [openDialog, setOpenDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   const [data, setData] = useState(null);
@@ -277,7 +278,7 @@ const CreatePrescriptionPage = () => {
 
     const currentDate = new Date().toISOString();
     const uniqueTags = [...new Set(selectedTags)];
-
+    setIsLoading(true);
     try {
       const response = await fetch('api/v0/add_prescription/', {
         method: 'POST',
@@ -313,8 +314,10 @@ const CreatePrescriptionPage = () => {
       }
     } catch (error) {
       console.error('Failed to fetch data:', error);
+    } finally {
+      setIsLoading(false);
     }
-    
+    // window.location.reload();
     
   };
 
@@ -373,6 +376,16 @@ const CreatePrescriptionPage = () => {
 
       {/* Bottom Banner with 15% height */}
       <BottomBanner handleClearAll={handleClearAll} handleSave={handleSave} setFinding={setFinding}/>
+
+      {isLoading && 
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+        }}>
+          <CircularProgress color="success"/>
+        </div>
+      }
 
       <Dialog open={openDialog} style={{ zIndex: 1001 }}>
         <DialogTitle>Success</DialogTitle>
