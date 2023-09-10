@@ -1,0 +1,2 @@
+GET http://localhost:5000/api/v0/get_all_brand_drugs
+content-type: application/json

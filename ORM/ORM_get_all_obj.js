@@ -24,6 +24,18 @@ async function getAllTags() {
     return tests;
   }
 
+  async function getAllBrandDrugs() {
+    const tests = await prisma.brand_drugs.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+  
+    console.log(tests);
+    return tests;
+  }
+
   async function getAllDiseases() {
     const diseases = await prisma.diseases.findMany({
       select: {
@@ -85,4 +97,5 @@ module.exports = {
     getAllGenericDrugs,
     getAllBrands,
     getAllDrugInteractions,
+    getAllBrandDrugs,
 }

@@ -19,6 +19,18 @@ router.get('/api/v0/get_all_brands',ensureAuthenticated, async (req, res) => {
     }
 });
 
+router.get('/api/v0/get_all_brand_drugs',ensureAuthenticated, async (req, res) => { 
+    // console.log("Inside search by tag route!");
+    const pseudo_view = await getAllObjController.getAllBrandDrugsController(req);
+    if(pseudo_view) {
+        res.status(200).json({message : 'Success', data : pseudo_view});
+    }
+    else {
+        res.status(404).json({error : 'Not Found'});
+    }
+});
+
+
 router.get('/api/v0/get_all_diseases',ensureAuthenticated, async (req, res) => { 
     // console.log("Inside search by tag route!");
     const pseudo_view = await getAllObjController.getAllDiseasesController(req);
