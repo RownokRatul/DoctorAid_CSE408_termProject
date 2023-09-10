@@ -2,6 +2,6 @@ POST http://localhost:5000/api/v0/search_by_tag
 content-type: application/json
 
 {
-  "patient_id": 1,
-  "tags" : [1,4,5,29,39,59]
+  "patient_id": 3,
+  "tags" : [2]
 }

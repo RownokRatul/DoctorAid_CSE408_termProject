@@ -1,0 +1,7 @@
+## login
+GET http://localhost:5000/api/v0/get_patient_testinfo_table
+content-type: application/json
+
+{
+    
+}

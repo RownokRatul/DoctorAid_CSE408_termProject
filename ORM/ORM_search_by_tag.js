@@ -175,12 +175,17 @@ async function getDiseasesByPatientAndTags(patientId, tagIds) {
             disease_name: true,
           },
         },
+        prescription: true,
       },
     });
   
     // Extract and return the disease names
-    const diseaseNames = results.map((item) => item.diseases.disease_name);
+    const diseaseNames = results.map(item => ({
+      name: item.diseases.disease_name,
+      url: item.prescription,
+    }));
   
+    
     // console.log(diseaseNames);
     return diseaseNames;
   }
