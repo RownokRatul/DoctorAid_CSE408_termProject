@@ -11,6 +11,12 @@ import BottomBanner from './Components/BottomBanner';
 import { useState } from 'react';
 import { usePatientIDValidation } from '../../PatientIDValidation';
 import { PatientContext } from '../../PatientContext';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 import { set } from 'lodash';
 
 
@@ -47,6 +53,9 @@ const CreatePrescriptionPage = () => {
 
   const [doses, setDoses] = useState([]); // To store the doses of the selected medicines
   const [allInteractions, setAllInteractions] = useState([]); // To store all the interactions
+
+  const [openDialog, setOpenDialog] = useState(false);
+
 
 
 
@@ -219,6 +228,7 @@ const CreatePrescriptionPage = () => {
     // Navigate to the desired page
     navigate(location.state?.from || '/');
   };
+  
 
 
   const handleClearAll = async () => {
@@ -226,6 +236,11 @@ const CreatePrescriptionPage = () => {
     setDiseasesList([]);
     setTestsList([]);
     setSelectedMedicines([]);
+    setSelectedTags([]);
+    setAllResults([]);
+    setFinding('');
+    setDoses([]);
+
     
     console.log('Clearing all the states');
   };
@@ -265,6 +280,10 @@ const CreatePrescriptionPage = () => {
       const result = await response.json(); // Await the result here
       if (result.message === 'Success') {
         console.log("Prescription added successfully");
+        setOpenDialog(true);
+        
+        //const waiting= await resetData();
+        console.log("added");
       }
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -299,7 +318,12 @@ const CreatePrescriptionPage = () => {
         overflow: 'auto',
         transition: 'transform 10.5s ease, opacity 10.5s ease', // Add transition
       }}
+      
     >
+
+      
+      
+
       <Button onClick={resetData}>Close</Button>
       
       
@@ -323,6 +347,20 @@ const CreatePrescriptionPage = () => {
 
       {/* Bottom Banner with 15% height */}
       <BottomBanner handleClearAll={handleClearAll} handleSave={handleSave} setFinding={setFinding}/>
+
+      <Dialog open={openDialog} style={{ zIndex: 1001 }}>
+        <DialogTitle>Success</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            The prescription has been successfully saved.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
+
+      
       
     </div>
   );

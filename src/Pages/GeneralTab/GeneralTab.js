@@ -43,7 +43,6 @@ const GeneralTab = () => {
   }, [patientID]);
 
   // Dummy data for surgeries and diseases
-  const surgeries = ['Appendectomy', 'Cholecystectomy'];
   // const diseases = ['Hypertension', 'Diabetes'];
 
   return (
