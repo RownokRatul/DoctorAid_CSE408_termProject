@@ -32,9 +32,6 @@ import { PatientContext } from '../../PatientContext';
 
 const MedicationTab = () => {
 
-
-
-
   usePatientIDValidation();
   const [detail, setDetail] = useState(null);
 
