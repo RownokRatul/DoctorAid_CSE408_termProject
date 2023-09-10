@@ -50,15 +50,13 @@ const CreatePrescriptionPage = () => {
 
 
 
-  useEffect(() => {
-    console.log("All interactions: ", allInteractions);
-  }, [allInteractions]);
 
+  useEffect(() => { 
+    console.log("All INTERACTIONS: ", allInteractions);
+  }, [allInteractions]);
+  
   useEffect(() => {
-    console.log("Selected tags: ", selectedTags,selectedMedicineNames);
-    console.log("NExt line");
     const uniqueTags = [...new Set(selectedTags)];
-    console.log("Unique tags: ", uniqueTags);
 
     const requestBody = {
       patient_id: patientID,

@@ -30,6 +30,7 @@ const GeneralTab = () => {
         const result = await response.json();
         console.log("result", result);
         setData(result.data);
+        console.log("data", result.data.chronic_diseases.disease_name);
       } catch (error) {
         console.error('Failed to fetch data:', error);
       } finally {
@@ -43,7 +44,7 @@ const GeneralTab = () => {
 
   // Dummy data for surgeries and diseases
   const surgeries = ['Appendectomy', 'Cholecystectomy'];
-  const diseases = ['Hypertension', 'Diabetes'];
+  // const diseases = ['Hypertension', 'Diabetes'];
 
   return (
 
@@ -64,7 +65,7 @@ const GeneralTab = () => {
                 <PatientInfoCard patient={data} />
                 <HealthStatsCard stats={data} />
                 <MajorSurgeriesCard surgeries={surgeries} />
-                <MajorDiseasesCard diseases={diseases} />
+                <MajorDiseasesCard diseases={data.chronic_diseases.disease_name} />
               </div>
               <div style={{ flex: '1', padding: '20px' }}>
                 <Card style={{ marginBottom: '20px',background:'azure', borderBlockColor:'red' }}>
