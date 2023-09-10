@@ -54,7 +54,7 @@ const CreatePrescriptionPage = () => {
   useEffect(() => { 
     console.log("All INTERACTIONS: ", allInteractions);
   }, [allInteractions]);
-  
+
   useEffect(() => {
     const uniqueTags = [...new Set(selectedTags)];
 
@@ -235,6 +235,7 @@ const CreatePrescriptionPage = () => {
     // Clear all the states
 
     const currentDate = new Date().toISOString();
+    const uniqueTags = [...new Set(selectedTags)];
 
     try {
       const response = await fetch('api/v0/add_prescription/', {
@@ -251,7 +252,7 @@ const CreatePrescriptionPage = () => {
           doctor_username : doctorInfo.info.username,
           date : currentDate,
           findings : finding,
-          tags : selectedTags,
+          tags : uniqueTags,
         }),
       });
 
