@@ -1,11 +1,25 @@
-import React from 'react';
+import {React,useState,useContext,useEffect} from 'react';
 import { Avatar, Grid } from '@mui/material';
+import { PatientContext } from '../../../PatientContext'
+import axios from 'axios';
 
-function TopBanner({ patientInfo, prescriptionNo, avatarSrc }) {
+function TopBanner ({ prescriptionNo, avatarSrc ,data}) {
   // Get current date and time
   const currentDate = new Date();
   const date = currentDate.toLocaleDateString();
   const time = currentDate.toLocaleTimeString();
+
+
+
+  const dummy = {
+    id: 1,
+    name: 'Jon Doe',
+    address: '123 Nguyen Van Cu, P.1, Q.5, TP.HCM',
+    avatarSrc: 'https://material-ui.com/static/images/avatar/1.jpg',
+  };
+
+
+  
 
   return (
     <Grid container className="top-banner" style={{
@@ -17,12 +31,11 @@ function TopBanner({ patientInfo, prescriptionNo, avatarSrc }) {
       marginBottom: '20px',
     }}>
       <Grid item xs={3} style={{ paddingLeft: '10px' }}>
-        <div>ID: {patientInfo.id}</div>
-        <div>Name: {patientInfo.name}</div>
+        <div>ID: {dummy.id}</div>
+        <div>Name: {dummy.name}</div>
       </Grid>
       <Grid item xs={3}>
-        <div>Prescription No: {prescriptionNo}</div>
-        <div>Address: {patientInfo.address}</div>
+        <div>Address: {dummy.address}</div>
       </Grid>
       <Grid item xs={3}>
         <div>Date: {date}</div>

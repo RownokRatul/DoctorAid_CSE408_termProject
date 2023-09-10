@@ -68,8 +68,11 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
     });
   
     prescriptions.forEach((prescription) => {
+
+      console.log("prescription:",prescription);
       transformedResults.push({
         type: 'Prescription',
+        id: prescription.id,
         date: prescription.date,
         tags: [], // Add tags if available
       });
@@ -90,6 +93,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
   const handleCloseDialog = () => {
     setDialogOpen(false);
+    setDialogOpen2(false);
   };
 
   const [selectedTest, setSelectedTest] = useState(null);
@@ -142,9 +146,50 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 
   };
+  
+  const [prescriptionDetail, setPrescriptionDetail] = useState(null);
+  
+  const [dialogOpen2, setDialogOpen2] = useState(false);
 
-  const handleSeeMorePrescription = (result) => {
+  const handleSeeMorePrescription = async (result) => {
+    console.log("result in search:",result);
     setSelectedResult(result);
+
+
+    try {
+      const response = await fetch('api/v0/get_prescription_by_id/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prescription_id: result.id }),
+      });
+      const result_2 = await response.json();
+      setPrescriptionDetail(result_2.data);
+      setDialogOpen2(true);
+    } catch (error) {
+      console.error('Failed to fetch prescribed drugs:', error);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   };
 
   const [selectedFileType, setSelectedFileType] = useState(null);
@@ -305,10 +350,49 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
             </Paper>
           </Dialog>
 
+          <Dialog open={dialogOpen2} onClose={handleCloseDialog} fullWidth maxWidth="md">
+        <DialogTitle>Prescription Detail</DialogTitle>
+        <DialogContent>
+          {prescriptionDetail && (
+            <>
+              <Box style={{ backgroundColor: '#f2f2f2', padding: '1rem' }}>
+                <Typography variant="h6" style={{ fontWeight: 'bold' }}>General Information</Typography>
+                <Typography>ID: {prescriptionDetail.id}</Typography>
+                <Typography>Doctor: {prescriptionDetail.doctor_username}</Typography>
+                <Typography>Date: {new Date(prescriptionDetail.date).toLocaleDateString()}</Typography>
+                <Typography>Findings: {prescriptionDetail.findings}</Typography>
+              </Box>
+              <Box mt={2} style={{ backgroundColor: '#e6e6e6', padding: '1rem' }}>
+                <Typography variant="h6" style={{ fontWeight: 'bold' }}>Queued Tests</Typography>
+                {prescriptionDetail.queued_tests.map((test, index) => (
+                  <Typography key={index}>Test ID: {test.test_id}</Typography>
+                ))}
+              </Box>
+              <Box mt={2} style={{ backgroundColor: '#d9d9d9', padding: '1rem' }}>
+                <Typography variant="h6" style={{ fontWeight: 'bold' }}>Prescribed Drugs</Typography>
+                {prescriptionDetail.prescribed_drugs.map((drug, index) => (
+                  <Box key={index}>
+                    <Typography>Drug ID: {drug.drug_id}</Typography>
+                    <Typography>Dosage: {drug.prescribed_dosage}</Typography>
+                  </Box>
+                ))}
+              </Box>
+              <Box mt={2} style={{ backgroundColor: '#cccccc', padding: '1rem' }}>
+                <Typography variant="h6" style={{ fontWeight: 'bold' }}>Disease List</Typography>
+                {prescriptionDetail.prescription_diseases.map((disease, index) => (
+                  <Typography key={index}>Disease ID: {disease.disease_id}</Typography>
+                ))}
+              </Box>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
           
 
 
     </Box>
+    
 
   );
 };

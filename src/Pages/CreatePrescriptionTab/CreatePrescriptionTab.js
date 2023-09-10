@@ -17,6 +17,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import axios from 'axios';
+
 import { set } from 'lodash';
 
 
@@ -35,6 +37,8 @@ const CreatePrescriptionPage = () => {
   usePatientIDValidation();
 
   const {patientID}=useContext(PatientContext);
+
+  console.log("Patient ID: ",patientID);
   const { doctorInfo }=useContext(PatientContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -55,6 +59,28 @@ const CreatePrescriptionPage = () => {
   const [allInteractions, setAllInteractions] = useState([]); // To store all the interactions
 
   const [openDialog, setOpenDialog] = useState(false);
+
+
+  const [data, setData] = useState(null);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post('/api/v0/patients/get_demography_tab_info/', {
+          id: patientID  // Use the patient ID from context here
+        });
+
+        if (response.status === 200) {
+          setData(response.data.data);
+          console.log("data::::", response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching demography data:', error);
+      }
+    };
+    fetchData();
+  }, [patientID]); 
 
 
 
@@ -328,7 +354,7 @@ const CreatePrescriptionPage = () => {
       
       
       {/* Top Banner with 15% height */}
-      <TopBanner patientInfo={patientInfo} prescriptionNo={prescriptionNo} avatarSrc={avatarSrc} />
+      <TopBanner prescriptionNo={prescriptionNo} avatarSrc={avatarSrc} data={data}/>
       
       {/* Middle 70% Flexbox */}
       <Grid container style={{ height: '100%', width: '100%' }}>
