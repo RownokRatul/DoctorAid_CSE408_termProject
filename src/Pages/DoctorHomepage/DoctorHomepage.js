@@ -79,7 +79,7 @@ const DoctorHomepage = () => {
 
 
         const url = 'https://newsapi.org/v2/everything?'+
-       'q=Apple&'+
+       'q=medicine&medical'+
        'from=2023-08-27&'+
        'sortBy=popularity&'+
        'apiKey=af17597cd9564f5bb7615fa5ff39b6ad';
@@ -170,10 +170,8 @@ const DoctorHomepage = () => {
     // navigate('/');
     return <div>Loading...</div>;
   }
-
   return (
     <div>
-      {/* Top Panel */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#f0f0f0', padding: '10px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Avatar src={doctoravatar} alt="Doctor" sx={{ width: 100, height: 100 }} />
@@ -184,7 +182,7 @@ const DoctorHomepage = () => {
             <Typography variant="h6" style={{ color: '#333', marginBottom: '10px' }}>{doctorInfo.info.name}</Typography>
             <Typography variant="subtitle1" style={{ color: '#666', marginBottom: '10px' }}>{doctorInfo.info.specialization}</Typography>
           </div>
-          <div style={{ display: 'flex', gap: '15px' ,justifyContent:"center"}}>
+          <div style={{ display: 'flex', gap: '15px', justifyContent: "center" }}>
             <div style={{ padding: '10px', border: '1px solid #eaeaea', borderRadius: '5px' }}>
               <Typography variant="body2" style={{ fontWeight: 'bold' }}>Contact:</Typography>
               <Typography variant="body1">{doctorInfo.info.phone}</Typography>
@@ -204,117 +202,78 @@ const DoctorHomepage = () => {
           </div>
         </Card>
       </div>
-
-
-      {/* Main Content Area */}
+  
       <div style={{ display: 'flex', height: '90%' }}>
-
-
-
-
-        {/* Middle Panel */}
         <div style={{ flex: '30%', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-           
-
-          <Card style={{ display: 'flex', marginBottom: '20px', padding: '15px', backgroundColor: "azure" }}>
-            {/* Left Part with Graph */}
-            <div style={{ flex: '50%', marginRight: '10px' }}>
-              <Typography variant="h6" style={{ marginBottom: '10px' }}>Last 7 Days Patient Count</Typography>
-              <div style={{ height: '300px' }}> {/* Set your desired max height */}
-                <Line
-                  data={{
-                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-                    datasets: [{
-                      label: 'Patients',
-                      data: [12, 19, 3, 5, 2, 3, 7], // Dummy data
-                      borderColor: 'rgba(75,192,192,1)',
-                      backgroundColor: 'rgba(75,192,192,0.2)',
-                    }]
-                  }}
-                  options={{ maintainAspectRatio: false }}
-                />
-              </div>
-            </div>
-            
-            {/* Right Part with Calendar */}
+          <Card style={{ display: 'flex', marginBottom: '50px', padding: '40px', backgroundColor: "azure" }}>
             <div style={{ flex: '50%', marginLeft: '10px', height: '300px' }}>
               <Typography variant="h6" style={{ marginBottom: '10px' }}>Calendar</Typography>
-              <Calendar value={new Date()} /> {/* react-calendar component */}
+              <Calendar value={new Date()} />
             </div>
-          </Card>
-
-
-          {/* Bottom Card with 3 Patient Info Cards */}
-          <Card style={{ padding: '15px', backgroundColor: 'beige' }}>
-          <Typography variant="h6" style={{ marginBottom: '10px' }}>Last 3 Visited Patients</Typography>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            {patients.map((patient, index) => (
-              <Card key={index} style={{ padding: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#f5f5f5', borderTop: '0.5px solid gray' }}>
-                <Avatar src={'dummyAvatar' + index} alt="Patient" />
-                <Typography variant="body1">Name: {patient.name}</Typography>
-                <Typography variant="body2">Patient ID: {patient.patient_id}</Typography>
-                <Typography variant="body2">Phone: {patient.phoneNumber}</Typography>
-                <Typography variant="body2">Date: {new Date(patient.date).toLocaleDateString()}</Typography>
-                <Typography variant="body2">Findings: {patient.findings}</Typography>
-                <Button onClick={() => handlePatientDetail(patient.patient_id)}>Detail</Button>
-              </Card>
-            ))}
-          </div>
-        </Card>
-        
-        
-      <div>    
-      <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="right">Patient ID</TableCell>
-            <TableCell align="right">Prescription ID&nbsp;(g)</TableCell>
-            <TableCell align="right">Test Name&nbsp;(g)</TableCell>
-            <TableCell align="right">Status&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          { tests===null? (<div>loading</div>):(
-          tests.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell align="right">{row.patient_id}</TableCell>
-              <TableCell align="right">{row.prescription_id}</TableCell>
-              <TableCell align="right">{row.test_name}</TableCell>
-              <TableCell align="right">{row.status}</TableCell>
-            </TableRow>
-          )))
-        }
-        </TableBody>
-      </Table>
-    </TableContainer>
-    </div>
-
-        </div>
-
-        {/* Right Panel */}
-        <div style={{ flex: '30%', height: '690px', padding: '20px' }}> {/* Adjusted flex value */}
-          <Card style={{ padding: '5px', backgroundColor: "azure", marginBottom: "20px" }}>
-            <h2 style={{textAlign:"center"}}>Search Patient</h2>
-            <div style={{marginTop:"30px" , marginBottom:"30px", marginLeft:"130px"}}>
+            <div style={{ marginTop: "30px", marginBottom: "30px", marginLeft: "10px" }}>
+              <h2> Enter Patient ID to Search</h2>
               <TextField label="Patient ID" value={inputID} onChange={(e) => setInputID(e.target.value)} />
               <Button onClick={handleSubmit}>Enter</Button>
             </div>
           </Card>
-
-          {/* <Card style={{ height: '100%', padding: '15px', overflowY: 'scroll', backgroundColor: "beige" }}>
-            <h2 style={{textAlign:"center"}}>Recent News</h2>
-          {news.map((article, index) => (
-            <NewsCard key={index} news={article} />
-          ))}
-          </Card> */}
+          <Card style={{ padding: '15px', backgroundColor: 'beige' }}>
+            <Typography variant="h6" style={{ marginBottom: '10px' }}>Last 3 Visited Patients</Typography>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              {patients.map((patient, index) => (
+                <Card key={index} style={{ padding: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#f5f5f5', borderTop: '0.5px solid gray' }}>
+                  <Avatar src={'dummyAvatar' + index} alt="Patient" />
+                  <Typography variant="body1">Name: {patient.name}</Typography>
+                  <Typography variant="body2">Patient ID: {patient.patient_id}</Typography>
+                  <Typography variant="body2">Phone: {patient.phoneNumber}</Typography>
+                  <Typography variant="body2">Date: {new Date(patient.date).toLocaleDateString()}</Typography>
+                  <Typography variant="body2">Findings: {patient.findings}</Typography>
+                  <Button onClick={() => handlePatientDetail(patient.patient_id)}>Detail</Button>
+                </Card>
+              ))}
+            </div>
+          </Card>
         </div>
+  
+        <div style={{ flex: '30%', height: '690px', padding: '20px' }}>
+          <Card style={{ height: '100%', padding: '15px', overflowY: 'scroll', backgroundColor: "beige" }}>
+            <h2 style={{ textAlign: "center" }}>Recent News</h2>
+            {news.map((article, index) => (
+              <NewsCard key={index} news={article} />
+            ))}
+          </Card>
+          <h1>All Patient Test Status</h1>
+          <div style={{ maxHeight: '300px', overflowY: 'auto' }}> {/* Added this div */}
+            
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="right">Patient ID</TableCell>
+                    <TableCell align="right">Prescription ID</TableCell>
+                    <TableCell align="right">Test Name</TableCell>
+                    <TableCell align="right">Status</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {tests === null ? (<div>loading</div>) : (
+                    tests.map((test, index) => (
+                      <TableRow key={index}>
+                        <TableCell align="right">{test.patient_id}</TableCell>
+                        <TableCell align="right">{test.prescription_id}</TableCell>
+                        <TableCell align="right">{test.test_name}</TableCell>
+                        <TableCell align="right">{test.status}</TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div> {/* End of added div */}
+        </div>
+
       </div>
     </div>
   );
-}
+}  
 
 export default DoctorHomepage;

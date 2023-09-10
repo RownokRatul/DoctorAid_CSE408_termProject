@@ -32,7 +32,7 @@ const OccupationCard = ({ occupations,title }) => {
             </Typography>
             {' '}
             <Typography variant="body2" sx={{ color: '#f44336' }}>
-              To: {occupation.to}
+              To: {occupation.to===undefined?"Present":occupation.to}
             </Typography>
           </Box>
         </Box>

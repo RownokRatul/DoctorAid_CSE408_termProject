@@ -12,7 +12,7 @@ const PatientInfoCard = ({ patient }) => {
         <div style={{ marginTop:"20px"}}>
           <Typography variant="h6">{patient.name}</Typography>
           <Typography variant="body2">Age: {patient.age}</Typography>
-          <Typography variant="body2">Contact: {patient.contact}</Typography>
+          <Typography variant="body2">Contact: {patient.phone}</Typography>
           {/* Add other patient details here */}
         </div>
       </CardContent>

@@ -64,7 +64,6 @@ const GeneralTab = () => {
               <div style={{ flex: '1', padding: '20px' }}>
                 <PatientInfoCard patient={data} />
                 <HealthStatsCard stats={data} />
-                <MajorSurgeriesCard surgeries={surgeries} />
                 <MajorDiseasesCard diseases={data.chronic_diseases.disease_name} />
               </div>
               <div style={{ flex: '1', padding: '20px' }}>

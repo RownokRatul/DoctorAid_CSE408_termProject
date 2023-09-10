@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Box, Typography, LinearProgress, Pagination } from '@mui/material';
 import PrescriptionCard from './Components/PrescriptionCard';
 import { PatientContext } from '../../PatientContext';
+import { async } from 'q';
 
 const PrescriptionTab = () => {
   const [prescriptions, setPrescriptions] = useState([]);
@@ -34,8 +35,25 @@ const PrescriptionTab = () => {
     setPage(value);
   };
 
-  const handleSeeMore = (prescriptionID) => {
+  const handleSeeMore = async(prescriptionID) => {
     console.log('See more clicked for prescription ID:', prescriptionID);
+
+    try {
+      const response = await fetch('api/v0/get_prescription_by_id/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prescription_id: prescriptionID }),
+      });
+      const result = await response.json();
+      
+      console.log("prescription details:", result.data);
+    } catch (error) {
+      console.error('Failed to fetch prescribed drugs:', error);
+    }
+
+
   };
 
   const indexOfLastItem = page * itemsPerPage;

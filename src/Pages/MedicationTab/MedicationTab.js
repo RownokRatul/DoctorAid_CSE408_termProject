@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Typography, Button, Dialog, DialogContent, DialogTitle, Paper, Box } from '@mui/material';
+import { Typography, Button, Dialog, DialogContent, DialogTitle, Paper, Box,Grid } from '@mui/material';
 import MedicationCard from './Components/MedicationCard';
 import { usePatientIDValidation } from '../../PatientIDValidation';
 import { PatientContext } from '../../PatientContext';
@@ -57,6 +57,7 @@ const MedicationTab = () => {
         });
         const result = await response.json();
         setPrescribedDrugs(result.data);
+        console.log("Prescribed drugs:", result.data);
       } catch (error) {
         console.error('Failed to fetch prescribed drugs:', error);
       }
@@ -83,6 +84,8 @@ const handleClickDetail = async (drugId, prescriptionId) => {
       body: JSON.stringify({ prescription_id: prescriptionId, drug_id: drugId }),
     });
     const drugDetails = await valuesResponse.json();
+
+    console.log("Drug details:", drugDetails.data);
     setSelectedDrug(drugDetails.data);
     setDialogOpen(true);
 
@@ -93,8 +96,7 @@ const handleClickDetail = async (drugId, prescriptionId) => {
 
 const handleCloseDialog = () => {
   setDialogOpen(false);
-};
-return (
+};return (
   <div style={{ backgroundColor: '#eaeaea', padding: '20px' }}>
     <h1 style={{ textAlign: "center", marginTop: "50px" }}>Prescribed Drugs</h1>
     {prescribedDrugs.length === 0 ? (
@@ -104,6 +106,7 @@ return (
     ) : (
       <Box>
         {prescribedDrugs.map((drug) => (
+
           <MedicationCard key={drug.drug_id} drug={drug} onClickDetail={handleClickDetail} />
         ))}
       </Box>
@@ -113,16 +116,30 @@ return (
       <DialogTitle>{selectedDrug?.brandName}</DialogTitle>
       <DialogContent>
         <Paper style={{ padding: '20px' }}>
-          <Typography variant="body2">Generic Name: {selectedDrug?.genericName}</Typography>
-          <Typography variant="body2">Prescription ID: {selectedDrug?.prescription_id}</Typography>
-          <Typography variant="body2">Dosage: {selectedDrug?.prescribedDosage}</Typography>
-          <Typography variant="body2">Prescription Date: {selectedDrug?.prescriptionDate ? (new Date(selectedDrug?.prescriptionDate)).toISOString().split("T")[0] : "N/A"}</Typography>
-          <Button variant="contained" color="primary" onClick={handleCloseDialog}>Close</Button>
+          <Typography variant="h6" gutterBottom>Drug Details</Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <Typography variant="body2"><strong>Generic Name:</strong> {selectedDrug?.genericName}</Typography>
+              <Typography variant="body2"><strong>Prescription ID:</strong> {selectedDrug?.prescriptionId}</Typography>
+              <Typography variant="body2"><strong>Dosage:</strong> {selectedDrug?.prescribedDosage}</Typography>
+              <Typography variant="body2"><strong>Prescription Date:</strong> {selectedDrug?.prescriptionDate ? (new Date(selectedDrug?.prescriptionDate)).toISOString().split("T")[0] : "N/A"}</Typography>
+              <Typography variant="body2"><strong>Doctor:</strong> {selectedDrug?.doctor_username}</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="body2"><strong>Adult Dosage:</strong> {selectedDrug?.adultDosage}</Typography>
+              <Typography variant="body2"><strong>Child Dosage:</strong> {selectedDrug?.childDosage}</Typography>
+              <Typography variant="body2"><strong>Brand:</strong> {selectedDrug?.brand}</Typography>
+              <Typography variant="body2"><strong>Uses:</strong> {selectedDrug?.usecases.join(', ')}</Typography>
+              <Typography variant="body2"><strong>Adverse Effects:</strong> {selectedDrug?.adverseEffects.join(', ')}</Typography>
+            </Grid>
+          </Grid>
+          <Button variant="contained" color="primary" onClick={handleCloseDialog} style={{ marginTop: '20px' }}>Close</Button>
         </Paper>
       </DialogContent>
     </Dialog>
   </div>
 );
+
 };
 
 export default MedicationTab;

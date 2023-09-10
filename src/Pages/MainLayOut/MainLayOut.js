@@ -47,7 +47,6 @@ const MainLayout = ({ children }) => {
         flex: 1,  // Take up all available space
         width: '90%',
         marginLeft: '5%',
-        overflow: 'hidden'  // Hide overflow
       }}>
         {children}
       

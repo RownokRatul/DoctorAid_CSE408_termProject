@@ -32,7 +32,7 @@ const AddressCard = ({ addresses,title }) => {
             </Typography>
             {' '}
             <Typography variant="body2" sx={{ color: '#f44336' }}>
-              To: {address.to}
+              To: {address.to===undefined?"Present":address.to}
             </Typography>
           </Box>
         </Box>
