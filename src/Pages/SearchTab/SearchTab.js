@@ -241,7 +241,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
       } else {
         console.log('Tag not found');
       }
-
+      setIsLoading(true);
       const requestBody = {
         patient_id: patientID,
         tags: [selectedTag.id],
@@ -264,7 +264,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
         .catch((err) => {
           console.error('Failed to search by tag:', err);
           // Handle the error here if necessary
-        });  
+        }).finally(() => {
+          setIsLoading(false);
+        });
     };
 
   return (
