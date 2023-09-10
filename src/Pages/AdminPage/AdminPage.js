@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
-import { Container, Box, Button, Card, TextField, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, Select, MenuItem, InputLabel, FormControl, Paper, TableContainer } from '@mui/material';
+import React, { useState, useContext } from 'react';
+import { redirect, useNavigate } from 'react-router-dom';
+import { Container, Box, Button, Card, TextField, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, Select, MenuItem, InputLabel, FormControl, Paper, TableContainer, Avatar } from '@mui/material';
 import TestsTable from './Components/TestTable';
 import DiseasesTable from './Components/DiseaseTable';
 import KeywordsTable from './Components/KeywordsTable';
 import UsersTable from './Components/UsersTable';
+import { PatientContext } from '../../PatientContext'
+import adminAvatar from './Components/Image/admin.jpg';
+
 
 function AdminPage() {
+
+  const { role } = useContext(PatientContext);
+  const { logout } = useContext(PatientContext);
+
+  const navigate = useNavigate();
+
   const [selectedTable, setSelectedTable] = useState('tests');
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [isSuccessDialogOpen, setSuccessDialogOpen] = useState(false);
@@ -26,6 +36,11 @@ function AdminPage() {
   const closeDialog = () => {
     setFormData({});
     setDialogOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   const handleInputChange = (e) => {
@@ -75,6 +90,7 @@ function AdminPage() {
   const renderDialogContent = () => {
     return (
       <>
+
         <FormControl fullWidth margin="normal">
           <InputLabel>Role</InputLabel>
           <Select name="user_role" onChange={handleInputChange}>
@@ -126,7 +142,20 @@ function AdminPage() {
   };
 
   return (
-    <Container>
+    <Container style={{ marginBottom: '10%' }}>
+
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center',
+      position: 'fixed',
+      bottom: '100px',
+      right: '40px',
+    }}>
+        <Avatar src={adminAvatar} alt="Intern" sx={{ width: 100, height: 100 }} />
+        <Button variant="contained" color="primary" style={{ marginTop: '10px' }} onClick={handleLogout}>Logout</Button>
+    </div>
+
       <Box display="flex">
         <Box flex="20%" p={3}>
           <Card>

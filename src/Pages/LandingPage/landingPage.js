@@ -53,6 +53,10 @@ const LoginPage = () => {
             setRole(role.toLowerCase());
             navigate('/register');
             break;
+          case 'admin':
+            setRole(role.toLowerCase());
+            navigate('/admin');
+            break;
           default:
             setError('Unknown role');
         }
