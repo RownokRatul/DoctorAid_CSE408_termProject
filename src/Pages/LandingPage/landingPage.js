@@ -84,7 +84,7 @@ const LoginPage = () => {
         {isLoading && (
           <div style={{
             position: 'absolute', // Position it absolutely
-            top: '70%',  // Center vertically
+            top: '25%',  // Center vertically
             left: '50%', // Center horizontally
             transform: 'translate(-50%, -50%)'  // Adjust for true centering
           }}>

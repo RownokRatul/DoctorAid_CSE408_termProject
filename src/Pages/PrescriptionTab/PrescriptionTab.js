@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Box, Typography, LinearProgress, Pagination } from '@mui/material';
+import { Box, Typography, LinearProgress, Pagination, FormControlLabel, Switch } from '@mui/material';
 import PrescriptionCard from './Components/PrescriptionCard';
 import { PatientContext } from '../../PatientContext';
 import { async } from 'q';
 
 const PrescriptionTab = () => {
   const [prescriptions, setPrescriptions] = useState([]);
+  const [filteredPrescriptions, setFilteredPrescriptions] = useState([]);
+  const [filterMine, setFilterMine] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
   const itemsPerPage = 5;
-  const { patientID } = useContext(PatientContext);
+  const { patientID, doctorInfo } = useContext(PatientContext);
 
   useEffect(() => {
     setIsLoading(true);
@@ -25,11 +27,26 @@ const PrescriptionTab = () => {
       .then((response) => response.json())
       .then((data) => {
         setPrescriptions(data.data);
+        setFilteredPrescriptions(data.data);
         setTotalCount(data.data.length);
       })
       .catch((error) => console.error('Error fetching prescriptions:', error))
       .finally(() => setIsLoading(false));
   }, [patientID]);
+
+
+  useEffect(() => {
+    console.log("Inside useEffect 2 of Diagnostics.js");
+    const newFilteredPrescriptions = filterMine 
+      ? prescriptions.filter(pres => pres.doctor_username === doctorInfo.info.username) 
+      : prescriptions;
+    
+    setFilteredPrescriptions(newFilteredPrescriptions);
+    console.log("Before Filtering ", prescriptions);
+    console.log("filterMine: ",filterMine);
+    console.log("Filtered Tests: ",filteredPrescriptions);
+  }, [filterMine, prescriptions, doctorInfo.info.username]);
+
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -56,9 +73,13 @@ const PrescriptionTab = () => {
 
   };
 
+  const handleToggleFilter = async () => {
+    setFilterMine(!filterMine);
+  };
+
   const indexOfLastItem = page * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = prescriptions.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredPrescriptions.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <div style={{ marginBottom: '10%' }}>
@@ -67,6 +88,19 @@ const PrescriptionTab = () => {
         <LinearProgress color="success" />
       ) : (
         <>
+
+          <FormControlLabel
+            control={
+              <Switch
+                checked={filterMine}
+                onChange={handleToggleFilter}
+                name="filterMine"
+                color="primary"
+              />
+            }
+            label="Filter"
+          />
+
           {currentItems.length === 0 ? (
             <Typography variant="body1" style={{ textAlign: 'center' }}>
               No prescriptions available.
