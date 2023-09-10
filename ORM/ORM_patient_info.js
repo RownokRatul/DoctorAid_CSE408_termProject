@@ -231,6 +231,41 @@ async function get_most_recent_patients(doctorUsername, limit) {
   }
 }
 
+async function getChronicDiseasesByPId(patient_id) {
+  try {
+    // Fetch prescriptions based on patient_id
+    const prescriptions = await prisma.prescription.findMany({
+      where: {
+        patient_id: patient_id
+      },
+      include: {
+        prescription_diseases: {
+          select: {
+            disease: {
+              where: {
+                is_chronic: "Y"
+              },
+              select: {
+                disease_name: true
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Extract chronic disease names
+    const chronicDiseases = prescriptions.flatMap(prescription => 
+      prescription.prescription_diseases.map(pd => pd.disease.disease_name)
+    );
+    console.log(chronicDiseases);
+
+    return chronicDiseases;
+  } catch (error) {
+    console.error("Error in getChronicDiseasesByPatientId: ", error);
+    return null;
+  }
+}
 
 module.exports = {
     get_patient_basic_info,
@@ -238,6 +273,7 @@ module.exports = {
     get_patient_demography_info,
     get_chronic_disease_by_pid,
     get_most_recent_patients,
+    getChronicDiseasesByPId,
 };
 
 
