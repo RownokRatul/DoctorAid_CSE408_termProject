@@ -1,0 +1,8 @@
+POST http://localhost:5000/api/v0/admin/add_drug_interaction
+Content-Type: application/json
+
+{
+  "drug1_id": 1,
+  "drug2_id": 2,
+  "comment": "May cause drowsiness"
+}

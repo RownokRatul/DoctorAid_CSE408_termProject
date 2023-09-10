@@ -1,0 +1,7 @@
+DELETE http://localhost:5000/api/v0/admin/delete_drug_interaction
+Content-Type: application/json
+
+{
+  "drug1_id": 1,
+  "drug2_id": 2
+}

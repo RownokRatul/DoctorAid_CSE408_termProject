@@ -119,4 +119,196 @@ async function deleteUser(req) {
     }
 }
 
-module.exports = { listAllUsers, addUser, deleteUser };
+async function addTestMetadataController(req, res) {
+    const { test_name, row_name, column_name, prefilled_values } = req.body;
+    const result = await orm_admin.addTestMetadata(test_name, row_name, column_name, prefilled_values);
+    
+    if (result.success) {
+        res.status(201).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+async function deleteTestMetadataController(req, res) {
+    const { id } = req.body;
+    const result = await orm_admin.deleteTestMetadata(id);
+    
+    if (result.success) {
+        res.status(200).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+async function addTagController(req, res) {
+    const { tag_name } = req.body;
+    const result = await orm_admin.addTag(tag_name);
+    
+    if (result.success) {
+        res.status(201).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+async function deleteTagController(req, res) {
+    const { id } = req.body;
+    const result = await orm_admin.deleteTag(id);
+    
+    if (result.success) {
+        res.status(200).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+async function addTestsTagController(req, res) {
+    const { test_id, tag_id } = req.body;
+    const result = await orm_admin.addTestsTag(test_id, tag_id);
+    
+    if (result.success) {
+        res.status(201).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+async function deleteTestsTagController(req, res) {
+    const { test_id, tag_id } = req.body;
+    const result = await orm_admin.deleteTestsTag(test_id, tag_id);
+    
+    if (result.success) {
+        res.status(200).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+
+async function addBrandController(req, res) {
+    const { brand_name } = req.body;
+    const result = await orm_admin.addBrand(brand_name);
+    
+    if (result.success) {
+        res.status(201).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+async function deleteBrandController(req, res) {
+    const { id } = req.body;
+    const result = await orm_admin.deleteBrand(id);
+    
+    if (result.success) {
+        res.status(200).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+async function addBrandDrugController(req, res) {
+    const { generic_id, name, adult_dosage, child_dosage, brand_id } = req.body;
+    const result = await orm_admin.addBrandDrug(generic_id, name, adult_dosage, child_dosage, brand_id);
+    
+    if (result.success) {
+        res.status(201).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+async function deleteBrandDrugController(req, res) {
+    const { id } = req.body;
+    const result = await orm_admin.deleteBrandDrug(id);
+    
+    if (result.success) {
+        res.status(200).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+async function addGenericDrugController(req, res) {
+    const { name, usecases, adverse_effects } = req.body;
+    const result = await orm_admin.addGenericDrug(name, usecases, adverse_effects);
+    
+    if (result.success) {
+        res.status(201).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+async function deleteGenericDrugController(req, res) {
+    const { id } = req.body;
+    const result = await orm_admin.deleteGenericDrug(id);
+    
+    if (result.success) {
+        res.status(200).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+async function addDiseaseController(req, res) {
+    const { disease_name, is_chronic } = req.body;
+    const result = await orm_admin.addDisease(disease_name, is_chronic);
+    
+    if (result.success) {
+        res.status(201).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+async function deleteDiseaseController(req, res) {
+    const { id } = req.body;
+    const result = await orm_admin.deleteDisease(id);
+    
+    if (result.success) {
+        res.status(200).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+async function addDiseaseTagController(req, res) {
+    const { disease_id, tag_id } = req.body;
+    const result = await orm_admin.addDiseaseTag(disease_id, tag_id);
+    
+    if (result.success) {
+        res.status(201).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+async function deleteDiseaseTagController(req, res) {
+    const { disease_id, tag_id } = req.body;
+    const result = await orm_admin.deleteDiseaseTag(disease_id, tag_id);
+    
+    if (result.success) {
+        res.status(200).json(result.data);
+    } else {
+        res.status(400).json({ error: result.error });
+    }
+}
+
+async function addDrugDrugInteraction(req) {
+    const { drug1_id, drug2_id, comment } = req.body;
+    const result = await orm_admin.addDrugDrugInteraction(drug1_id, drug2_id, comment);
+    return result;
+  }
+  
+  async function deleteDrugDrugInteraction(req) {
+    const { drug1_id, drug2_id } = req.body;
+    const result = await orm_admin.deleteDrugDrugInteraction(drug1_id, drug2_id);
+    return result;
+  }
+
+module.exports = { listAllUsers, addUser, deleteUser, addTestMetadataController, deleteTestMetadataController,
+                     addTagController, deleteTagController, addTestsTagController, deleteTestsTagController, 
+                     addBrandController, deleteBrandController, addBrandDrugController, deleteBrandDrugController, 
+                     addGenericDrugController, deleteGenericDrugController, addDiseaseController, deleteDiseaseController, 
+                     addDiseaseTagController, deleteDiseaseTagController, addDrugDrugInteraction, deleteDrugDrugInteraction };
