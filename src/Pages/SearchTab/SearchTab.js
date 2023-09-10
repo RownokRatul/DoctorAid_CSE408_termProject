@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from 'react';
-import { Box, Dialog, DialogContent, DialogTitle, Typography, Button ,Table, TableHead, TableRow, TableCell, TableBody, Paper,} from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, Typography, Button ,Table, TableHead, TableRow, TableCell, TableBody, Paper, CircularProgress, LinearProgress} from '@mui/material';
 import SearchCriteria from './Components/SearchCriteria/SearchCriteria';
 import SearchResult from './Components/SearchResults/SearchResult';
 import MiddleFlexBox from './Components/BodyPicker/MiddleFlexBox';
@@ -22,6 +22,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
   const [selectedResult, setSelectedResult] = useState(null);
   const { patientID } = useContext(PatientContext);
   const [filteredResults, setFilteredResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [tags, setTags] = useState([]); // To store the fetched tags
   const [bodyPart,setBodyPart]=useState(null);
@@ -269,7 +270,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
   return (
     <Box display="flex" width="100%">
       
-      <SearchCriteria onSearch={handleSearch} tags={tags} />
+      <SearchCriteria onSearch={handleSearch} tags={tags} setIsLoading={setIsLoading} />
 
       {/* Middle Flexbox */}
     <Box width="40%" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -282,6 +283,13 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
       {/* Right Flexbox */}
       <Box width="50%" overflow="auto" style={{ marginTop: '20px', padding: '15px' }}>
         <h1>Search Results</h1>
+
+        <div style={{
+          align: 'center'
+        }}> 
+          {isLoading && <LinearProgress color="success" />}
+        </div>
+
         {results.length > 0 ? (
           results.map((result, index) => {
             switch (result.type) {

@@ -3,7 +3,7 @@ import { Card, CardContent, TextField, Button, Box, FormControlLabel, Checkbox, 
 import CloseIcon from '@mui/icons-material/Close';
 import { PatientContext } from '../../../../../PatientContext'
 
-const SearchKeyCard = ({ criteria, handleCriteriaChange, handleSearch, tags }) => {
+const SearchKeyCard = ({ criteria, handleCriteriaChange, handleSearch, tags, setIsLoading }) => {
   const [searchText, setSearchText] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
   const { patientID } = useContext(PatientContext);
@@ -12,7 +12,7 @@ const SearchKeyCard = ({ criteria, handleCriteriaChange, handleSearch, tags }) =
 
   console.log('Before Searching Finally: ', criteria );
 
-  const handleCheckboxChange = (e, tag) => {
+  const handleCheckboxChange = (e, tag, isLoading) => {
     if (e.target.checked) {
       setSelectedTags([...selectedTags, tag]);
       handleCriteriaChange('tags', [...criteria.tags, tag.tag_name]);
@@ -30,12 +30,13 @@ const SearchKeyCard = ({ criteria, handleCriteriaChange, handleSearch, tags }) =
   const handleSearchClick = () => {
     console.log(selectedTags);
   
+    setIsLoading(true);
     const tagIds = selectedTags.map((tag) => tag.id); // Assuming the tag objects have an 'id' property
     const requestBody = {
       patient_id: patientID,
       tags: tagIds,
     };
-  
+    
     fetch('api/v0/search_by_tag', {
       method: 'POST',
       headers: {
@@ -47,17 +48,8 @@ const SearchKeyCard = ({ criteria, handleCriteriaChange, handleSearch, tags }) =
       .then((data) => {
 
         console.log("body part-------------:",data);
-        // Process the response data here if necessary
-        //handleSearch({ ...criteria, searchKey: selectedTags.map((tag) => tag.tag_name).join(', ') });
-
-        // console.log("body part from backend:",data);  
-        
-        // Filtering based on criteria
         let filteredData = data.data;
-        // console.log("Before Filtered data:",filteredData);
-        // filteredData.tests = filteredData.tests.map(test => ({
-        //   ...test, date: test.prescription_date,
-        // }));
+
         console.log("Before Filtered data:",filteredData);
 
         if(!criteria.domains.medicalHistory) {
@@ -82,22 +74,6 @@ const SearchKeyCard = ({ criteria, handleCriteriaChange, handleSearch, tags }) =
             if(toDate) {
               toDate.setDate(toDate.getDate() + 1);
             }
-            // fromDate.setDate(fromDate.getDate() + 1);
-            // toDate.setDate(toDate.getDate() + 1);
-            
-            // let today = new Date();
-            // if (new Date(fromDate).toISOString().split('T')[0] === today.toISOString().split('T')[0]) {
-            //   console.log('From date is today');
-            //   fromDate = today;
-            // }
-            // console.log("To date:",new Date(toDate).toISOString().split('T')[0]);
-            // console.log("From date:",new Date(fromDate).toISOString().split('T')[0]);
-            // console.log("today", today.toISOString().split('T')[0]);
-
-            // if (new Date(toDate).toISOString().split('T')[0] === today.toISOString().split('T')[0]) {
-            //   console.log('To date is today');
-            //   toDate = today;
-            // }
   
             if (fromDate && toDate) {
               return itemDate >= fromDate && itemDate <= toDate;
@@ -122,6 +98,8 @@ const SearchKeyCard = ({ criteria, handleCriteriaChange, handleSearch, tags }) =
       .catch((err) => {
         console.error('Failed to search by tag:', err);
         // Handle the error here if necessary
+      }).finally(() => {
+        setIsLoading(false);
       });
   };
   

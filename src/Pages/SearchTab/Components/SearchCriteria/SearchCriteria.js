@@ -6,7 +6,7 @@ import DateRangeCard from './Cards/DateRangeCard';
 import TagsCard from './Cards/TagsCard';
 
 
-const SearchCriteria = ({ onSearch, tags }) => {
+const SearchCriteria = ({ onSearch, tags, setIsLoading }) => {
   
   const [criteria, setCriteria] = useState({
     domains: {
@@ -43,7 +43,7 @@ const SearchCriteria = ({ onSearch, tags }) => {
     // <Box width="30%" style={{ marginTop: '20px' }}>
     <Box width="30%"  style={{ marginTop: '20px' }}>
       <SearchDomainCard criteria={criteria} handleCriteriaChange={handleCriteriaChange} />
-      <SearchKeyCard criteria={criteria} handleCriteriaChange={handleCriteriaChange} handleSearch={handleSearch} tags={tags} />
+      <SearchKeyCard criteria={criteria} handleCriteriaChange={handleCriteriaChange} handleSearch={handleSearch} tags={tags} setIsLoading={setIsLoading} />
       <DateRangeCard criteria={criteria} handleCriteriaChange={handleCriteriaChange} />
     </Box>
   );
