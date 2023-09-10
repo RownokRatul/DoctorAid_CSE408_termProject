@@ -163,7 +163,7 @@ const PrescriptionTab = () => {
                 <Typography variant="h6" style={{ fontWeight: 'bold' }}>Prescribed Drugs</Typography>
                 {prescriptionDetail.prescribed_drugs.map((drug, index) => (
                   <Box key={index}>
-                    <Typography>Drug ID: {(allDrugs.find(drug2 => drug2.id === drug.drug_id)).name}</Typography>
+                    <Typography>Prescribed Drug : {(allDrugs.find(drug2 => drug2.id === drug.drug_id)).name}</Typography>
                     <Typography>Dosage: {drug.prescribed_dosage}</Typography>
                   </Box>
                 ))}

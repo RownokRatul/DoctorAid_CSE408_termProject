@@ -26,6 +26,10 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
   const [tags, setTags] = useState([]); // To store the fetched tags
   const [bodyPart,setBodyPart]=useState(null);
 
+  const [allDiseases, setAllDiseases] = useState([]);
+  const [allTests, setAllTests] = useState([]);
+  const [allDrugs, setAllDrugs] = useState([]);
+
     useEffect(() => {
       // Fetching the tags when the component mounts
       fetch('api/v0/search_by_tag')
@@ -36,6 +40,22 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
           setTags(fetchedTags); // Updating the state
         })
         .catch((err) => console.error('Failed to fetch tags:', err));
+
+        fetch('api/v0/get_all_diseases')
+      .then(res => res.json())
+      .then(data => setAllDiseases(data.data))
+      .catch(err => console.error('Failed to fetch diseases:', err));
+
+    fetch('api/v0/get_all_tests')
+      .then(res => res.json())
+      .then(data => setAllTests(data.data))
+      .catch(err => console.error('Failed to fetch tests:', err));
+
+    fetch('api/v0/get_all_brand_drugs')
+      .then(res => res.json())
+      .then(data => setAllDrugs(data.data))
+      .catch(err => console.error('Failed to fetch Drugs:', err));
+
     }, []);
     
 
@@ -365,14 +385,14 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
               <Box mt={2} style={{ backgroundColor: '#e6e6e6', padding: '1rem' }}>
                 <Typography variant="h6" style={{ fontWeight: 'bold' }}>Queued Tests</Typography>
                 {prescriptionDetail.queued_tests.map((test, index) => (
-                  <Typography key={index}>Test ID: {test.test_id}</Typography>
+                  <Typography key={index}>Diagnostic Tests: {(allTests.find(test2 => test2.id === test.test_id)).test_name}</Typography>
                 ))}
               </Box>
               <Box mt={2} style={{ backgroundColor: '#d9d9d9', padding: '1rem' }}>
                 <Typography variant="h6" style={{ fontWeight: 'bold' }}>Prescribed Drugs</Typography>
                 {prescriptionDetail.prescribed_drugs.map((drug, index) => (
                   <Box key={index}>
-                    <Typography>Drug ID: {drug.drug_id}</Typography>
+                    <Typography>Prescribed Drug : {(allDrugs.find(drug2 => drug2.id === drug.drug_id)).name}</Typography>
                     <Typography>Dosage: {drug.prescribed_dosage}</Typography>
                   </Box>
                 ))}
@@ -380,7 +400,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
               <Box mt={2} style={{ backgroundColor: '#cccccc', padding: '1rem' }}>
                 <Typography variant="h6" style={{ fontWeight: 'bold' }}>Disease List</Typography>
                 {prescriptionDetail.prescription_diseases.map((disease, index) => (
-                  <Typography key={index}>Disease ID: {disease.disease_id}</Typography>
+                  <Typography key={index}>Diagnosis : {(allDiseases.find(dis2 => dis2.id === disease.disease_id)).disease_name}</Typography>
                 ))}
               </Box>
             </>

@@ -3,6 +3,28 @@ import { Card, TextField, Table, TableBody, TableCell, TableHead, TableRow, Butt
 import remove from './Image/trash-bin.png'; // Make sure you have this path correct
 function RightFlexbox({ SearchResults }) {
 
+  // const [allDiseases, setAllDiseases] = useState([]);
+  // const [allTests, setAllTests] = useState([]);
+  // const [allDrugs, setAllDrugs] = useState([]);
+
+  // useEffect(() => {
+  //   fetch('api/v0/get_all_diseases')
+  //     .then(res => res.json())
+  //     .then(data => setAllDiseases(data.data))
+  //     .catch(err => console.error('Failed to fetch diseases:', err));
+
+  //   fetch('api/v0/get_all_tests')
+  //     .then(res => res.json())
+  //     .then(data => setAllTests(data.data))
+  //     .catch(err => console.error('Failed to fetch tests:', err));
+
+  //   fetch('api/v0/get_all_brand_drugs')
+  //     .then(res => res.json())
+  //     .then(data => setAllDrugs(data.data))
+  //     .catch(err => console.error('Failed to fetch Drugs:', err));
+
+  // }, []);
+
   console.log("IN RIGHT FLEXBOX", SearchResults);
   const { tests, prescriptions, medical_history } = SearchResults|| {};
 
