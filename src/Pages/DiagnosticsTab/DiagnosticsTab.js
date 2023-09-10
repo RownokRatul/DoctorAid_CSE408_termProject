@@ -3,7 +3,7 @@ import { PatientContext } from '../../PatientContext'
 
 import { usePatientIDValidation } from '../../PatientIDValidation';
 import React, { useState, useContext, useEffect } from 'react';
-import { Card, CardContent, Typography, Button, Dialog, Table, TableHead, TableRow, TableCell, TableBody, Paper, CircularProgress, FormControlLabel, Switch, Pagination } from '@mui/material';
+import { Card, CardContent, Typography, Button, Dialog, Table, TableHead, TableRow, TableCell, TableBody, Paper, CircularProgress, FormControlLabel, Switch, Pagination, LinearProgress } from '@mui/material';
 // import { use } from 'passport';
 
 
@@ -121,14 +121,10 @@ const Diagnostics = () => {
   return (
 
     <div style={{ position: 'relative', minHeight: '100vh' }}>
+    <h1 style={{textAlign:"center",marginTop:"50px"}}>Previous Tests</h1>
       {isLoading ? (
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)'
-        }}>
-          <CircularProgress />
+        <div>
+          <LinearProgress color="success" />
         </div>
       ) : (
         <div>
@@ -145,7 +141,6 @@ const Diagnostics = () => {
             label="Filter"
           />
 
-          <h1 style={{textAlign:"center",marginTop:"50px"}}>Previous Tests</h1>
           {filteredTests.map((test) => (
 
             <Card key={test.test_id} style={{ margin: '10px' ,backgroundColor:"azure",textAlign:"center",marginTop:"50px"}}>

@@ -32,7 +32,7 @@ const MainLayout = ({ children }) => {
 
     }}>
       <Banner src={doctoraid_logo} />
-      {location.pathname !== '/' && location.pathname !== '/intern' && location.pathname !== '/diagnostician' && location.pathname !== '/internPage' && location.pathname !== '/register' && location.pathname !== '/home' && (
+      {location.pathname !== '/' && location.pathname !== '/intern' && location.pathname !== '/diagnostician' && location.pathname !== '/internPage' && location.pathname !== '/register' && location.pathname !== '/home' && location.pathname !== '/admin'  && (
         <div>
           <TopMenuBar logo={logo} />
           {!open && (
