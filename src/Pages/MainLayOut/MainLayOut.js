@@ -27,7 +27,9 @@ const MainLayout = ({ children }) => {
     <div style={{ 
       display: 'flex', 
       flexDirection: 'column',
-      position: 'relative'
+      position: 'relative',
+      height: '100%',
+
     }}>
       <Banner src={doctoraid_logo} />
       {location.pathname !== '/' && location.pathname !== '/intern' && location.pathname !== '/diagnostician' && location.pathname !== '/internPage' && location.pathname !== '/register' && location.pathname !== '/home' && (

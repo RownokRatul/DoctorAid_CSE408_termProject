@@ -1,22 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableRow, Button } from '@mui/material';
 import remove from './Image/trash-bin.png'; // Import your delete icon
 
 function UsersTable() {
   const [tests, setTests] = useState([]);
 
-
-  useState(() => {
+  useEffect(() => {
     fetch('api/v0/admin/list_all_users')
       .then(res => res.json())
       .then(data => setTests(data.data));
-  }
-  , []);
+  }, []);
 
   const handleRemoveTest = (index) => {
-    const newTests = [...tests];
-    newTests.splice(index, 1);
-    setTests(newTests);
+    const testToRemove = tests[index];
+    
+    // Perform API call to remove user
+    fetch('api/v0/admin/delete_user', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_role: testToRemove.user_role,
+        username: testToRemove.username
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        // Refetch the updated user list
+        fetch('api/v0/admin/list_all_users')
+          .then(res => res.json())
+          .then(data => setTests(data.data));
+      } else {
+        // Handle error
+        console.error("Error deleting user:", data.message);
+      }
+    });
+    
   };
 
   return (

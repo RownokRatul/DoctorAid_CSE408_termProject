@@ -1,15 +1,23 @@
 import React, { useState ,useEffect} from 'react';
-import { Box, Dialog, DialogContent, DialogTitle, Typography, Button } from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, Typography, Button ,Table, TableHead, TableRow, TableCell, TableBody, Paper,} from '@mui/material';
 import SearchCriteria from './Components/SearchCriteria/SearchCriteria';
 import SearchResult from './Components/SearchResults/SearchResult';
 import MiddleFlexBox from './Components/BodyPicker/MiddleFlexBox';
 import { useContext } from 'react';
 import { PatientContext } from '../../PatientContext';
+import { Document, Page } from 'react-pdf';  // for PDF rendering
+import { pdfjs } from 'react-pdf';
+
+
+
 
 import { usePatientIDValidation } from '../../PatientIDValidation';
+import { set } from 'lodash';
 const SearchTab = () => {
 
   usePatientIDValidation();
+  
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
   const [results, setResults] = useState([]); // To store the search results
   const [selectedResult, setSelectedResult] = useState(null);
   const { patientID } = useContext(PatientContext);
@@ -39,7 +47,7 @@ const SearchTab = () => {
 
 
   const handleSearch = (data) => {
-    console.log("Data:", data);
+    console.log("Data-------------:", data);
   
     // Extracting the relevant fields from the criteria
     const { tests, prescriptions, medical_history } = data;
@@ -50,9 +58,11 @@ const SearchTab = () => {
     tests.forEach((test) => {
       transformedResults.push({
         type: 'Test',
+        test_id: test.test_id,
         name: test.test_name,
         date: test.prescription_date,
         prescribedDate: test.prescribed_date,
+        prescription_id: test.prescription_id,
         tags: [], // Add tags if available
       });
     });
@@ -68,7 +78,8 @@ const SearchTab = () => {
     medical_history.forEach((history) => {
       transformedResults.push({
         type: 'Medical History',
-        description: history,
+        description: history.name,
+        url: history.url,
         tags: [], // Add tags if available
       });
     });
@@ -76,22 +87,78 @@ const SearchTab = () => {
     setResults(transformedResults);
     console.log("Newresults:",results);
   };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+
+  const [selectedTest, setSelectedTest] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const handleClickDetail = async (testId, prescriptionId) => {
+    try {
+      // First, fetch the test metadata.
+      const metadataResponse = await fetch('api/v0/get_test_metadata/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ test_id: testId }),
+      });
+      const metadata = await metadataResponse.json();
+  
+      // Then, fetch the specific test values.
+      const valuesResponse = await fetch('api/v0/get_prescribed_test_by_test_id/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prescription_id: prescriptionId, test_id: testId }),
+      });
+      const valuesData = await valuesResponse.json();
+  
+      // Combine the metadata and test values into a single object.
+      const selectedTestData = {
+        ...metadata.data,
+        test_values: valuesData.data.test_values,
+      };
+  
+      setSelectedTest(selectedTestData);
+      setDialogOpen(true);
+    } catch (error) {
+      console.error('Failed to fetch test details:', error);
+    } finally {
+      
+    }
+  };
   
 
   const handleSeeMoreTest = (result) => {
 
-    console.log("result:",result)
+    console.log("result in search:",result);
     setSelectedResult(result);
+    handleClickDetail(result.test_id,result.prescription_id);
+
+
+
   };
 
   const handleSeeMorePrescription = (result) => {
     setSelectedResult(result);
   };
 
+  const [selectedFileType, setSelectedFileType] = useState(null);
+
+
+  
   const handleSeeMoreHistory = (result) => {
     setSelectedResult(result);
-
+  
+    console.log("Medical History:", result.url);
+  
+    window.open(result.url, '_blank');
   };
+  
 
 
 
@@ -153,6 +220,7 @@ const SearchTab = () => {
         {results.length > 0 ? (
           results.map((result, index) => {
             switch (result.type) {
+
               case 'Test':
                 return (
                   <Box key={index} mb={2} p={2} boxShadow={3} borderRadius="borderRadius" bgcolor="azure">
@@ -177,7 +245,9 @@ const SearchTab = () => {
                     <Typography variant="h6">{result.type}</Typography>
                     <Typography variant="body1">Description: {result.description}</Typography>
                     <Button color="primary" onClick={() => handleSeeMoreHistory(result)}>See More</Button>
+
                   </Box>
+                  
                 );
               default:
                 return null;
@@ -190,7 +260,56 @@ const SearchTab = () => {
         )}
       </Box>
 
+      
+
+
+      <Dialog open={dialogOpen} onClose={handleCloseDialog} scroll="body">
+          <Paper style={{ 
+              padding: '20px', 
+              width: '100vw',  // Set width
+              height: '80vh',  // Set height
+              overflow: 'auto'  // Content will be scrollable
+            }}>
+              <Typography variant="h6">{selectedTest?.test_name}</Typography>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell></TableCell>
+                    {selectedTest?.column_name.map((col, index) => (
+                      <TableCell key={index}>{col}</TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {selectedTest?.row_name.map((row, rowIndex) => (
+                    <TableRow key={rowIndex}>
+                      <TableCell>{row}</TableCell>
+                      {selectedTest.column_name.map((col, colIndex) => (
+                        <TableCell key={colIndex}>
+                          {col.toLowerCase() === "image" ? (
+                            <img
+                              src={selectedTest.test_values[rowIndex * selectedTest.column_name.length + colIndex] || ''}
+                              alt="Data"
+                              // width={500}
+                              // height={500}
+                            />
+                          ) : (
+                            selectedTest.test_values[rowIndex * selectedTest.column_name.length + colIndex] || ''
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Paper>
+          </Dialog>
+
+          
+
+
     </Box>
+
   );
 };
 

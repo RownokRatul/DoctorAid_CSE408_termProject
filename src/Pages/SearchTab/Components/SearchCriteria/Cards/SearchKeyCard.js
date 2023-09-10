@@ -45,6 +45,8 @@ const SearchKeyCard = ({ criteria, handleCriteriaChange, handleSearch, tags }) =
     })
       .then((res) => res.json())
       .then((data) => {
+
+        console.log("body part-------------:",data);
         // Process the response data here if necessary
         //handleSearch({ ...criteria, searchKey: selectedTags.map((tag) => tag.tag_name).join(', ') });
 
