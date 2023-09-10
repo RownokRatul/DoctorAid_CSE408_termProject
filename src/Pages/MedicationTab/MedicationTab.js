@@ -1,34 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Typography, Button, Dialog, DialogContent, DialogTitle, Paper, Box,Grid } from '@mui/material';
+import { Typography, Button, Dialog, DialogContent, DialogTitle, Paper, Box,Grid, LinearProgress } from '@mui/material';
 import MedicationCard from './Components/MedicationCard';
 import { usePatientIDValidation } from '../../PatientIDValidation';
 import { PatientContext } from '../../PatientContext';
 
-
-// // Mock data with additional details
-// const medicationList = [
-//   {
-//     medicineName: 'Aspirin',
-//     genericName: 'Acetylsalicylic Acid',
-//     startedFrom: '01/01/2021',
-//     doses: '100mg',
-//     appointmentNo: '12345',
-//     uses: 'Pain relief, fever reduction',
-//     sideEffects: 'Nausea, vomiting',
-//   },
- 
-//   // Add more as needed
-// ];
-
-// const restrictedList = [
-//   {
-//     medicineName: 'Ibuprofen',
-//     genericName: 'Ibuprofen',
-//     sideEffects: 'Stomach pain, nausea',
-//   },
- 
-//   // Add more as needed
-// ];
 
 const MedicationTab = () => {
 
@@ -40,12 +15,13 @@ const MedicationTab = () => {
   const [prescribedDrugs, setPrescribedDrugs] = useState([]);
   const [selectedDrug, setSelectedDrug] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   console.log("Patient ID:", patientID);
 
   useEffect(() => {
     if(patientID === null) return;
-
+    setIsLoading(true);
     const fetchData = async () => {
       try {
         const response = await fetch('api/v0/get_prescribed_drugs_by_patient_id/', {
@@ -60,6 +36,9 @@ const MedicationTab = () => {
         console.log("Prescribed drugs:", result.data);
       } catch (error) {
         console.error('Failed to fetch prescribed drugs:', error);
+      }
+      finally {
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -97,46 +76,59 @@ const handleClickDetail = async (drugId, prescriptionId) => {
 const handleCloseDialog = () => {
   setDialogOpen(false);
 };return (
-  <div style={{ backgroundColor: '#eaeaea', padding: '20px' }}>
-    <h1 style={{ textAlign: "center", marginTop: "50px" }}>Prescribed Drugs</h1>
-    {prescribedDrugs.length === 0 ? (
-      <Typography variant="body1" style={{ textAlign: 'center' }}>
-        No drugs prescribed.
-      </Typography>
-    ) : (
-      <Box>
-        {prescribedDrugs.map((drug) => (
 
-          <MedicationCard key={drug.drug_id} drug={drug} onClickDetail={handleClickDetail} />
-        ))}
-      </Box>
+
+  <div style={{ backgroundColor: '#eaeaea', padding: '20px' }}>
+
+    <h1 style={{ textAlign: "center", marginTop: "50px" }}>Prescribed Drugs</h1>
+
+    {isLoading ? (
+      <LinearProgress color="success" />
+    ) : (
+      <>
+        
+        {prescribedDrugs.length === 0 ? (
+          <Typography variant="body1" style={{ textAlign: 'center' }}>
+            No drugs prescribed.
+          </Typography>
+        ) : (
+          <Box>
+            {prescribedDrugs.map((drug) => (
+    
+              <MedicationCard key={drug.drug_id} drug={drug} onClickDetail={handleClickDetail} />
+            ))}
+          </Box>
+        )}
+    
+        <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+          <DialogTitle>{selectedDrug?.brandName}</DialogTitle>
+          <DialogContent>
+            <Paper style={{ padding: '20px' }}>
+              <Typography variant="h6" gutterBottom>Drug Details</Typography>
+              <Grid container spacing={3}>
+                <Grid item xs={6}>
+                  <Typography variant="body2"><strong>Generic Name:</strong> {selectedDrug?.genericName}</Typography>
+                  <Typography variant="body2"><strong>Prescription ID:</strong> {selectedDrug?.prescriptionId}</Typography>
+                  <Typography variant="body2"><strong>Dosage:</strong> {selectedDrug?.prescribedDosage}</Typography>
+                  <Typography variant="body2"><strong>Prescription Date:</strong> {selectedDrug?.prescriptionDate ? (new Date(selectedDrug?.prescriptionDate)).toISOString().split("T")[0] : "N/A"}</Typography>
+                  <Typography variant="body2"><strong>Doctor:</strong> {selectedDrug?.doctor_username}</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body2"><strong>Adult Dosage:</strong> {selectedDrug?.adultDosage}</Typography>
+                  <Typography variant="body2"><strong>Child Dosage:</strong> {selectedDrug?.childDosage}</Typography>
+                  <Typography variant="body2"><strong>Brand:</strong> {selectedDrug?.brand}</Typography>
+                  <Typography variant="body2"><strong>Uses:</strong> {selectedDrug?.usecases.join(', ')}</Typography>
+                  <Typography variant="body2"><strong>Adverse Effects:</strong> {selectedDrug?.adverseEffects.join(', ')}</Typography>
+                </Grid>
+              </Grid>
+              <Button variant="contained" color="primary" onClick={handleCloseDialog} style={{ marginTop: '20px' }}>Close</Button>
+            </Paper>
+          </DialogContent>
+        </Dialog>
+        
+      </>
     )}
 
-    <Dialog open={dialogOpen} onClose={handleCloseDialog}>
-      <DialogTitle>{selectedDrug?.brandName}</DialogTitle>
-      <DialogContent>
-        <Paper style={{ padding: '20px' }}>
-          <Typography variant="h6" gutterBottom>Drug Details</Typography>
-          <Grid container spacing={3}>
-            <Grid item xs={6}>
-              <Typography variant="body2"><strong>Generic Name:</strong> {selectedDrug?.genericName}</Typography>
-              <Typography variant="body2"><strong>Prescription ID:</strong> {selectedDrug?.prescriptionId}</Typography>
-              <Typography variant="body2"><strong>Dosage:</strong> {selectedDrug?.prescribedDosage}</Typography>
-              <Typography variant="body2"><strong>Prescription Date:</strong> {selectedDrug?.prescriptionDate ? (new Date(selectedDrug?.prescriptionDate)).toISOString().split("T")[0] : "N/A"}</Typography>
-              <Typography variant="body2"><strong>Doctor:</strong> {selectedDrug?.doctor_username}</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography variant="body2"><strong>Adult Dosage:</strong> {selectedDrug?.adultDosage}</Typography>
-              <Typography variant="body2"><strong>Child Dosage:</strong> {selectedDrug?.childDosage}</Typography>
-              <Typography variant="body2"><strong>Brand:</strong> {selectedDrug?.brand}</Typography>
-              <Typography variant="body2"><strong>Uses:</strong> {selectedDrug?.usecases.join(', ')}</Typography>
-              <Typography variant="body2"><strong>Adverse Effects:</strong> {selectedDrug?.adverseEffects.join(', ')}</Typography>
-            </Grid>
-          </Grid>
-          <Button variant="contained" color="primary" onClick={handleCloseDialog} style={{ marginTop: '20px' }}>Close</Button>
-        </Paper>
-      </DialogContent>
-    </Dialog>
   </div>
 );
 
