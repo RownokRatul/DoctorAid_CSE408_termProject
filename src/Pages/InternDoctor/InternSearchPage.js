@@ -78,30 +78,42 @@ const SearchPatient = () => {
           <Avatar src={internAvatar} alt="Intern" sx={{ width: 100, height: 100 }} />
           <Button variant="contained" color="primary" style={{ marginTop: '10px' }} onClick={handleLogout}>Logout</Button>
       </div>
-      <div>
-        <TextField
-          label="Search Patient" 
-          value={phone} 
-          onChange={(e) => setPhone(e.target.value)} 
-        />
-        <Button variant="contained" color="primary" onClick={handleSearch}>
-          Search
-        </Button>
+      
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: '100px',
+      }}>
+
+            <div>
+            <TextField
+              label="Search Patient" 
+              value={phone} 
+              onChange={(e) => setPhone(e.target.value)} 
+            />
+            <Button variant="contained" color="primary" onClick={handleSearch}>
+              Search
+            </Button>
+          </div>
+          {/* Dialog box for "Patient not found" */}
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>{"Patient not found"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                The patient with the given ID could not be found.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
+
       </div>
-      {/* Dialog box for "Patient not found" */}
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{"Patient not found"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            The patient with the given ID could not be found.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+
+
     </div>
   );
 };
